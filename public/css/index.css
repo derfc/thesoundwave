@@ -1,3 +1,10 @@
-h1 {
+/* h1 {
 	color: red;
+} */
+
+.music-player {
+	height: 50px;
+	width: 300px;
+	border-color: black;
+	border-style: double;
 }
