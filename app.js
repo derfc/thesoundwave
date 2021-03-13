@@ -22,37 +22,48 @@ app.get("/login", (req, res) => {
 	res.render("login");
 });
 
+//login logic
+app.post("/login", (req, res) => {
+	res.send("logged in");
+	//rediredt to /home
+});
+
 //register route
 app.get("/register", (req, res) => {
 	res.render("register");
 });
 
+//register logic
+app.post("/register", (req, res) => {
+	res.send("registered");
+	//rediredt to /home
+});
+
 //home route
-//layouts
 app.get("/home", (req, res) => {
-	// res.render("home");
+	res.render("home", { layout: "dashboard" });
 	//render user name, playlist, lots of btns, browsing
 });
 
 //setting route
 app.get("/setting", (req, res) => {
-	// res.render("setting");
+	res.render("setting", { layout: "dashboard" });
 });
 
 //setting route
 //commit changes
 app.post("/setting", (req, res) => {
-	// res.render("setting");
+	res.render("setting", { layout: "dashboard" });
 });
 
 //store route
 app.get("/store", (req, res) => {
-	res.render("store");
+	res.render("store", { layout: "dashboard" });
 });
 
 //cart route
 app.get("/cart", (req, res) => {
-	res.render("cart");
+	res.render("cart", { layout: "dashboard" });
 });
 
 app.listen(port, () => {
