@@ -3,7 +3,7 @@
 }
 
 body {
-  font-family: "Open Sans";
+  font-family: "Open Sans", sans-serif;
   font-size: 20px;
   font-weight: 600;
 }
@@ -55,13 +55,12 @@ a {
   margin: 10px 0px;
   border: none;
   padding: 10px;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
   border-radius: 4px;
 }
-/* .content input[type="checkbox"] {
+.content input[type="checkbox"] {
   display: none;
-} */
+}
+
 .content label {
   display: inline-block;
   width: 20px;
@@ -101,11 +100,16 @@ a {
   font-size: 1.1rem;
   padding: 10px;
   margin: 20px 0px;
-  background-color: #66a756;
+  background-color: #4d9e38;
   color: White;
   border: none;
   border-radius: 4px;
 }
+
+.content button:hover {
+  background-color: #376e2a;
+}
+
 .content .social {
   width: 100%;
   position: relative;
