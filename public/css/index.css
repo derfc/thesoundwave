@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-@import url(https://fonts.googleapis.com/css?family=Dosis:300|Lato:300,400,600,700|Roboto+Condensed:300,700|Open+Sans+Condensed:300,600|Open+Sans:400,300,600,700|Maven+Pro:400,700);
-
 * {
   box-sizing: border-box;
 }
@@ -182,15 +179,15 @@ a {
 .content .already {
   text-align: center;
   font-size: 0.9rem;
-=======
+}
+
 /* h1 {
 	color: red;
 } */
 
 .music-player {
-	height: 50px;
-	width: 300px;
-	border-color: black;
-	border-style: double;
->>>>>>> 16c5ab3728b052aaf7b33a149d81f1f114cac00b
+  height: 50px;
+  width: 300px;
+  border-color: black;
+  border-style: double;
 }

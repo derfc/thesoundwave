@@ -1,6 +1,5 @@
 $(document).ready(() => {
-<<<<<<< HEAD
-    $("#register").click((e) => {
+    $("#registerbutton").click((e) => {
         e.preventDefault();
         let email = $('#email').val()
         let password = $('#password').val()
@@ -21,12 +20,9 @@ $(document).ready(() => {
         })
     });
 
+    $(".button-login").click((e) => {
+        // e.preventDefault();
+        console.log("hello");
+    });
 
 })
-=======
-	$(".button-login").click((e) => {
-		// e.preventDefault();
-		console.log("hello");
-	});
-});
->>>>>>> 16c5ab3728b052aaf7b33a149d81f1f114cac00b
