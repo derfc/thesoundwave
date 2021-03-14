@@ -1,11 +1,28 @@
-<h1>login page</h1>
-<div class="content">
-    <div class="title">Create account</div>
-    <input type="text" placeholder="E-mail" />
-    <input type="password" placeholder="Password" />
-    <input type="checkbox" id="rememberMe" /><label for="rememberMe"></label><span>I have read and agree to the <a href="#">Terms of Use </a>and <a href="#">Privacy Policy</a></span><button>Create Account</button>
-    
-    <div class="social"> <span>or sign up with social media</span></div>
-    <div class="buttons"><button class="facebook"><i class="fa fa-facebook"></i>Facebook</button><button class="twitter"><i class="fa fa-twitter"></i>Twitter</button><button class="google"><i class="fa fa-google-plus"></i>Google</button></div>
-    <div class="already">Already have an account? <a href="#">Sign In</a></div>
+<form action="" method="post">
+
+  <div class="container text-center">
+    <div>
+    <label for="uname"><b>Email</b></label>
+    <input type="text" placeholder="Email" name="email" required>
+
+<div>
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Password" name="password" required>
 </div>
+
+
+    <button type="submit">Login</button>
+    <label>
+      <input type="checkbox" checked="checked" name="remember"> Remember me
+    </label>
+</div>
+  <div>
+    <button type="button" class="cancelbtn">Cancel</button>
+    <span class="psw">Forgot <a href="#">password?</a></span>
+  </div>
+
+
+  </div>
+
+
+</form>
