@@ -8,7 +8,7 @@ const port = 3000;
 
 //auth routes
 const authRoutes = require('./routes/auth-routes')
-
+const passportSetup = require('./config/passport-setup')
 app.use('/auth', authRoutes)
 
 //handlebars
