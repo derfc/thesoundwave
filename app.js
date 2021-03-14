@@ -26,6 +26,18 @@ app.use(bodyParser.json());
 //static files
 app.use(express.static(__dirname + "/public"));
 
+//knex
+const knex = require('knex')({
+	client: 'postgresql',
+	connection: {
+		database: process.env.db_name,
+		user: process.env.db_username,
+		password: process.env.db_password,
+	}
+});
+
+
+
 //index route
 //2 btn to login/register
 app.get("/", (req, res) => {
