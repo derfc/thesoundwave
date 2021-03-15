@@ -2,7 +2,8 @@ exports.up = function (knex) {
 	return knex.schema.createTable("users", (table) => {
 		table.increments();
 		table.string("username").notNull();
-		table.string("password").notNull();
+		table.string("password");
+		table.string("google_id");
 		table.binary("profile_pic");
 		table.timestamps(false, true);
 	});

@@ -6,11 +6,27 @@ let storeSQL = new StoreSQL("users", "store", "item", "cart");
 
 const app = express();
 const port = 3000;
+const authRoutes = require('./routes/auth-routes')
+const passportSetup = require('./config/passport-setup')
+const keys = require('./config/keys')
+const passport = require('passport')
+
+//cookie session
+const cookieSession = require('cookie-session')
+
+app.use(cookieSession({
+	//1 day
+	maxAge: 24 * 60 * 60 * 1000,
+	keys: [keys.session.cookieKey]
+}))
+
+
+//initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 //auth routes
-const authRoutes = require("./routes/auth-routes");
-const passportSetup = require("./config/passport-setup");
-app.use("/auth", authRoutes);
+app.use('/auth', authRoutes)
 
 //handlebars
 app.engine(
@@ -33,31 +49,29 @@ app.engine(
 app.set("view engine", "handlebars");
 
 //body-parser
-app.use(
-	bodyParser.urlencoded({
-		extended: true,
-	})
-);
+app.use(bodyParser.urlencoded({ extended: true, }));
 app.use(bodyParser.json());
 
 //static files
 app.use(express.static(__dirname + "/public"));
 
 //knex
-const knex = require("knex")({
-	client: "postgresql",
-	connection: {
-		database: process.env.db_name,
-		user: process.env.db_username,
-		password: process.env.db_password,
-	},
-});
+
+//authcheck
+const authCheck = (req, res, next) => {
+	if (!req.user) {
+		res.redirect('/auth/login');
+	} else {
+		next();
+	}
+}
 
 //index route
 //2 btn to login/register
 app.get("/", (req, res) => {
 	res.render("index");
 });
+
 
 //login route
 // app.get("/login", (req, res) => {
@@ -82,10 +96,14 @@ app.post("/register", (req, res) => {
 });
 
 //home route
-app.get("/home", (req, res) => {
-	res.render("home", { layout: "dashboard" });
+app.get("/home", authCheck, (req, res) => {
+	res.render("home", { layout: "dashboard", user: req.user.displayName, thumbnail: req.user._json.picture });
+
+	// console.log(req.user.displayName)
+	// res.send('you are logged in ' + req.user.displayName)
 	//render user name, playlist, lots of btns, browsing
 });
+
 
 //setting route
 app.get("/setting", (req, res) => {

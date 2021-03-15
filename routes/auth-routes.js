@@ -1,8 +1,15 @@
 const router = require('express').Router();
 const passport = require('passport')
 
+
 router.get('/login', (req, res) => {
     res.render('login')
+})
+
+//logout
+router.get("/logout", (req, res) => {
+    req.logout();
+    res.redirect('/')
 })
 
 //clientID: 694064478458-c0n5152oi73nb9cd9erlemqrdour867o.apps.googleusercontent.com
@@ -15,7 +22,10 @@ router.get('/google', passport.authenticate('google', {
 
 //callback route for google redirect
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-    res.send('callback URI')
+    console.log('this is the user', req.user);
+    res.redirect('/home')
+
+
 })
 
 
