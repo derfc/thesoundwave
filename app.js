@@ -5,6 +5,12 @@ const bodyParser = require("body-parser");
 const app = express();
 const port = 3000;
 
+
+//auth routes
+const authRoutes = require('./routes/auth-routes')
+const passportSetup = require('./config/passport-setup')
+app.use('/auth', authRoutes)
+
 //handlebars
 app.engine("handlebars", handlebars({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
@@ -18,7 +24,19 @@ app.use(
 app.use(bodyParser.json());
 
 //static files
-app.use(express.static("public"));
+app.use(express.static(__dirname + "/public"));
+
+//knex
+const knex = require('knex')({
+	client: 'postgresql',
+	connection: {
+		database: process.env.db_name,
+		user: process.env.db_username,
+		password: process.env.db_password,
+	}
+});
+
+
 
 //index route
 //2 btn to login/register
@@ -27,15 +45,15 @@ app.get("/", (req, res) => {
 });
 
 //login route
-app.get("/login", (req, res) => {
-	res.render("login");
-});
+// app.get("/login", (req, res) => {
+// 	res.render("login");
+// });
 
 //login logic
-app.post("/login", (req, res) => {
-	res.send("logged in");
-	//rediredt to /home
-});
+// app.post("/login", (req, res) => {
+// 	res.send("logged in");
+// 	//rediredt to /home
+// });
 
 //register route
 app.get("/register", (req, res) => {
@@ -47,6 +65,7 @@ app.post("/register", (req, res) => {
 	res.send("registered");
 	//rediredt to /home
 });
+
 
 //home route
 app.get("/home", (req, res) => {
