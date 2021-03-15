@@ -1,11 +1,26 @@
-const { default: knex } = require('knex')
+require("dotenv").config();
+const knex = require('knex')({
+    client: 'postgresql',
+    connection: {
+        database: process.env.db_name,
+        user: process.env.db_username,
+        password: process.env.db_password,
+    }
+});
 const passport = require('passport')
 const googleStrategy = require('passport-google-oauth20')
 const keys = require('./keys')
 
-//clientID: 694064478458-c0n5152oi73nb9cd9erlemqrdour867o.apps.googleusercontent.com
-//client secret: f5-jq-TOv_OLnnqFu9DURoiF
+passport.serializeUser((user, done) => {
+    done(null, user.id)
+})
 
+passport.deserializeUser((id, done) => {
+    User.findById(id, function (err, user) {
+        done(err, user);
+    })
+    // done(null, id)
+})
 
 
 passport.use(
@@ -19,21 +34,53 @@ passport.use(
         console.log('passport callback fired')
         console.log(profile)
         const newuser = { username: profile.displayName, googleID: profile.id }
-
+        console.log(newuser)
         // insert database
 
-        const user = await knex('users').where('google_id', user.googleID)
-        console.log(user)
 
-
-        knex('users').insert({ username: newuser.username, google_id: newuser.googleID })
-            .then(() => {
-                console.log('user inserted')
+        await knex('users').where('google_id', newuser.googleID)
+            .then((currentUser) => {
+                if (currentUser[0] !== undefined) {
+                    //already have the user 
+                    console.log('user is', currentUser)
+                    return done(null, currentUser)
+                } else {
+                    // create user in database  
+                    try {
+                        knex('users').insert({ username: newuser.username, google_id: newuser.googleID })
+                            .then(() => {
+                                knex('users').where('google_id', newuser.googleID)
+                                    .then((newnew) => {
+                                        console.log('user inserted', newnew);
+                                        return done(null, newnew)
+                                    })
+                            })
+                    }
+                    catch {
+                        console.log('cannot run knex')
+                    }
+                }
             })
-
-
 
     })
 )
 
 
+
+
+
+
+
+// const getUser = async () => {
+//     try {
+//         await knex('users').insert({ username: 'oscar', google_id: '123' })
+//             .then(() => {
+//                 console.log('user inserted')
+//             })
+//     }
+//     catch {
+//         console.log('cannot run knex')
+//     }
+// }
+
+// getUser()

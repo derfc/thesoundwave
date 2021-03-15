@@ -4,11 +4,25 @@ const bodyParser = require("body-parser");
 
 const app = express();
 const port = 3000;
-
-
-//auth routes
 const authRoutes = require('./routes/auth-routes')
 const passportSetup = require('./config/passport-setup')
+const keys = require('./config/keys')
+const passport = require('passport')
+
+//cookie session
+const cookieSession = require('cookie-session')
+
+app.use(cookieSession({
+	//1 day
+	maxAge: 24 * 60 * 60 * 1000,
+	keys: [keys.session.cookieKey]
+}))
+
+//initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+//auth routes
 app.use('/auth', authRoutes)
 
 //handlebars
@@ -16,25 +30,13 @@ app.engine("handlebars", handlebars({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 //body-parser
-app.use(
-	bodyParser.urlencoded({
-		extended: true,
-	})
-);
+app.use(bodyParser.urlencoded({ extended: true, }));
 app.use(bodyParser.json());
 
 //static files
 app.use(express.static(__dirname + "/public"));
 
 //knex
-const knex = require('knex')({
-	client: 'postgresql',
-	connection: {
-		database: process.env.db_name,
-		user: process.env.db_username,
-		password: process.env.db_password,
-	}
-});
 
 
 
