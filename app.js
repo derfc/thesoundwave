@@ -123,6 +123,10 @@ app.post("/cart", (req, res) => {
 	});
 });
 
+app.delete("/cart/:id", (req, res) => {
+	// res.render("cart", { layout: "dashboard" });
+});
+
 app.listen(port, () => {
 	console.log(`app listening on port ${port}`);
 });

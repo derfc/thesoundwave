@@ -51,6 +51,24 @@ $(document).ready(() => {
 		});
 	});
 
+	$(".delete-item").click((e) => {
+		e.preventDefault();
+		console.log("hello", e.target);
+		// $.ajax({
+		// 	url: `/cart/${e.target.id}`,
+		// 	type: "DELETE",
+		// 	success: function () {
+		// 		console.log("success del");
+		// 	},
+		// })
+		// 	.done(function () {
+		// 		window.location.reload();
+		// 		// console.log("hello");
+		// 	})
+		// 	.fail(() => console.log("hahafail"))
+		// 	.always(() => console.log("running"));
+	});
+
 	$("#checkout").click((e) => {
 		e.preventDefault();
 		alert("checkout");
