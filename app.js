@@ -38,13 +38,21 @@ app.use(express.static(__dirname + "/public"));
 
 //knex
 
-
+//authcheck
+const authCheck = (req, res, next) => {
+	if (!req.user) {
+		res.redirect('/auth/login');
+	} else {
+		next();
+	}
+}
 
 //index route
 //2 btn to login/register
 app.get("/", (req, res) => {
 	res.render("index");
 });
+
 
 //login route
 // app.get("/login", (req, res) => {
@@ -70,10 +78,14 @@ app.post("/register", (req, res) => {
 
 
 //home route
-app.get("/home", (req, res) => {
-	res.render("home", { layout: "dashboard" });
+app.get("/home", authCheck, (req, res) => {
+	res.render("home", { layout: "dashboard", user: req.user.displayName, thumbnail: req.user._json.picture });
+
+	// console.log(req.user.displayName)
+	// res.send('you are logged in ' + req.user.displayName)
 	//render user name, playlist, lots of btns, browsing
 });
+
 
 //setting route
 app.get("/setting", (req, res) => {
