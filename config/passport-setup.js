@@ -21,7 +21,7 @@ const keys = require('./keys')
 module.exports = (app) => {
 
     passport.serializeUser((user, done) => {
-        console.log("serilize")
+        console.log("serialize")
         console.log(user)
         done(null, user)
     })

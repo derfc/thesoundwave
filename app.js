@@ -70,18 +70,17 @@ app.use(express.static(__dirname + "/public"));
 //authcheck
 const authCheck = (req, res, next) => {
 	if (!req.user) {
+		console.log('auth check fail?')
 		res.redirect('/auth/login');
 	} else {
 		next();
 	}
 }
 
-//index route
-//2 btn to login/register
+//landing page
 app.get("/", (req, res) => {
 	res.render("index");
 });
-
 
 //home route
 app.get("/home", authCheck, (req, res) => {
