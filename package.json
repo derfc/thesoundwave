@@ -26,6 +26,7 @@
     "jest": "^26.6.3",
     "knex": "^0.95.1",
     "passport": "^0.4.1",
+    "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0",
     "pg": "^8.5.1"
   }

@@ -9,7 +9,8 @@ const knex = require('knex')({
 });
 const database = require('../database/userdata')
 const passport = require('passport')
-const googleStrategy = require('passport-google-oauth20')
+const googleStrategy = require('passport-google-oauth20').Strategy
+const facebookStrategy = require('passport-facebook').Strategy
 const keys = require('./keys')
 
 passport.serializeUser((user, done) => {
@@ -23,21 +24,17 @@ passport.deserializeUser((id, done) => {
     done(null, id)
 })
 
-
 passport.use(
     new googleStrategy({
         callbackURL: '/auth/google/redirect',
         clientID: keys.google.clientID,
-        clientSecret: keys.google.clientSecret
-
+        clientSecret: keys.google.clientSecret,
     }, async (accessToken, refreshToken, profile, done) => {
         // passport callback
         console.log('passport callback fired')
         console.log(profile)
-        // const newuser = { username: profile.displayName, googleID: profile.id }
-        // console.log(newuser)
-        // insert database
 
+        // insert database
         database.findUserById(profile.id).then(function (id) {
             if (id) {
                 return done(null, profile);
@@ -48,11 +45,48 @@ passport.use(
                     });
             }
         });
+    })
+)
+
+passport.use(
+    new facebookStrategy({
+        clientID: keys.facebook.appID,
+        clientSecret: keys.facebook.appSecret,
+        callbackURL: "/auth/facebook/redirect",
+        profileFields: ['id', 'displayName', 'photos', 'email']
+    }, async (accessToken, refreshToken, profile, done) => {
+        console.log('passport callback fired')
+        console.log(profile)
+
+        database.findUserByFacebookID(profile.id).then(function (id) {
+            if (id) {
+                return done(null, profile);
+            } else {
+                database.createFBuser(profile.id, profile.displayName, profile._json.picture.data.url)
+                    .then(function (id) {
+                        return done(null, profile);
+                    });
+            }
+        });
 
 
-        module.exports = { passport: passport };
 
-        // await knex('users').where('google_id', newuser.googleID)
+        // // User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+        // //     return done(err, user);
+        // });
+    }
+    ));
+
+
+
+
+
+
+
+
+
+
+ // await knex('users').where('google_id', newuser.googleID)
         //     .then((currentUser) => {
         //         if (currentUser[0] !== undefined) {
         //             //already have the user 
@@ -75,16 +109,6 @@ passport.use(
         //             }
         //         }
         //     })
-
-    })
-)
-
-
-
-
-
-
-
 // const getUser = async () => {
 //     try {
 //         await knex('users').insert({ username: 'oscar', google_id: '123' })

@@ -20,5 +20,18 @@ module.exports = {
     createUser: function (profileId, username, thumbnail) {
         return knex('users')
             .insert({ username: username, google_id: profileId, profile_pic: thumbnail });
-    }
+    },
+
+    findUserByFacebookID: function (id) {
+        return knex('users')
+            .select()
+            .where({ facebook_id: id })
+            .first()
+    },
+
+    createFBuser: function (id, username, thumbnail) {
+        return knex('users')
+            .insert({ username: username, facebook_id: id, profile_pic: thumbnail });
+    },
+
 };

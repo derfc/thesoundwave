@@ -20,7 +20,6 @@ app.use(cookieSession({
 	keys: [keys.session.cookieKey]
 }))
 
-
 //initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
@@ -97,7 +96,15 @@ app.post("/register", (req, res) => {
 
 //home route
 app.get("/home", authCheck, (req, res) => {
-	res.render("home", { layout: "dashboard", user: req.user.displayName, thumbnail: req.user._json.picture });
+	let pic
+	console.log(req.user)
+	if (req.user.provider === 'google') {
+		pic = req.user._json.picture
+	} else if (req.user.provider === 'facebook') {
+		pic = req.user.photos[0].value
+	}
+
+	res.render("home", { layout: "dashboard", user: req.user.displayName, thumbnail: pic });
 
 	// console.log(req.user.displayName)
 	// res.send('you are logged in ' + req.user.displayName)
