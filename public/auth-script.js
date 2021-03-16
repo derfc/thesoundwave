@@ -8,7 +8,7 @@ $(document).ready(() => {
     });
 
     $('#registerbutton').click((e) => {
-        e.preventDefault();
+
         console.log('hi')
 
         let username = $('#username').val();
@@ -18,6 +18,8 @@ $(document).ready(() => {
         console.log(username, password, confirmPassword)
 
         if (confirmPassword !== password) {
+            return
+        } else if (username === '' || password === '' || confirmPassword === '') {
             return
         } else {
             $.ajax({
@@ -34,4 +36,28 @@ $(document).ready(() => {
             })
         }
     })
+
+    $('#loginButton').click((e) => {
+        let username = $('#loginUsername').val();
+        let password = $('#loginPassword').val();
+
+        $.ajax({
+            type: "POST",
+            url: `/auth/login`,
+            data: { username: username, password: password },
+            success: function () {
+                console.log("success");
+            },
+        }).done(function () {
+            console.log('done')
+        }).fail(function () {
+            console.log('failed')
+        })
+    })
+
+    $('#cancelButton').click((e) => {
+        $('#loginUsername').val('')
+        $('#loginPassword').val('')
+    })
+
 });

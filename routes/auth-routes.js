@@ -11,17 +11,34 @@ router.get("/register", (req, res) => {
 });
 
 //register logic
-router.post("/register", (req, res) => {
-    console.log(req.body)
-    let username = req.body.username
-    let password = req.body.password
-});
+router.post("/register", passport.authenticate('local-signup', {
+    successRedirect: '/auth/login',
+    failureRedirect: '/auth/register'
+}));
+
+
+
+
+// (req, res) => {
+
+//     console.log(req.body)
+//     let username = req.body.username
+//     let password = req.body.password
+
+//     // insert register data in knex
+//     // fireoff passport
+
+// });
 
 
 router.get('/login', (req, res) => {
     res.render('login')
 })
 
+router.post('/login', passport.authenticate('local-login', { failureRedirect: '/auth/login' }),
+    function (req, res) {
+        res.redirect('/home')
+    });
 
 //logout
 router.get("/logout", (req, res) => {
@@ -50,7 +67,5 @@ router.get('/facebook/redirect', passport.authenticate('facebook'), (req, res) =
     console.log('this is the user', req.user);
     res.redirect('/home')
 })
-
-
 
 module.exports = router;
