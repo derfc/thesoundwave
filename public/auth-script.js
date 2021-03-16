@@ -38,6 +38,7 @@ $(document).ready(() => {
     })
 
     $('#loginButton').click((e) => {
+        e.preventDefault();
         let username = $('#loginUsername').val();
         let password = $('#loginPassword').val();
 

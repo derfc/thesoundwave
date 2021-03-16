@@ -1,16 +1,17 @@
 
 
-<form action="/auth/login" method="post">
+<form>
 
-  <div class="container text-center">
+<div class="container text-center">
     <div>
     <label for="uname"><b>Username</b></label>
     <input type="text" placeholder="Username" name="user" id="loginUsername" required>
 
-<div>
+
+  <div>
     <label for="psw"><b>Password</b></label>
     <input type="password" placeholder="Password" name="password" id="loginPassword" required>
-</div>
+  </div>
 
 
     <button class="btn btn-success" type="submit" id="loginButton">Login</button>
@@ -30,6 +31,8 @@
       <input type="checkbox" checked="checked" name="remember"> Remember me
     </label>
 </div>
+  
+  
   <div>
     <button type="button" class="cancelbtn" id="cancelButton">Cancel</button>
     <span class="psw">Forgot <a href="#">password?</a></span>

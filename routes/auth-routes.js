@@ -17,28 +17,30 @@ router.post("/register", passport.authenticate('local-signup', {
 }));
 
 
-
-
-// (req, res) => {
-
-//     console.log(req.body)
-//     let username = req.body.username
-//     let password = req.body.password
-
-//     // insert register data in knex
-//     // fireoff passport
-
-// });
-
-
 router.get('/login', (req, res) => {
     res.render('login')
 })
 
-router.post('/login', passport.authenticate('local-login', { failureRedirect: '/auth/login' }),
-    function (req, res) {
-        res.redirect('/home')
-    });
+router.post('/login', passport.authenticate('local-login', {
+    successRedirect: '/home',
+    failureRedirect: '/auth/login'
+}));
+
+
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next()
+    }
+    res.redirect('/home')
+}
+
+function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return res.redirect('/')
+    }
+    next()
+}
+
 
 //logout
 router.get("/logout", (req, res) => {

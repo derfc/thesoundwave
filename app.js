@@ -10,6 +10,9 @@ const authRoutes = require('./routes/auth-routes')
 const passportSetup = require('./config/passport-setup')
 const keys = require('./config/keys')
 const passport = require('passport')
+const session = require('express-session')
+
+
 
 //cookie session
 const cookieSession = require('cookie-session')
@@ -18,6 +21,14 @@ app.use(cookieSession({
 	//1 day
 	maxAge: 24 * 60 * 60 * 1000,
 	keys: [keys.session.cookieKey]
+}))
+
+passportSetup(app);
+
+app.use(session({
+	secret: 'supersecret',
+	resave: false,
+	saveUninitialized: false
 }))
 
 //initialize passport
