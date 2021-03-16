@@ -1,10 +1,27 @@
 const router = require('express').Router();
 const passport = require('passport')
+const bodyParser = require("body-parser");
+
+router.use(bodyParser.urlencoded({ extended: true, }));
+router.use(bodyParser.json());
+
+//register route
+router.get("/register", (req, res) => {
+    res.render("register");
+});
+
+//register logic
+router.post("/register", (req, res) => {
+    console.log(req.body)
+    let username = req.body.username
+    let password = req.body.password
+});
 
 
 router.get('/login', (req, res) => {
     res.render('login')
 })
+
 
 //logout
 router.get("/logout", (req, res) => {

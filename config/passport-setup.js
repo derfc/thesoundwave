@@ -11,6 +11,7 @@ const database = require('../database/userdata')
 const passport = require('passport')
 const googleStrategy = require('passport-google-oauth20').Strategy
 const facebookStrategy = require('passport-facebook').Strategy
+const localStrategy = require('passport-local').Strategy
 const keys = require('./keys')
 
 passport.serializeUser((user, done) => {
@@ -24,6 +25,8 @@ passport.deserializeUser((id, done) => {
     done(null, id)
 })
 
+
+//Google passport
 passport.use(
     new googleStrategy({
         callbackURL: '/auth/google/redirect',
@@ -48,6 +51,7 @@ passport.use(
     })
 )
 
+//Facebook passport
 passport.use(
     new facebookStrategy({
         clientID: keys.facebook.appID,
@@ -68,12 +72,6 @@ passport.use(
                     });
             }
         });
-
-
-
-        // // User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-        // //     return done(err, user);
-        // });
     }
     ));
 

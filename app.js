@@ -72,28 +72,6 @@ app.get("/", (req, res) => {
 });
 
 
-//login route
-// app.get("/login", (req, res) => {
-// 	res.render("login");
-// });
-
-//login logic
-// app.post("/login", (req, res) => {
-// 	res.send("logged in");
-// 	//rediredt to /home
-// });
-
-//register route
-app.get("/register", (req, res) => {
-	res.render("register");
-});
-
-//register logic
-app.post("/register", (req, res) => {
-	res.send("registered");
-	//rediredt to /home
-});
-
 //home route
 app.get("/home", authCheck, (req, res) => {
 	let pic
@@ -103,14 +81,8 @@ app.get("/home", authCheck, (req, res) => {
 	} else if (req.user.provider === 'facebook') {
 		pic = req.user.photos[0].value
 	}
-
 	res.render("home", { layout: "dashboard", user: req.user.displayName, thumbnail: pic });
-
-	// console.log(req.user.displayName)
-	// res.send('you are logged in ' + req.user.displayName)
-	//render user name, playlist, lots of btns, browsing
 });
-
 
 //setting route
 app.get("/setting", (req, res) => {

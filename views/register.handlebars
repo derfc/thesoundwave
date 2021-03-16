@@ -1,17 +1,17 @@
 <div class="content text-white text-center">
     <div class="title">Create account</div>
     <form>
-    <input type="email" placeholder="E-mail" id="email"/>
-    <input type="password" placeholder="Password" id="password"/>
+    <input type="text" placeholder="Username" id="username" required/>
+    <input type="password" placeholder="Password" id="password" required/>
+    <input type="password" placeholder="Confirm Password" id="confirmPassword" required/>
     <input type="checkbox" id="rememberMe" /><label for="rememberMe"></label><span>I have read and agree to the <a href="#">Terms of Use </a>and <a href="#">Privacy Policy</a></span><button id="registerbutton">Create Account</button>
     </form>
 
 
     <div class="social"><span>or sign up with social media</span></div>
     <div class="buttons">
-        <button class="facebook"><i class="fa fa-facebook"></i>Facebook</button>
-        <button class="twitter"><i class="fa fa-twitter"></i>Twitter</button>
-        <button class="google"><i class="fa fa-google-plus"></i>Google</button>
+        <button class="facebook" id="facebook"><i class="fa fa-facebook"></i>Facebook</button>
+        <button class="google" id="google"><i class="fa fa-google-plus"></i>Google</button>
     </div>
     <div class="already">
         Already have an account? <a href="#">Sign In</a>
