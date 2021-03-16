@@ -27,21 +27,6 @@ router.post('/login', passport.authenticate('local-login', {
 }));
 
 
-function checkAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next()
-    }
-    res.redirect('/home')
-}
-
-function checkNotAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-        return res.redirect('/')
-    }
-    next()
-}
-
-
 //logout
 router.get("/logout", (req, res) => {
     req.logout();
