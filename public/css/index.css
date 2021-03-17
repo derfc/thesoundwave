@@ -46,7 +46,7 @@ a {
   text-align: center;
   font-size: 2rem;
   font-weight: 600;
-  padding-bottom: 30px;
+  padding-bottom: 10px;
 }
 .content input {
   width: 100%;
@@ -97,13 +97,13 @@ a {
 }
 .content button {
   width: 100%;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   padding: 10px;
   margin: 20px 0px;
   background-color: #4d9e38;
   color: White;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 .content button:hover {
@@ -141,11 +141,13 @@ a {
 
 .content .buttons {
   width: 100%;
-  margin: 30px 0px;
+  margin: 15px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .content .buttons button {
-  float: left;
-  width: 30%;
+  width: 40%;
   margin: 0px 1.5%;
 }
 .content .buttons button i {

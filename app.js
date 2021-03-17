@@ -10,6 +10,7 @@ const authRoutes = require('./routes/auth-routes')
 const passportSetup = require('./config/passport-setup')
 const keys = require('./config/keys')
 const passport = require('passport')
+const session = require('express-session')
 
 //cookie session
 const cookieSession = require('cookie-session')
@@ -20,6 +21,12 @@ app.use(cookieSession({
 	keys: [keys.session.cookieKey]
 }))
 
+
+app.use(session({
+	secret: 'supersecret',
+	resave: false,
+	saveUninitialized: false
+}))
 
 //initialize passport
 app.use(passport.initialize());
@@ -59,51 +66,44 @@ app.use(express.static(__dirname + "/public"));
 
 //authcheck
 const authCheck = (req, res, next) => {
-	if (!req.user) {
-		res.redirect('/auth/login');
+	console.log('requser', req.user)
+	// if (!req.user) {
+	// 	console.log('auth check fail?')
+	// 	res.redirect('/auth/login');
+	// } else {
+	// 	next();
+	// }
+	if (req.isAuthenticated()) {
+		console.log('He is allowed!')
+		return next()
 	} else {
-		next();
+		res.redirect('/auth/login');
+
 	}
 }
 
-//index route
-//2 btn to login/register
+//landing page
 app.get("/", (req, res) => {
 	res.render("index");
 });
 
-
-//login route
-// app.get("/login", (req, res) => {
-// 	res.render("login");
-// });
-
-//login logic
-// app.post("/login", (req, res) => {
-// 	res.send("logged in");
-// 	//rediredt to /home
-// });
-
-//register route
-app.get("/register", (req, res) => {
-	res.render("register");
-});
-
-//register logic
-app.post("/register", (req, res) => {
-	res.send("registered");
-	//rediredt to /home
-});
-
 //home route
 app.get("/home", authCheck, (req, res) => {
-	res.render("home", { layout: "dashboard", user: req.user.displayName, thumbnail: req.user._json.picture });
+	let pic
+	let user
+	console.log('this is requser', req.user)
+	if (req.user.provider === 'google') {
+		pic = req.user._json.picture
+		user = req.user.displayName
+	} else if (req.user.provider === 'facebook') {
+		pic = req.user.photos[0].value
+		user = req.user.displayName
+	} else {
+		user = req.user.username
+	}
 
-	// console.log(req.user.displayName)
-	// res.send('you are logged in ' + req.user.displayName)
-	//render user name, playlist, lots of btns, browsing
+	res.render("home", { layout: "dashboard", user: user, thumbnail: pic });
 });
-
 
 //setting route
 app.get("/setting", (req, res) => {
@@ -111,7 +111,6 @@ app.get("/setting", (req, res) => {
 });
 
 //setting route
-//commit changes
 app.put("/setting", (req, res) => {
 	res.render("setting", { layout: "dashboard" });
 });
