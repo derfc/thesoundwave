@@ -33,6 +33,11 @@ module.exports = class StoreSQL {
 			return knex(this.item).orderBy("store_id");
 		}
 	}
+
+	getItemPrice(item_id) {
+		return knex(this.item).select("item_price").where("id", item_id);
+	}
+
 	getCartItem(user_id) {
 		// return knex(this.cart).where("user_id", user_id).orderBy("item_id");
 		return knex(this.item)
@@ -49,7 +54,10 @@ module.exports = class StoreSQL {
 		return knex(this.notes).update("notes", updateNote).where("id", updateID);
 	}
 
-	delCartItem(deleteID) {
-		return knex(this.cart).where("id", deleteID).del();
+	delCartItem(user_id, delete_item) {
+		return knex(this.cart)
+			.where("user_id", user_id)
+			.andWhere("item_id", delete_item)
+			.del();
 	}
 };

@@ -1,19 +1,19 @@
 $(document).ready(() => {
+	let total = 0;
 	if ($(".subtotal").length !== 0) {
-		let total = 0;
 		for (let i = 0; i < $(".subtotal").length; i++) {
 			let subtotal = +$(".subtotal")[i].innerText.replace("$", "");
 			total += subtotal;
 		}
-		$("#total")[0].innerText = `TOTAL = ${total}`;
+		$("#total")[0].innerText = `TOTAL = $${total}`;
+	} else {
+		$("#total")[0].innerText = `TOTAL = $${total}`;
 	}
 
 	$(".add-to-cart").click((e) => {
 		e.preventDefault();
-		console.log(e.target.dataset);
 		let item_id = e.target.dataset.item_id;
 		let user_id = e.target.dataset.user_id;
-		console.log(item_id, user_id);
 
 		$.ajax({
 			type: "POST",
@@ -32,11 +32,9 @@ $(document).ready(() => {
 	});
 
 	$(".quantity").change((e) => {
-		// e.preventDefault();
 		let subtotal = e.target.dataset.subtotal;
 		let quantity = e.target.value;
 		let item_id = e.target.dataset.item_id;
-		console.log(item_id);
 		return new Promise((res, rej) => {
 			res(($(`#subtotal${item_id}`)[0].innerText = `${subtotal * quantity}`));
 		}).then(() => {
@@ -46,31 +44,62 @@ $(document).ready(() => {
 					let subtotal = +$(".subtotal")[i].innerText.replace("$", "");
 					total += subtotal;
 				}
-				$("#total")[0].innerText = `TOTAL = ${total}`;
+				$("#total")[0].innerText = `TOTAL = $${total}`;
 			}
 		});
 	});
 
 	$(".delete-item").click((e) => {
 		e.preventDefault();
-		console.log("hello", e.target);
-		// $.ajax({
-		// 	url: `/cart/${e.target.id}`,
-		// 	type: "DELETE",
-		// 	success: function () {
-		// 		console.log("success del");
-		// 	},
-		// })
-		// 	.done(function () {
-		// 		window.location.reload();
-		// 		// console.log("hello");
-		// 	})
-		// 	.fail(() => console.log("hahafail"))
-		// 	.always(() => console.log("running"));
+		$.ajax({
+			url: `/cart/${e.target.dataset.user_id}/${e.target.dataset.item_id}`,
+			type: "DELETE",
+			success: function () {
+				console.log("success del");
+			},
+		})
+			.done(function () {
+				window.location.reload();
+			})
+			.fail(() => console.log("hahafail"))
+			.always(() => console.log("running"));
 	});
+	var stripeHandler = StripeCheckout.configure({
+		key: stripePK,
+		locale: "auto",
+		token: function (token) {
+			var items = [];
+			for (let i = 0; i < $(".quantity").length; i++) {
+				let quantity = $(".quantity")[i].value;
+				if (quantity == "") {
+					quantity = 1;
+				}
+				let item_id = $(".quantity")[i].dataset.item_id;
+				items.push({ item_id: item_id, quantity: quantity });
+			}
 
+			$.ajax({
+				url: `/purchase`,
+				type: "POST",
+				data: {
+					stripeTokenId: token.id,
+					email: token.email,
+					items: items,
+				},
+				success: function (data) {
+					console.log("Success", data);
+				},
+				error: function (err) {
+					console.log("Ajax Error!");
+					console.log(err);
+				},
+			});
+		},
+	});
 	$("#checkout").click((e) => {
-		e.preventDefault();
-		alert("checkout");
+		var price = $("#total")[0].innerText.replace("TOTAL = $", "");
+		stripeHandler.open({
+			amount: price * 100,
+		});
 	});
 });
