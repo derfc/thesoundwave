@@ -5,38 +5,39 @@ $(document).ready(() => {
 			let subtotal = +$(".subtotal")[i].innerText.replace("$", "");
 			total += subtotal;
 		}
-		$("#total")[0].innerText = `TOTAL = $${total}`;
+		$("#total")[0].innerText = `TOTAL = $${total.toFixed(2)}`;
 	} else {
-		$("#total")[0].innerText = `TOTAL = $${total}`;
+		$("#total")[0].innerText = `TOTAL = $${total.toFixed(2)}`;
 	}
 
-	$(".add-to-cart").click((e) => {
-		e.preventDefault();
-		let item_id = e.target.dataset.item_id;
-		let user_id = e.target.dataset.user_id;
+	// $(".add-to-cart").click((e) => {
+	// 	e.preventDefault();
+	// 	let item_id = e.target.dataset.item_id;
+	// 	let user_id = e.target.dataset.user_id;
 
-		$.ajax({
-			type: "POST",
-			url: `/cart`,
-			data: { item_id: item_id, user_id: user_id },
-			success: function () {
-				console.log("success");
-			},
-		})
-			.done(function () {
-				window.location.reload();
-			})
-			.fail(function () {
-				console.log("failed");
-			});
-	});
+	// 	$.ajax({
+	// 		type: "POST",
+	// 		url: `/cart`,
+	// 		data: { item_id: item_id, user_id: user_id },
+	// 		success: function () {
+	// 			console.log("success");
+	// 		},
+	// 	})
+	// 		.done(function () {
+	// 			window.location.reload();
+	// 		})
+	// 		.fail(function () {
+	// 			console.log("failed");
+	// 		});
+	// });
 
 	$(".quantity").change((e) => {
-		let subtotal = e.target.dataset.subtotal;
+		let unitPrice = e.target.dataset.subtotal;
 		let quantity = e.target.value;
 		let item_id = e.target.dataset.item_id;
 		return new Promise((res, rej) => {
-			res(($(`#subtotal${item_id}`)[0].innerText = `${subtotal * quantity}`));
+			let subtotal = (unitPrice * quantity).toFixed(2);
+			res(($(`#subtotal${item_id}`)[0].innerText = `${subtotal}`));
 		}).then(() => {
 			if ($(".subtotal").length !== 0) {
 				let total = 0;
@@ -44,7 +45,7 @@ $(document).ready(() => {
 					let subtotal = +$(".subtotal")[i].innerText.replace("$", "");
 					total += subtotal;
 				}
-				$("#total")[0].innerText = `TOTAL = $${total}`;
+				$("#total")[0].innerText = `TOTAL = $${total.toFixed(2)}`;
 			}
 		});
 	});
