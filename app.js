@@ -6,11 +6,11 @@ let storeSQL = new StoreSQL("users", "store", "item", "cart");
 
 const app = express();
 const port = 3000;
-const authRoutes = require('./routes/auth-routes')
-const passportSetup = require('./config/passport-setup')
-const keys = require('./config/keys')
-const passport = require('passport')
-const session = require('express-session')
+const authRoutes = require("./routes/auth-routes");
+const passportSetup = require("./config/passport-setup");
+const keys = require("./config/keys");
+const passport = require("passport");
+const session = require("express-session");
 const stripePublicKey = process.env.stripe_pk;
 const stripeSecretKey = process.env.stripe_sk;
 const stripe = require("stripe")(stripeSecretKey);
@@ -26,11 +26,13 @@ app.use(
 	})
 );
 
-app.use(session({
-	secret: 'supersecret',
-	resave: false,
-	saveUninitialized: false
-}))
+app.use(
+	session({
+		secret: "supersecret",
+		resave: false,
+		saveUninitialized: false,
+	})
+);
 
 //initialize passport
 app.use(passport.initialize());
@@ -70,8 +72,7 @@ app.use(express.static(__dirname + "/public"));
 
 //authcheck
 const authCheck = (req, res, next) => {
-
-	console.log('requser', req.user)
+	console.log("requser", req.user);
 	// if (!req.user) {
 	// 	console.log('auth check fail?')
 	// 	res.redirect('/auth/login');
@@ -79,11 +80,10 @@ const authCheck = (req, res, next) => {
 	// 	next();
 	// }
 	if (req.isAuthenticated()) {
-		console.log('He is allowed!')
-		return next()
+		console.log("He is allowed!");
+		return next();
 	} else {
-		res.redirect('/auth/login');
-
+		res.redirect("/auth/login");
 	}
 };
 
@@ -97,22 +97,20 @@ app.get("/", (req, res) => {
 	res.render("index");
 });
 
-
 //home route
 app.get("/home", authCheck, (req, res) => {
-	let pic
-	let user
-	console.log('this is requser', req.user)
-	if (req.user.provider === 'google') {
-		pic = req.user._json.picture
-		user = req.user.displayName
-	} else if (req.user.provider === 'facebook') {
-		pic = req.user.photos[0].value
-		user = req.user.displayName
+	let pic;
+	let user;
+	console.log("this is requser", req.user);
+	if (req.user.provider === "google") {
+		pic = req.user._json.picture;
+		user = req.user.displayName;
+	} else if (req.user.provider === "facebook") {
+		pic = req.user.photos[0].value;
+		user = req.user.displayName;
 	} else {
-		user = req.user.username
+		user = req.user.username;
 	}
-
 
 	res.render("home", { layout: "dashboard", user: user, thumbnail: pic });
 });
@@ -169,7 +167,7 @@ app.post("/purchase", (req, res) => {
 			total += data[0].item_price * item.quantity;
 			count++;
 			if (count === req.body.items.length) {
-				// charge below
+				console.log("charge below");
 				// stripe.charges
 				// 	.create({
 				// 		amount: total,

@@ -15,3 +15,26 @@ same as personal site
 <button class="add-to-cart" method="POST" data-item_id="{{this.id}}" data-user_id="1" data-store_id={{this.store_id}}>add to cart</button>
 </div>
 {{/each}}
+{{!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> --}}
+<script>
+     $(".add-to-cart").click((e) => {
+		e.preventDefault();
+		let item_id = e.target.dataset.item_id;
+		let user_id = e.target.dataset.user_id;
+
+		$.ajax({
+			type: "POST",
+			url: `/cart`,
+			data: { item_id: item_id, user_id: user_id },
+			success: function () {
+				console.log("success");
+			},
+		})
+			.done(function () {
+				window.location.reload();
+			})
+			.fail(function () {
+				console.log("failed");
+			});
+	});
+</script>
