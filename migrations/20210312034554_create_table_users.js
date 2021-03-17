@@ -4,6 +4,7 @@ exports.up = function (knex) {
 		table.string("username").notNull();
 		table.string("password");
 		table.string("google_id");
+		table.string("facebook_id");
 		table.binary("profile_pic");
 		table.timestamps(false, true);
 	});
