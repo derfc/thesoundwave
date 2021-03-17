@@ -12,8 +12,6 @@ const keys = require('./config/keys')
 const passport = require('passport')
 const session = require('express-session')
 
-
-
 //cookie session
 const cookieSession = require('cookie-session')
 
@@ -23,7 +21,6 @@ app.use(cookieSession({
 	keys: [keys.session.cookieKey]
 }))
 
-passportSetup(app);
 
 app.use(session({
 	secret: 'supersecret',
@@ -69,11 +66,19 @@ app.use(express.static(__dirname + "/public"));
 
 //authcheck
 const authCheck = (req, res, next) => {
-	if (!req.user) {
-		console.log('auth check fail?')
-		res.redirect('/auth/login');
+	console.log('requser', req.user)
+	// if (!req.user) {
+	// 	console.log('auth check fail?')
+	// 	res.redirect('/auth/login');
+	// } else {
+	// 	next();
+	// }
+	if (req.isAuthenticated()) {
+		console.log('He is allowed!')
+		return next()
 	} else {
-		next();
+		res.redirect('/auth/login');
+
 	}
 }
 
@@ -85,13 +90,19 @@ app.get("/", (req, res) => {
 //home route
 app.get("/home", authCheck, (req, res) => {
 	let pic
-	console.log(req.user)
+	let user
+	console.log('this is requser', req.user)
 	if (req.user.provider === 'google') {
 		pic = req.user._json.picture
+		user = req.user.displayName
 	} else if (req.user.provider === 'facebook') {
 		pic = req.user.photos[0].value
+		user = req.user.displayName
+	} else {
+		user = req.user.username
 	}
-	res.render("home", { layout: "dashboard", user: req.user.displayName, thumbnail: pic });
+
+	res.render("home", { layout: "dashboard", user: user, thumbnail: pic });
 });
 
 //setting route
@@ -100,7 +111,6 @@ app.get("/setting", (req, res) => {
 });
 
 //setting route
-//commit changes
 app.put("/setting", (req, res) => {
 	res.render("setting", { layout: "dashboard" });
 });

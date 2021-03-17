@@ -8,57 +8,68 @@ $(document).ready(() => {
     });
 
     $('#registerbutton').click((e) => {
-
-        console.log('hi')
+        e.preventDefault();
 
         let username = $('#username').val();
         let password = $('#password').val();
         let confirmPassword = $('#confirmPassword').val()
-
         console.log(username, password, confirmPassword)
 
-        if (confirmPassword !== password) {
-            return
-        } else if (username === '' || password === '' || confirmPassword === '') {
-            return
+        if (username !== '' && password !== '' && confirmPassword !== '') {
+            if (confirmPassword !== password) {
+                $('.wrongPW').empty().append("<h4 class='text-warning'>Your password does not match !</h4>")
+                $('#username').val('');
+                $('#password').val('');
+                $('#confirmPassword').val('')
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: `/auth/register`,
+                    data: { username: username, password: confirmPassword },
+                    success: function () {
+                        console.log("success");
+                    },
+                }).done(function (response) {
+                    console.log(response)
+                    // $.get('/auth/login')
+                    window.location.href = '/auth/login'
+
+                    console.log('done')
+                }).fail(function () {
+                    console.log('failed')
+                })
+            }
         } else {
-            $.ajax({
-                type: "POST",
-                url: `/auth/register`,
-                data: { username: username, password: confirmPassword },
-                success: function () {
-                    console.log("success");
-                },
-            }).done(function () {
-                console.log('done')
-            }).fail(function () {
-                console.log('failed')
-            })
+            $('.wrongPW').empty().append("<h4 class='text-warning'>Fields must not be empty !</h4>");
+            $('#username').val('');
+            $('#password').val('');
+            $('#confirmPassword').val('')
         }
-    })
-
-    $('#loginButton').click((e) => {
-        e.preventDefault();
-        let username = $('#loginUsername').val();
-        let password = $('#loginPassword').val();
-
-        $.ajax({
-            type: "POST",
-            url: `/auth/login`,
-            data: { username: username, password: password },
-            success: function () {
-                console.log("success");
-            },
-        }).done(function () {
-            console.log('done')
-        }).fail(function () {
-            console.log('failed')
-        })
     })
 
     $('#cancelButton').click((e) => {
         $('#loginUsername').val('')
         $('#loginPassword').val('')
     })
-
 });
+
+
+    // $('#loginButton').click((e) => {
+    //     e.preventDefault();
+    //     let username = $('#loginUsername').val();
+    //     let password = $('#loginPassword').val();
+
+    //     $.ajax({
+    //         type: "POST",
+    //         url: `/auth/login`,
+    //         data: { username: username, password: password },
+    //         success: function () {
+    //             console.log("success");
+    //         },
+    //     }).done(function () {
+    //         console.log('done')
+    //     }).fail(function () {
+    //         console.log('failed')
+    //     })
+    // })

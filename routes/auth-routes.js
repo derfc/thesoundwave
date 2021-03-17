@@ -10,22 +10,22 @@ router.get("/register", (req, res) => {
     res.render("register");
 });
 
-//register logic
 router.post("/register", passport.authenticate('local-signup', {
     successRedirect: '/auth/login',
-    failureRedirect: '/auth/register'
+    failureRedirect: '/'
 }));
 
 
+
+//login route
 router.get('/login', (req, res) => {
     res.render('login')
 })
 
 router.post('/login', passport.authenticate('local-login', {
     successRedirect: '/home',
-    failureRedirect: '/auth/login'
+    failureRedirect: '/auth/register'
 }));
-
 
 //logout
 router.get("/logout", (req, res) => {
