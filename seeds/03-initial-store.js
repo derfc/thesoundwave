@@ -17,6 +17,12 @@ exports.seed = function (knex) {
 					store_photo: "storeTroyboi.jpg",
 					artist_id: 2,
 				},
+				{
+					id: 3,
+					store_name: "storeEasonChan",
+					store_photo: "storeEasonChan.jpg",
+					artist_id: 3,
+				},
 			]);
 		});
 };
