@@ -37,7 +37,7 @@ $(document).ready(() => {
 		let item_id = e.target.dataset.item_id;
 		return new Promise((res, rej) => {
 			let subtotal = (unitPrice * quantity).toFixed(2);
-			res(($(`#subtotal${item_id}`)[0].innerText = `${subtotal}`));
+			res(($(`#subtotal${item_id}`)[0].innerText = `$${subtotal}`));
 		}).then(() => {
 			if ($(".subtotal").length !== 0) {
 				let total = 0;
