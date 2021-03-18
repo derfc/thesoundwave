@@ -9,11 +9,13 @@ const knex = require("knex")({
 });
 
 module.exports = class StoreSQL {
-	constructor(users, store, item, cart) {
+	constructor(users, store, item, cart, song, artist) {
 		this.users = users;
 		this.store = store;
 		this.item = item;
 		this.cart = cart;
+		this.song = song;
+		this.artist = artist;
 	}
 
 	selectUserName(user_id) {
@@ -59,5 +61,16 @@ module.exports = class StoreSQL {
 			.where("user_id", user_id)
 			.andWhere("item_id", delete_item)
 			.del();
+	}
+
+	getSong(song_id) {
+		if (song_id) {
+			return knex(this.song).where("id", song_id).orderBy("id");
+		} else {
+			return knex
+				.from(this.song)
+				.innerJoin(this.artist, "song.artist_id", "artist.id");
+			// .orderBy("id");
+		}
 	}
 };

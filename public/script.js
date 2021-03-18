@@ -9,7 +9,6 @@ $(document).ready(() => {
 	} else {
 		$("#total")[0].innerText = `TOTAL = $${total.toFixed(2)}`;
 	}
-
 	// $(".add-to-cart").click((e) => {
 	// 	e.preventDefault();
 	// 	let item_id = e.target.dataset.item_id;

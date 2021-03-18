@@ -2,7 +2,7 @@ const express = require("express");
 const handlebars = require("express-handlebars");
 const bodyParser = require("body-parser");
 const StoreSQL = require("./storesql");
-let storeSQL = new StoreSQL("users", "store", "item", "cart");
+let storeSQL = new StoreSQL("users", "store", "item", "cart", "song", "artist");
 
 const app = express();
 const port = 3000;
@@ -111,8 +111,13 @@ app.get("/home", authCheck, (req, res) => {
 	} else {
 		user = req.user.username;
 	}
-
-	res.render("home", { layout: "dashboard", user: user, thumbnail: pic });
+	return storeSQL.getSong().then((songs) => {
+		res.render("home", {
+			songs: songs,
+			layout: "dashboard",
+			stripePublicKey: stripePublicKey,
+		});
+	});
 });
 
 //setting route

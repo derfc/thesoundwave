@@ -1,19 +1,31 @@
-let previous = $('#previous')
-let play = $('#play')
-let next = $('#next')
+let previous = $("#previous");
+let play = $("#play");
+let next = $("#next");
 // let title = $('#title');
-let volume = $('#volume');
-let displayVolume = $('#volume_show');
-let slider = $('#duration_slider');
-let show_duration = $('#show_duration');
-let track = $('#myTrack')
-let current_time = $('#current_time')
+let volume = $("#volume");
+let displayVolume = $("#volume_show");
+let slider = $("#duration_slider");
+let show_duration = $("#show_duration");
+let track = $("#myTrack");
+let current_time = $("#current_time");
 // let track_image = $('#track_image');
 // let present = $('#present');
 // let total = $('#total');
 // let artist = $('#artist');
 
 let Playing_song = false;
+
+let songList = [];
+let songNameArr = songName.split("/");
+let songUrlArr = songUrl.split("[split]");
+let artistNameArr = artistName.split("/");
+for (let i = 0; i < songNameArr.length; i++) {
+	songList.push({
+		song_name: songNameArr[i],
+		song_url: songUrlArr[i],
+		artist_name: artistNameArr[i],
+	});
+}
 
 // // function update() {
 // //     console.log(track[0].duration)
@@ -30,91 +42,93 @@ let Playing_song = false;
 // // }
 // update()
 
-
 function updateTrackTime() {
-    var currTimeDiv = $('#current_time');
-    var durationDiv = $('#show_duration');
+	var currTimeDiv = $("#current_time");
+	var durationDiv = $("#show_duration");
 
-    var currTime = Math.floor(track[0].currentTime).toString();
-    var duration = Math.floor(track[0].duration).toString();
+	var currTime = Math.floor(track[0].currentTime).toString();
+	var duration = Math.floor(track[0].duration).toString();
 
-    currTimeDiv[0].innerHTML = formatSecondsAsTime(currTime);
+	currTimeDiv[0].innerHTML = formatSecondsAsTime(currTime);
 
-    if (isNaN(duration)) {
-        durationDiv[0].innerHTML = '00:00';
-    }
-    else {
-        durationDiv[0].innerHTML = formatSecondsAsTime(duration);
-    }
+	if (isNaN(duration)) {
+		durationDiv[0].innerHTML = "00:00";
+	} else {
+		durationDiv[0].innerHTML = formatSecondsAsTime(duration);
+	}
 }
 
 function formatSecondsAsTime(secs, format) {
-    var hr = Math.floor(secs / 3600);
-    var min = Math.floor((secs - (hr * 3600)) / 60);
-    var sec = Math.floor(secs - (hr * 3600) - (min * 60));
-    if (min < 10) {
-        min = "0" + min;
-    }
-    if (sec < 10) {
-        sec = "0" + sec;
-    }
-    return min + ':' + sec;
+	var hr = Math.floor(secs / 3600);
+	var min = Math.floor((secs - hr * 3600) / 60);
+	var sec = Math.floor(secs - hr * 3600 - min * 60);
+	if (min < 10) {
+		min = "0" + min;
+	}
+	if (sec < 10) {
+		sec = "0" + sec;
+	}
+	return min + ":" + sec;
 }
 
-
 function justplay() {
-    if (Playing_song == false) {
-        playsong();
-    } else {
-        pausesong();
-    }
+	if (Playing_song == false) {
+		playsong();
+	} else {
+		pausesong();
+	}
 }
 
 function playsong() {
-    // console.log(track)
-    console.log("playing")
-    track[0].play();
-    Playing_song = true;
-    play[0].innerHTML = "<span class='fa-stack'><i class='fas fa-circle fa-stack-2x text-warning'></i><i class='fa fa-pause fa-stack -1x' aria-hidden='true'></i></span>";
-    console.log(track[0].currentTime)
-
-
+	// console.log(track)
+	console.log("playing");
+	// console.log("testing", songName.split("/")[13]);
+	// console.log("testing", songUrl.split("[split]")[13]);
+	// console.log("testing", artistName.split("/")[13]);
+	console.log("fkingdone", songList);
+	track[0].play();
+	Playing_song = true;
+	play[0].innerHTML =
+		"<span class='fa-stack'><i class='fas fa-circle fa-stack-2x text-warning'></i><i class='fa fa-pause fa-stack -1x' aria-hidden='true'></i></span>";
+	console.log(track[0].currentTime);
 }
 
 function pausesong() {
-    track[0].pause();
-    Playing_song = false;
-    console.log("paused")
-    console.log(track[0].currentTime)
-    console.log(slider[0])
-    play[0].innerHTML = "<span class='fa-stack'><i class='fas fa-circle fa-stack-2x text-warning'></i><i class='fa fa-play fa-stack -1x' aria-hidden='true'></i></span>";
+	track[0].pause();
+	Playing_song = false;
+	console.log("paused");
+	console.log(track[0].currentTime);
+	console.log(slider[0]);
+	play[0].innerHTML =
+		"<span class='fa-stack'><i class='fas fa-circle fa-stack-2x text-warning'></i><i class='fa fa-play fa-stack -1x' aria-hidden='true'></i></span>";
 }
 
 function change_duration() {
-    slider_position = track[0].duration * (slider[0].value / 100);
-    track[0].currentTime = slider_position;
+	slider_position = track[0].duration * (slider[0].value / 100);
+	track[0].currentTime = slider_position;
 }
 
 function volume_change() {
-    displayVolume[0].innerHTML = volume[0].value;
-    track[0].volume = volume[0].value / 100;
+	displayVolume[0].innerHTML = volume[0].value;
+	track[0].volume = volume[0].value / 100;
 }
 
 function range_slider() {
-    let position = 0;
-    // update slider position
-    if (!isNaN(track[0].duration)) {
-        position = track[0].currentTime * (100 / track[0].duration);
-        slider[0].value = position;
-    }
+	let position = 0;
+	// update slider position
+	if (!isNaN(track[0].duration)) {
+		position = track[0].currentTime * (100 / track[0].duration);
+		slider[0].value = position;
+	}
 
-    // function will run when the song is over
-    if (track[0].ended) {
-        play[0].innerHTML = "<span class='fa-stack'><i class='fas fa-circle fa-stack-2x text-warning'></i><i class='fa fa-play fa-stack -1x' aria-hidden='true'></i></span>";
-        // if (autoplay == 1) {
-        //     index_no += 1;
-        //     load_track(index_no);
-        //     playsong();
-        // }
-    }
+	// function will run when the song is over
+	if (track[0].ended) {
+		play[0].innerHTML =
+			"<span class='fa-stack'><i class='fas fa-circle fa-stack-2x text-warning'></i><i class='fa fa-play fa-stack -1x' aria-hidden='true'></i></span>";
+		// if (autoplay == 1) {
+		//     index_no += 1;
+		//     load_track(index_no);
+		//     playsong();
+		// }
+	}
 }
