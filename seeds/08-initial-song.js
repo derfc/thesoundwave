@@ -95,6 +95,78 @@ exports.seed = function (knex) {
 					album_id: 1,
 					genre_id: 1,
 				},
+				{
+					id: 11,
+					song_name: "原來只要共你活一天",
+					song_url:
+						"https://thesoundwave.s3-us-west-1.amazonaws.com/%E4%B8%8D%E8%80%81%E7%9A%84%E5%82%B3%E8%AA%AA/%E5%BC%B5%E5%AD%B8%E5%8F%8B+%E5%8E%9F%E4%BE%86%E5%8F%AA%E8%A6%81%E5%85%B1%E4%BD%A0%E6%B4%BB%E4%B8%80%E5%A4%A9+(%E9%AB%98%E6%B8%85%E9%9F%B3).mp3",
+					artist_id: 4,
+					album_id: 2,
+					genre_id: 1,
+				},
+				{
+					id: 12,
+					song_name: "不老的傳說",
+					song_url:
+						"https://thesoundwave.s3-us-west-1.amazonaws.com/%E4%B8%8D%E8%80%81%E7%9A%84%E5%82%B3%E8%AA%AA/%E5%BC%B5%E5%AD%B8%E5%8F%8B(Jacky+Cheung)+-+%E4%B8%8D%E8%80%81%E7%9A%84%E5%82%B3%E8%AA%AA.mp3",
+					artist_id: 4,
+					album_id: 2,
+					genre_id: 1,
+				},
+				{
+					id: 13,
+					song_name: "怎麼捨得你",
+					song_url:
+						"https://thesoundwave.s3-us-west-1.amazonaws.com/%E4%B8%8D%E8%80%81%E7%9A%84%E5%82%B3%E8%AA%AA/%E5%BC%B5%E5%AD%B8%E5%8F%8B+%E6%80%8E%E9%BA%BC%E6%8D%A8%E5%BE%97%E4%BD%A0+(%E9%AB%98%E6%B8%85%E9%9F%B3).mp3",
+					artist_id: 4,
+					album_id: 2,
+					genre_id: 1,
+				},
+				{
+					id: 14,
+					song_name: "愛是永恒 ",
+					song_url:
+						"https://thesoundwave.s3-us-west-1.amazonaws.com/%E4%B8%8D%E8%80%81%E7%9A%84%E5%82%B3%E8%AA%AA/%E5%BC%B5%E5%AD%B8%E5%8F%8B+%E6%84%9B%E6%98%AF%E6%B0%B8%E6%81%92+(%E9%AB%98%E6%B8%85%E9%9F%B3).mp3",
+					artist_id: 4,
+					album_id: 2,
+					genre_id: 1,
+				},
+				{
+					id: 15,
+					song_name: "給金鐘地鐵站車廂內的人",
+					song_url:
+						"https://thesoundwave.s3-us-west-1.amazonaws.com/%E9%A6%99%E6%B8%AF%E6%98%AF%E5%80%8B%E5%A4%A7%E5%95%86%E5%A0%B4/My+little+airport+-+%E7%B5%A6%E9%87%91%E9%90%98%E5%9C%B0%E9%90%B5%E7%AB%99%E8%BB%8A%E5%BB%82%E5%85%A7%E7%9A%84%E4%BA%BA.mp3",
+					artist_id: 5,
+					album_id: 3,
+					genre_id: 1,
+				},
+				{
+					id: 16,
+					song_name: "九龍公園游泳池",
+					song_url:
+						"https://thesoundwave.s3-us-west-1.amazonaws.com/%E9%A6%99%E6%B8%AF%E6%98%AF%E5%80%8B%E5%A4%A7%E5%95%86%E5%A0%B4/my+little+airport+-+%E4%B9%9D%E9%BE%8D%E5%85%AC%E5%9C%92%E6%B8%B8%E6%B3%B3%E6%B1%A0.mp3",
+					artist_id: 5,
+					album_id: 3,
+					genre_id: 1,
+				},
+				{
+					id: 17,
+					song_name: "你是浪子別泊岸",
+					song_url:
+						"https://thesoundwave.s3-us-west-1.amazonaws.com/%E9%A6%99%E6%B8%AF%E6%98%AF%E5%80%8B%E5%A4%A7%E5%95%86%E5%A0%B4/my+little+airport+-+%E4%BD%A0%E6%98%AF%E6%B5%AA%E5%AD%90%E5%88%A5%E6%B3%8A%E5%B2%B8.mp3",
+					artist_id: 5,
+					album_id: 3,
+					genre_id: 1,
+				},
+				{
+					id: 18,
+					song_name: "西西弗斯之歌",
+					song_url:
+						"https://thesoundwave.s3-us-west-1.amazonaws.com/%E9%A6%99%E6%B8%AF%E6%98%AF%E5%80%8B%E5%A4%A7%E5%95%86%E5%A0%B4/my+little+airport+-+%E8%A5%BF%E8%A5%BF%E5%BC%97%E6%96%AF%E4%B9%8B%E6%AD%8C.mp3",
+					artist_id: 5,
+					album_id: 3,
+					genre_id: 1,
+				},
 			]);
 		});
 };
