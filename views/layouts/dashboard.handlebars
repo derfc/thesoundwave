@@ -8,6 +8,9 @@
     <title>The Sound Wave</title>
 
     <script src="https://kit.fontawesome.com/4237d50c76.js" crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v5.15.1/css/pro.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/index.css">
     <script src="http://checkout.stripe.com/checkout.js" defer></script>
@@ -20,7 +23,6 @@
 <body>
 <h1>dashboard layout</h1>
 {{!-- //navbar --}}
-<div class="music-player"><p>music player</p></div>
 <a href="/home"><button id="home" class="button-home" value="home">home</button></a>
 <a href="/setting"><button id="setting" class="button-setting" value="setting">setting</button></a>
 <a href="/store"><button id="store" class="button-store" value="store">store</button></a>
@@ -37,6 +39,35 @@
     {{{body}}}
 
 {{!-- //footer --}}
+<div class="music-player"><p>music player</p></div>
+
+<audio id="myTrack" ontimeupdate="updateTrackTime(this)" src="https://thesoundwave.s3-us-west-1.amazonaws.com/h3m/05.%E4%B8%80%E5%80%8B%E6%97%85%E4%BA%BA.mp3" type="audio/mp3"/>
+</audio>
+
+<div class="middle">
+    <button onclick="random_song()" id="random"><i class="fa fa-random" aria-hidden="true"></i></button>
+    <button onclick="previous_song()" id="previous"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
+    <button onclick="justplay()" id="play">
+        <span class="fa-stack">
+            <i class="fas fa-circle fa-stack-2x text-warning"></i>
+            <i class="fa fa-play fa-stack-1x" aria-hidden="true"></i>
+        </span>
+    </button>
+  	<button onclick="next_song()" id="next"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
+    <button onclick="repeat_song()" id="repeat"><i class="fas fa-repeat-alt" aria-hidden="true"></i></button>
+</div>
+
+<div>
+    <span id="current_time">time </span>
+        <input type="range" min="0" max="100" value="0" id="duration_slider" onchange="change_duration()">
+    <span id="show_duration"> song time</span>
+</div>
+
+<div class="volume">
+    <p id="volume_show">90</p>
+    <i class="fa fa-volume-up" aria-hidden="true" onclick="mute_sound()" id="volume_icon"></i>
+    <input type="range" min="0" max="100" value="90" onchange="volume_change()" id="volume">  
+</div>
 
 </body>
     {{!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> --}}
@@ -51,5 +82,6 @@
     crossorigin="anonymous"
     ></script>
     {{!-- <script src="./script.js" defer></script> --}}
+    <script src="/musicplayer.js"></script>
 
 </html>
