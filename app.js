@@ -101,6 +101,7 @@ app.get("/", (req, res) => {
 app.get("/home", authCheck, (req, res) => {
 	let pic;
 	let user;
+	let id = req.user.id
 	console.log("this is requser", req.user);
 	if (req.user.provider === "google") {
 		pic = req.user._json.picture;
@@ -116,6 +117,9 @@ app.get("/home", authCheck, (req, res) => {
 			songs: songs,
 			layout: "dashboard",
 			stripePublicKey: stripePublicKey,
+			user: user,
+			thumbnail: pic,
+			id: id
 		});
 	});
 });
