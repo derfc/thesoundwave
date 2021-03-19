@@ -114,4 +114,12 @@ module.exports = class StoreSQL {
 			})
 			.returning("id");
 	}
+
+	delPlaylistSong(deleteID) {
+		return knex(this.playlist).where("library_id", deleteID).del();
+	}
+
+	delPlaylistInLibrary(deleteID) {
+		return knex(this.library).where("id", deleteID).del();
+	}
 };

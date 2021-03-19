@@ -143,13 +143,13 @@ app.get("/home", authCheck, (req, res) => {
 });
 
 //get playlist
-app.get("/playlist/:playlist_id", (req, res) => {
+app.get("/playlist/:library_id", (req, res) => {
 	// console.log("hi", req.params.playlist_id);
-	let playlist_id = req.params.playlist_id;
+	let library_id = req.params.library_id;
 	let count = 0;
 	let playlistSongArr = [];
 	let user_id = 1;
-	return storeSQL.getSongByPlaylist(playlist_id).then((playlistSongs) => {
+	return storeSQL.getSongByPlaylist(library_id).then((playlistSongs) => {
 		// console.log("PL id outpout", playlistSongs);
 		if (playlistSongs.length !== 0) {
 			playlistSongs.forEach((playlistSong) => {
@@ -174,12 +174,15 @@ app.get("/playlist/:playlist_id", (req, res) => {
 				});
 			});
 		} else {
-			res.render("playlist", {
-				// playlist: playlist,
-				// playlistSongArr: playlistSongArr,
-				layout: "dashboard",
-				stripePublicKey: stripePublicKey,
-				css: "../css/index.css",
+			storeSQL.getPlaylist(user_id).then((playlist) => {
+				console.log("PL outpout", playlist);
+				res.render("playlist", {
+					playlist: playlist,
+					// playlistSongArr: playlistSongArr,
+					layout: "dashboard",
+					stripePublicKey: stripePublicKey,
+					css: "../css/index.css",
+				});
 			});
 		}
 	});
@@ -196,6 +199,16 @@ app.post("/playlist", (req, res) => {
 	// return storeSQL.getLatestLibraryId().then((id) => {
 	// 	console.log("done", id);
 	// });
+});
+
+app.delete("/playlist/:library_id", (req, res) => {
+	console.log("hello", req.params.library_id);
+	let deleteID = req.params.library_id;
+	return storeSQL.delPlaylistSong(deleteID).then(() => {
+		storeSQL.delPlaylistInLibrary(deleteID).then(() => {
+			res.send("deleted");
+		});
+	});
 });
 
 //setting route
