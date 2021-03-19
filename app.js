@@ -135,6 +135,8 @@ app.get("/home", authCheck, (req, res) => {
 				playlist: playlist,
 				layout: "dashboard",
 				stripePublicKey: stripePublicKey,
+				user: user,
+				thumbnail: pic,
 			});
 		});
 	});
@@ -149,42 +151,51 @@ app.get("/playlist/:playlist_id", (req, res) => {
 	let user_id = 1;
 	return storeSQL.getSongByPlaylist(playlist_id).then((playlistSongs) => {
 		// console.log("PL id outpout", playlistSongs);
-		playlistSongs.forEach((playlistSong) => {
-			let song_id = playlistSong.song_id;
-			storeSQL.getSongById(song_id).then((song) => {
-				// console.log("what is this type", song[0]);
-				playlistSongArr.push(song[0]);
-				count++;
-				if (count == playlistSongs.length) {
-					// console.log("finally", playlistSongArr);
-					storeSQL.getPlaylist(user_id).then((playlist) => {
-						// console.log("PL outpout", playlist);
-						res.render("playlist", {
-							playlist: playlist,
-							playlistSongArr: playlistSongArr,
-							layout: "dashboard",
-							stripePublicKey: stripePublicKey,
-							css: "../css/index.css",
+		if (playlistSongs.length !== 0) {
+			playlistSongs.forEach((playlistSong) => {
+				let song_id = playlistSong.song_id;
+				storeSQL.getSongById(song_id).then((song) => {
+					// console.log("what is this type", song[0]);
+					playlistSongArr.push(song[0]);
+					count++;
+					if (count == playlistSongs.length) {
+						// console.log("finally", playlistSongArr);
+						storeSQL.getPlaylist(user_id).then((playlist) => {
+							// console.log("PL outpout", playlist);
+							res.render("playlist", {
+								playlist: playlist,
+								playlistSongArr: playlistSongArr,
+								layout: "dashboard",
+								stripePublicKey: stripePublicKey,
+								css: "../css/index.css",
+							});
 						});
-					});
-				}
+					}
+				});
 			});
-		});
+		} else {
+			res.render("playlist", {
+				// playlist: playlist,
+				// playlistSongArr: playlistSongArr,
+				layout: "dashboard",
+				stripePublicKey: stripePublicKey,
+				css: "../css/index.css",
+			});
+		}
 	});
 });
 
 app.post("/playlist", (req, res) => {
 	let user_id = 1;
-	console.log("hello");
 	console.log("hello", req.body.playlistName);
 	let newPlaylistName = req.body.playlistName;
-	return storeSQL.addPlaylist(newPlaylistName, user_id).then(() => {
-		storeSQL.getLatestLibraryId().then((library_id) => {
-			storeSQL.getSongByPlaylist(library_id).then(() => {
-				console.log("added", library_id);
-			});
-		});
+	return storeSQL.addPlaylist(newPlaylistName, user_id).then((library_id) => {
+		console.log("hihihihi", library_id[0]);
+		res.redirect(`/playlist/${library_id[0]}`);
 	});
+	// return storeSQL.getLatestLibraryId().then((id) => {
+	// 	console.log("done", id);
+	// });
 });
 
 //setting route
