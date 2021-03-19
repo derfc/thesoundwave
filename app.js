@@ -111,8 +111,11 @@ app.get("/", (req, res) => {
 app.get("/home", authCheck, (req, res) => {
 	let pic;
 	let user;
+
 	let user_id = 1;
 	// console.log("this is requser", req.user);
+
+	let id = req.user.id
 	if (req.user.provider === "google") {
 		pic = req.user._json.picture;
 		user = req.user.displayName;
@@ -122,6 +125,7 @@ app.get("/home", authCheck, (req, res) => {
 	} else {
 		user = req.user.username;
 	}
+
 	return storeSQL.getPlaylist(user_id).then((playlist) => {
 		// console.log("PL outpout", playlist);
 		storeSQL.getAllSong().then((songs) => {
