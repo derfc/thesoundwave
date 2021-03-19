@@ -107,13 +107,11 @@ module.exports = class StoreSQL {
 	}
 
 	addPlaylist(newPlaylistName, user_id) {
-		return knex(this.library).insert({
-			playlist_name: `${newPlaylistName}`,
-			user_id: user_id,
-		});
-	}
-
-	getLatestLibraryId() {
-		return knex(this.library).max("id");
+		return knex(this.library)
+			.insert({
+				playlist_name: `${newPlaylistName}`,
+				user_id: user_id,
+			})
+			.returning("id");
 	}
 };
