@@ -48,8 +48,12 @@
 
 {{!-- //footer --}}
 <div class="music-player"><p>music player</p></div>
+<div>
+    <div id="current_song"></div>
+    <div id="current_artist"></div>
+</div>
 
-<audio id="myTrack" ontimeupdate="updateTrackTime(this)" src="https://thesoundwave.s3-us-west-1.amazonaws.com/h3m/Eason+%E9%99%B3%E5%A5%95%E8%BF%85+%E6%B2%99%E9%BE%8D+MV.mp3" type="audio/mp3"/>
+<audio id="myTrack" ontimeupdate="updateTrackTime(this)" onended="audio_end()" src="" type="audio/mp3"/>
 </audio>
 
 <div class="middle">
