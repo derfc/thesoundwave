@@ -3,11 +3,11 @@ let play = $("#play");
 let next = $("#next");
 // let title = $('#title');
 
-let volume = $('#volume');
-let displayVolume = $('#volume_show');
-let slider = $('#duration_slider');
-let track = $('#myTrack')
-let current_time = $('#current_time')
+let volume = $("#volume");
+let displayVolume = $("#volume_show");
+let slider = $("#duration_slider");
+let track = $("#myTrack");
+let current_time = $("#current_time");
 
 // let track_image = $('#track_image');
 // let present = $('#present');
@@ -22,12 +22,13 @@ let songList = [];
 let songNameArr = songName.split("/");
 let songUrlArr = songUrl.split("[split]");
 let artistNameArr = artistName.split("/");
-for (let i = 0; i < songNameArr.length; i++) {
-    songList.push({
-        song_name: songNameArr[i],
-        song_url: songUrlArr[i],
-        artist_name: artistNameArr[i],
-    });
+
+for (let i = 0; i < songNameArr.length - 1; i++) {
+	songList.push({
+		song_name: songNameArr[i],
+		song_url: songUrlArr[i],
+		artist_name: artistNameArr[i],
+	});
 }
 let playlist = JSON.parse(JSON.stringify(songList));
 
