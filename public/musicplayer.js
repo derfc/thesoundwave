@@ -29,35 +29,37 @@ for (let i = 0; i < songNameArr.length; i++) {
         artist_name: artistNameArr[i],
     });
 }
+let playlist = JSON.parse(JSON.stringify(songList));
 
 function random_song() {
     random++
     if (random % 2) {
         $('#random').addClass('text-danger');
         console.log(random, 'random')
+        playlist.sort(() => Math.random() - 0.5)
     } else {
         $('#random').removeClass();
-        index = Math.floor(Math.random() * songList.length);
         console.log(random, 'not random')
+        load_playlist()
     }
 }
 
 function load_playlist() {
-    track[0].src = songList[index].song_url
-    $('#current_song')[0].innerHTML = `<p>You are currently playing: ${songList[index].song_name} by ${songList[index].artist_name}</p>`
+    if (random % 2) {
+        track[0].src = playlist[index].song_url
+        $('#current_song')[0].innerHTML = `<p>You are currently playing: ${playlist[index].song_name} by ${playlist[index].artist_name}</p>`
+    } else {
+        track[0].src = songList[index].song_url
+        $('#current_song')[0].innerHTML = `<p>You are currently playing: ${songList[index].song_name} by ${songList[index].artist_name}</p>`
+    }
 }
-
 load_playlist()
 
 
 // next song
 function next_song() {
     if (index < songList.length - 1) {
-        if (random % 2) {
-            index = Math.floor(Math.random() * songList.length);
-        } else {
-            index += 1;
-        }
+        index += 1;
         load_playlist();
         reset_slider();
         playsong();
@@ -99,25 +101,11 @@ function updateTrackTime() {
     } else {
         slider[0].value = Math.floor(track[0].currentTime / track[0].duration * 100).toString()
     }
-
     if (isNaN(duration)) {
         durationDiv[0].innerHTML = "00:00";
     } else {
         durationDiv[0].innerHTML = formatSecondsAsTime(duration);
     }
-}
-
-function formatSecondsAsTime(secs, format) {
-    let hr = Math.floor(secs / 3600);
-    let min = Math.floor((secs - (hr * 3600)) / 60);
-    let sec = Math.floor(secs - (hr * 3600) - (min * 60));
-    if (min < 10) {
-        min = "0" + min;
-    }
-    if (sec < 10) {
-        sec = "0" + sec;
-    }
-    return min + ':' + sec;
 }
 
 function justplay() {
@@ -129,7 +117,6 @@ function justplay() {
 }
 
 function playsong() {
-    // console.log(track)
     console.log("playing")
     track[0].play();
     Playing_song = true;
@@ -144,6 +131,13 @@ function pausesong() {
         "<span class='fa-stack'><i class='fas fa-circle fa-stack-2x text-warning'></i><i class='fa fa-play fa-stack -1x' aria-hidden='true'></i></span>";
 }
 
+function audio_end() {
+    index++;
+    load_playlist();
+    reset_slider();
+    playsong();
+}
+
 function change_duration() {
     slider_position = track[0].duration * (slider[0].value / 100);
     track[0].currentTime = slider_position;
@@ -152,4 +146,17 @@ function change_duration() {
 function volume_change() {
     displayVolume[0].innerHTML = volume[0].value;
     track[0].volume = volume[0].value / 100;
+}
+
+function formatSecondsAsTime(secs, format) {
+    let hr = Math.floor(secs / 3600);
+    let min = Math.floor((secs - (hr * 3600)) / 60);
+    let sec = Math.floor(secs - (hr * 3600) - (min * 60));
+    if (min < 10) {
+        min = "0" + min;
+    }
+    if (sec < 10) {
+        sec = "0" + sec;
+    }
+    return min + ':' + sec;
 }
