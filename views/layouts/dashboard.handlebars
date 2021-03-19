@@ -43,7 +43,8 @@
 <div>
     <p>select playlist sql</p>
     {{#each playlist}}
-<a href="/playlist/{{this.id}}"><button type="button" class="select-playlist" data-playlist_id="{{this.id}}">{{this.playlist_name}}</button></a>
+<a href="/playlist/{{this.id}}"><button type="button" class="select-playlist" data-library_id="{{this.id}}">{{this.playlist_name}}</button></a>
+<button data-library_id="{{this.id}}" class="delete-playlist">delete playlist</button>
     </br>
     {{/each}}
     <button class="open-button" onclick="openForm()">add playlist</button>
@@ -125,7 +126,22 @@ function closeForm() {
 document.getElementById("myForm").style.display = "none";
 }
 
-
+$(".delete-playlist").click((e) => {
+		e.preventDefault();
+        console.log(e.target.dataset.library_id)
+		$.ajax({
+			url: `/playlist/${e.target.dataset.library_id}`,
+			type: "DELETE",
+			success: function () {
+				console.log("success del");
+			},
+		})
+			.done(function () {
+				window.location.href="/home"
+			})
+			.fail(() => console.log("hahafail"))
+			.always(() => console.log("running"));
+	});
 
 </script>
 
