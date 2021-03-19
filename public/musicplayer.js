@@ -3,11 +3,11 @@ let play = $("#play");
 let next = $("#next");
 // let title = $('#title');
 
-let volume = $('#volume');
-let displayVolume = $('#volume_show');
-let slider = $('#duration_slider');
-let track = $('#myTrack')
-let current_time = $('#current_time')
+let volume = $("#volume");
+let displayVolume = $("#volume_show");
+let slider = $("#duration_slider");
+let track = $("#myTrack");
+let current_time = $("#current_time");
 
 // let track_image = $('#track_image');
 // let present = $('#present');
@@ -20,7 +20,7 @@ let songList = [];
 let songNameArr = songName.split("/");
 let songUrlArr = songUrl.split("[split]");
 let artistNameArr = artistName.split("/");
-for (let i = 0; i < songNameArr.length; i++) {
+for (let i = 0; i < songNameArr.length - 1; i++) {
 	songList.push({
 		song_name: songNameArr[i],
 		song_url: songUrlArr[i],
@@ -28,16 +28,15 @@ for (let i = 0; i < songNameArr.length; i++) {
 	});
 }
 
-
-
 function updateTrackTime() {
-    let currTimeDiv = $('#current_time');
-    let durationDiv = $('#show_duration');
-    let currTime = Math.floor(track[0].currentTime).toString();
-    let duration = Math.floor(track[0].duration).toString();
-    currTimeDiv[0].innerHTML = formatSecondsAsTime(currTime);
-    slider[0].value = Math.floor(track[0].currentTime / track[0].duration * 100).toString()
-
+	let currTimeDiv = $("#current_time");
+	let durationDiv = $("#show_duration");
+	let currTime = Math.floor(track[0].currentTime).toString();
+	let duration = Math.floor(track[0].duration).toString();
+	currTimeDiv[0].innerHTML = formatSecondsAsTime(currTime);
+	slider[0].value = Math.floor(
+		(track[0].currentTime / track[0].duration) * 100
+	).toString();
 
 	if (isNaN(duration)) {
 		durationDiv[0].innerHTML = "00:00";
@@ -47,16 +46,16 @@ function updateTrackTime() {
 }
 
 function formatSecondsAsTime(secs, format) {
-    let hr = Math.floor(secs / 3600);
-    let min = Math.floor((secs - (hr * 3600)) / 60);
-    let sec = Math.floor(secs - (hr * 3600) - (min * 60));
-    if (min < 10) {
-        min = "0" + min;
-    }
-    if (sec < 10) {
-        sec = "0" + sec;
-    }
-    return min + ':' + sec;
+	let hr = Math.floor(secs / 3600);
+	let min = Math.floor((secs - hr * 3600) / 60);
+	let sec = Math.floor(secs - hr * 3600 - min * 60);
+	if (min < 10) {
+		min = "0" + min;
+	}
+	if (sec < 10) {
+		sec = "0" + sec;
+	}
+	return min + ":" + sec;
 }
 
 function justplay() {
@@ -68,12 +67,14 @@ function justplay() {
 }
 
 function playsong() {
-    // console.log(track)
-    console.log("playing")
-    track[0].play();
-    Playing_song = true;
-    play[0].innerHTML = "<span class='fa-stack'><i class='fas fa-circle fa-stack-2x text-warning'></i><i class='fa fa-pause fa-stack -1x' aria-hidden='true'></i></span>";
-    console.log(track[0].currentTime)
+	// console.log(track)
+	console.log("playing");
+	console.log("playing", songList);
+	track[0].play();
+	Playing_song = true;
+	play[0].innerHTML =
+		"<span class='fa-stack'><i class='fas fa-circle fa-stack-2x text-warning'></i><i class='fa fa-pause fa-stack -1x' aria-hidden='true'></i></span>";
+	console.log(track[0].currentTime);
 }
 
 function pausesong() {

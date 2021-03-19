@@ -9,13 +9,15 @@ const knex = require("knex")({
 });
 
 module.exports = class StoreSQL {
-	constructor(users, store, item, cart, song, artist) {
+	constructor(users, store, item, cart, song, artist, library, playlist) {
 		this.users = users;
 		this.store = store;
 		this.item = item;
 		this.cart = cart;
 		this.song = song;
 		this.artist = artist;
+		this.library = library;
+		this.playlist = playlist;
 	}
 
 	selectUserName(user_id) {
@@ -63,14 +65,44 @@ module.exports = class StoreSQL {
 			.del();
 	}
 
-	getSong(song_id) {
-		if (song_id) {
-			return knex(this.song).where("id", song_id).orderBy("id");
-		} else {
-			return knex
-				.from(this.song)
-				.innerJoin(this.artist, "song.artist_id", "artist.id");
-			// .orderBy("id");
-		}
+	getAllSong() {
+		return knex
+			.select([
+				"s.id",
+				"s.song_name",
+				"s.song_url",
+				"a.id as artist_id",
+				"a.artist_name",
+			])
+			.from(`song as s`)
+			.join(`artist as a`, "s.artist_id", "a.id");
+		// .orderBy("id");
+		// return knex
+		// 	.from(this.song)
+		// 	.join(this.artist, "song.artist_id", "artist.id");
+	}
+
+	getSongById(song_id) {
+		// return knex(this.song).where("id", song_id).orderBy("id");
+		return knex
+			.select([
+				"s.id",
+				"s.song_name",
+				"s.song_url",
+				"a.id as artist_id",
+				"a.artist_name",
+			])
+			.from(`song as s`)
+			.join(`artist as a`, "s.artist_id", "a.id")
+			.where("s.id", song_id)
+			.orderBy("id");
+	}
+
+	getSongByPlaylist(library_id) {
+		return knex(this.playlist).where("library_id", library_id).orderBy("id");
+	}
+
+	getPlaylist(user_id) {
+		return knex(this.library).where("user_id", user_id).orderBy("id");
 	}
 };

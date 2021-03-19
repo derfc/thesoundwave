@@ -2,7 +2,16 @@ const express = require("express");
 const handlebars = require("express-handlebars");
 const bodyParser = require("body-parser");
 const StoreSQL = require("./storesql");
-let storeSQL = new StoreSQL("users", "store", "item", "cart", "song", "artist");
+let storeSQL = new StoreSQL(
+	"users",
+	"store",
+	"item",
+	"cart",
+	"song",
+	"artist",
+	"library",
+	"playlist"
+);
 
 const app = express();
 const port = 3000;
@@ -17,6 +26,7 @@ const stripe = require("stripe")(stripeSecretKey);
 
 //cookie session
 const cookieSession = require("cookie-session");
+const { default: knex } = require("knex");
 
 app.use(
 	cookieSession({
@@ -101,7 +111,8 @@ app.get("/", (req, res) => {
 app.get("/home", authCheck, (req, res) => {
 	let pic;
 	let user;
-	console.log("this is requser", req.user);
+	let user_id = 1;
+	// console.log("this is requser", req.user);
 	if (req.user.provider === "google") {
 		pic = req.user._json.picture;
 		user = req.user.displayName;
@@ -111,11 +122,49 @@ app.get("/home", authCheck, (req, res) => {
 	} else {
 		user = req.user.username;
 	}
-	return storeSQL.getSong().then((songs) => {
-		res.render("home", {
-			songs: songs,
-			layout: "dashboard",
-			stripePublicKey: stripePublicKey,
+	return storeSQL.getPlaylist(user_id).then((playlist) => {
+		// console.log("PL outpout", playlist);
+		storeSQL.getAllSong().then((songs) => {
+			console.log("where is the 19th", songs);
+			res.render("home", {
+				playlistSongArr: songs,
+				playlist: playlist,
+				layout: "dashboard",
+				stripePublicKey: stripePublicKey,
+			});
+		});
+	});
+});
+
+//get playlist
+app.get("/playlist/:playlist_id", (req, res) => {
+	// console.log("hi", req.params.playlist_id);
+	let playlist_id = req.params.playlist_id;
+	let count = 0;
+	let playlistSongArr = [];
+	let user_id = 1;
+	return storeSQL.getSongByPlaylist(playlist_id).then((playlistSongs) => {
+		// console.log("PL id outpout", playlistSongs);
+		playlistSongs.forEach((playlistSong) => {
+			let song_id = playlistSong.song_id;
+			storeSQL.getSongById(song_id).then((song) => {
+				// console.log("what is this type", song[0]);
+				playlistSongArr.push(song[0]);
+				count++;
+				if (count == playlistSongs.length) {
+					// console.log("finally", playlistSongArr);
+					storeSQL.getPlaylist(user_id).then((playlist) => {
+						// console.log("PL outpout", playlist);
+						res.render("playlist", {
+							playlist: playlist,
+							playlistSongArr: playlistSongArr,
+							layout: "dashboard",
+							stripePublicKey: stripePublicKey,
+							css: "../css/index.css",
+						});
+					});
+				}
+			});
 		});
 	});
 });

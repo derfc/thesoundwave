@@ -12,13 +12,17 @@
 
     <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v5.15.1/css/pro.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    {{#if css}}
+    <link rel="stylesheet" href="{{css}}">
+    {{else}}
     <link rel="stylesheet" href="./css/index.css">
+    {{/if}}
     <script src="http://checkout.stripe.com/checkout.js" defer></script>
     <script>
         var stripePK = "{{stripePublicKey}}"
-        var songName = "{{#each songs}}{{this.song_name}}/{{/each}}"
-        var songUrl = "{{#each songs}}{{this.song_url}}[split]{{/each}}"
-        var artistName = "{{#each songs}}{{this.artist_name}}/{{/each}}"
+        var songName = "{{#each playlistSongArr}}{{this.song_name}}/{{/each}}"
+        var songUrl = "{{#each playlistSongArr}}{{this.song_url}}[split]{{/each}}"
+        var artistName = "{{#each playlistSongArr}}{{this.artist_name}}/{{/each}}"
     </script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
@@ -38,11 +42,28 @@
 
 <div>
     <p>select playlist sql</p>
-    <ul>
-        <li>playlist1</li>
-        <li>playlist2</li>
-        <li>playlist3</li>
-    </ul>
+    {{#each playlist}}
+<a href="/playlist/{{this.id}}"><button type="button" class="select-playlist" data-playlist_id="{{this.id}}">{{this.playlist_name}}</button></a>
+    </br>
+    {{/each}}
+    <button class="open-button" onclick="openForm()">add playlist</button>
+
+<div class="form-popup" id="myForm">
+  <form action="#" class="form-container">
+    <h1>add playlist</h1>
+
+    <label for="playlist-name"><b>playlist name</b></label>
+    <input type="text" placeholder="myPlaylist" name="playlist-name" required>
+
+    {{!-- <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="psw" required> --}}
+
+    <button type="submit" class="btn">add playlist</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+  </form>
+</div>
+
+    {{!-- <button class="add-playlist" method="POST"  data-user_id="1">add playlist</button> --}}
 </div>
     {{{body}}}
 
@@ -91,5 +112,14 @@
     ></script>
     {{!-- <script src="./script.js" defer></script> --}}
     <script src="/musicplayer.js"></script>
+    <script>
+function openForm() {
+document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+document.getElementById("myForm").style.display = "none";
+}
+</script>
 
 </html>

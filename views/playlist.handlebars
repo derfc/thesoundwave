@@ -1,4 +1,4 @@
-<h1>home</h1>
+<h1>playlist</h1>
 
 <span class="display-6">welcome to your profile, {{user}} </span>
 <img src="{{thumbnail}}" alt="thumbnail" height="60px" width="60px">
@@ -6,6 +6,7 @@
 <p>math.random generating songs/news</p>
 {{#each playlistSongArr}}
 <div class="">
+     {{!-- btn > add to playlist  select playlist maybe?--}}
 <ul>
      <li>{{this.id}}</li>
      <li>{{this.song_name}}</li>
