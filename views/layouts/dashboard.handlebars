@@ -49,11 +49,11 @@
     <button class="open-button" onclick="openForm()">add playlist</button>
 
 <div class="form-popup" id="myForm">
-  <form action="#" class="form-container">
+  <form action="/playlist" method="post" class="form-container">
     <h1>add playlist</h1>
 
-    <label for="playlist-name"><b>playlist name</b></label>
-    <input type="text" placeholder="myPlaylist" name="playlist-name" required>
+    <label for="playlistName"><b>playlist name</b></label>
+    <input type="text" placeholder="myPlaylist" name="playlistName" required>
 
     {{!-- <label for="psw"><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="psw" required> --}}
@@ -124,6 +124,9 @@ document.getElementById("myForm").style.display = "block";
 function closeForm() {
 document.getElementById("myForm").style.display = "none";
 }
+
+
+
 </script>
 
 </html>

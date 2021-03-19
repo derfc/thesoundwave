@@ -115,7 +115,7 @@ app.get("/home", authCheck, (req, res) => {
 	let user_id = 1;
 	// console.log("this is requser", req.user);
 
-	let id = req.user.id
+	let id = req.user.id;
 	if (req.user.provider === "google") {
 		pic = req.user._json.picture;
 		user = req.user.displayName;
@@ -168,6 +168,20 @@ app.get("/playlist/:playlist_id", (req, res) => {
 						});
 					});
 				}
+			});
+		});
+	});
+});
+
+app.post("/playlist", (req, res) => {
+	let user_id = 1;
+	console.log("hello");
+	console.log("hello", req.body.playlistName);
+	let newPlaylistName = req.body.playlistName;
+	return storeSQL.addPlaylist(newPlaylistName, user_id).then(() => {
+		storeSQL.getLatestLibraryId().then((library_id) => {
+			storeSQL.getSongByPlaylist(library_id).then(() => {
+				console.log("added", library_id);
 			});
 		});
 	});
