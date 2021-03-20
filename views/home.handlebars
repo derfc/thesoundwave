@@ -3,8 +3,15 @@
 <span class="display-6">welcome to your profile, {{user}} </span>
 <img src="{{thumbnail}}" alt="thumbnail" height="60px" width="60px">
 
-<p>math.random generating songs/news</p>
-{{#each playlistSongArr}}
+<div class="instant-search">
+<input type="search" spellcheck="false" placeholder="Search songs" id="filter_songs"/>
+</div>
+<div class="results">
+     <div class="featuring"><p>featuring stuff</p></div>
+     <div class="artist"></div>
+     <div class="album"></div>
+     <div class="song">
+{{!-- {{#each playlistSongArr}}
 <div class="">
 <ul>
      <li>{{this.id}}</li>
@@ -14,4 +21,6 @@
      <li>{{this.artist_name}}</li>
 </ul>
 </div>
-{{/each}}
+{{/each}} --}}
+     </div>
+</div>

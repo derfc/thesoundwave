@@ -10,7 +10,8 @@ let storeSQL = new StoreSQL(
 	"song",
 	"artist",
 	"library",
-	"playlist"
+	"playlist",
+	"album"
 );
 
 const app = express();
@@ -129,7 +130,7 @@ app.get("/home", authCheck, (req, res) => {
 	return storeSQL.getPlaylist(user_id).then((playlist) => {
 		// console.log("PL outpout", playlist);
 		storeSQL.getAllSong().then((songs) => {
-			console.log("where is the 19th", songs);
+			// console.log("where is the 19th", songs);
 			res.render("home", {
 				playlistSongArr: songs,
 				playlist: playlist,
@@ -137,6 +138,20 @@ app.get("/home", authCheck, (req, res) => {
 				stripePublicKey: stripePublicKey,
 				user: user,
 				thumbnail: pic,
+				script: "./searchScript.js",
+			});
+		});
+	});
+});
+
+//search
+app.post("/home", (req, res) => {
+	let keywords = req.body.keywords;
+	return storeSQL.searchForArtist(keywords).then((artist) => {
+		storeSQL.searchForAlbum(keywords).then((album) => {
+			storeSQL.searchForSong(keywords).then((song) => {
+				let searchResult = { artist: artist, album: album, song: song };
+				res.send(searchResult);
 			});
 		});
 	});
