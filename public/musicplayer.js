@@ -51,11 +51,11 @@ function random_song() {
 
     random++
     if (random % 2) {
-        $('#random').addClass('text-danger');
+        $('#random').removeClass('text-white').addClass('text-danger');
         console.log(random, 'random')
         playlist.sort(() => Math.random() - 0.5)
     } else {
-        $('#random').removeClass();
+        $('#random').removeClass('text-danger').addClass('text-white');
         console.log(random, 'not random')
         index = songList.findIndex(x => x.song_name == playlist[index].song_name)
         // load_playlist()
@@ -68,12 +68,12 @@ function load_playlist() {
         track[0].src = playlist[index].song_url;
         $(
             "#current_song"
-        )[0].innerHTML = `<p>You are currently playing: ${playlist[index].song_name} by ${playlist[index].artist_name}</p>`;
+        )[0].innerHTML = `<p>You are currently playing:</p><p>${playlist[index].song_name} by ${playlist[index].artist_name}</p>`;
     } else {
         track[0].src = songList[index].song_url;
         $(
             "#current_song"
-        )[0].innerHTML = `<p>You are currently playing: ${songList[index].song_name} by ${songList[index].artist_name}</p>`;
+        )[0].innerHTML = `<p>You are currently playing:</p> <p>${songList[index].song_name} by ${songList[index].artist_name}</p>`;
     }
 }
 load_playlist();
@@ -128,9 +128,9 @@ function updateTrackTime() {
     if (track[0].currentTime == 0) {
         slider[0].value = "0";
     } else {
-        slider[0].value = Math.floor(
+        slider[0].value =
             (track[0].currentTime / track[0].duration) * 100
-        ).toString();
+                .toString();
     }
     if (isNaN(duration)) {
         durationDiv[0].innerHTML = "00:00";
@@ -152,7 +152,7 @@ function playsong() {
     track[0].play();
     Playing_song = true;
     play[0].innerHTML =
-        "<span class='fa-stack'><i class='fas fa-circle fa-stack-2x text-warning'></i><i class='fa fa-pause fa-stack -1x' aria-hidden='true'></i></span>";
+        "<span class='fa-stack'><i class='fas fa-circle fa-stack-2x text-white'></i><i class='fa fa-pause fa-stack-1x text-dark' aria-hidden='true'></i></span>";
 }
 
 function pausesong() {
@@ -160,7 +160,7 @@ function pausesong() {
     Playing_song = false;
     console.log("paused");
     play[0].innerHTML =
-        "<span class='fa-stack'><i class='fas fa-circle fa-stack-2x text-warning'></i><i class='fa fa-play fa-stack -1x' aria-hidden='true'></i></span>";
+        "<span class='fa-stack'><i class='fas fa-circle fa-stack-2x text-white'></i><i class='fa fa-play fa-stack-1x text-dark' aria-hidden='true'></i></span>";
     console.log(loop)
 }
 
