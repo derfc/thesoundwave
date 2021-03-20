@@ -9,7 +9,17 @@ const knex = require("knex")({
 });
 
 module.exports = class StoreSQL {
-	constructor(users, store, item, cart, song, artist, library, playlist) {
+	constructor(
+		users,
+		store,
+		item,
+		cart,
+		song,
+		artist,
+		library,
+		playlist,
+		album
+	) {
 		this.users = users;
 		this.store = store;
 		this.item = item;
@@ -18,6 +28,7 @@ module.exports = class StoreSQL {
 		this.artist = artist;
 		this.library = library;
 		this.playlist = playlist;
+		this.album = album;
 	}
 
 	selectUserName(user_id) {
@@ -121,5 +132,17 @@ module.exports = class StoreSQL {
 
 	delPlaylistInLibrary(deleteID) {
 		return knex(this.library).where("id", deleteID).del();
+	}
+
+	searchForArtist(keywords) {
+		return knex(this.artist).where("artist_name", "like", `%${keywords}%`);
+	}
+
+	searchForAlbum(keywords) {
+		return knex(this.album).where("album_name", "like", `%${keywords}%`);
+	}
+
+	searchForSong(keywords) {
+		return knex(this.song).where("song_name", "like", `%${keywords}%`);
 	}
 };

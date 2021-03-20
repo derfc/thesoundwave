@@ -37,10 +37,6 @@
 <a href="/auth/logout"><button id="logout" class="button-logout" value="logout">logout</button></a>
 
 <div>
-<input type="text" placeholder="Search songs" id="filter_songs"/>
-</div>
-
-<div>
     <p>select playlist sql</p>
     {{#each playlist}}
 <a href="/playlist/{{this.id}}"><button type="button" class="select-playlist" data-library_id="{{this.id}}">{{this.playlist_name}}</button></a>
@@ -66,6 +62,7 @@
 
     {{!-- <button class="add-playlist" method="POST"  data-user_id="1">add playlist</button> --}}
 </div>
+
     {{{body}}}
 
 {{!-- //footer --}}
@@ -115,7 +112,9 @@
     integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
     crossorigin="anonymous"
     ></script>
-    {{!-- <script src="./script.js" defer></script> --}}
+    {{#if script}}
+    <script src={{script}}></script>
+    {{/if}}
     <script src="/musicplayer.js"></script>
     <script>
 function openForm() {
@@ -143,6 +142,7 @@ $(".delete-playlist").click((e) => {
 			.always(() => console.log("running"));
 	});
 
+    
 </script>
 
 </html>
