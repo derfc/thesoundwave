@@ -68,7 +68,8 @@
 {{!-- //footer --}}
 
 <section class="music-bar text-white">
-<div class="music-player row"><p>music player</p>
+<div class="music-player row">
+<p>music player</p>
 
     <div class="col current-song">
     <div id="current_song"></div>
@@ -83,28 +84,32 @@
     <button class="btn text-white" onclick="previous_song()" id="previous"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
     <button class="btn" onclick="justplay()" id="play">
         <span class="fa-stack">
-            <i class="fas fa-circle fa-stack-2x text-white"></i>
-            <i class="fa fa-play fa-stack-1x text-dark" aria-hidden="true"></i>
+            <i class="fas fa-circle fa-stack-2x text-white" id="circleplay"></i>
+            <i class="fa fa-play fa-stack-1x" aria-hidden="true"></i>
         </span>
     </button>
   	<button class="btn text-white" onclick="next_song()" id="next"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
     <button class="btn text-white" onclick="repeat_song()" id="repeat"><i class="fas fa-repeat-alt" id="repeating" aria-hidden="true"></i></button>
-<div class="current-song">
-  <span id="current_time"> 00:00 </span>
-  <input type="range" min="0" max="100" value="0" id="duration_slider" onchange="change_duration()"/>
-  <span id="show_duration"> 00:00 </span>
-</div>
 
-
-</div>
-
-
-<div class="volume col text-center">
-    <span>Volume: </span><span id="volume_show">90</span>
-    <div>
-    <i class="fa fa-volume-up" aria-hidden="true" onclick="mute_sound()" id="volume_icon"></i>
-    <input type="range" min="0" max="100" value="90" onchange="volume_change()" id="volume">  
+    <div class="current-song">
+        <span id="current_time"> 00:00 </span>
+        <input type="range" min="0" max="100" value="0" id="duration_slider" onchange="change_duration()"/>
+        <span id="show_duration"> 00:00 </span>
     </div>
+
+</div>
+
+    <div class="col text-center">
+        <div class="volume">
+        <span>Volume: </span><span id="volume_show">90</span>
+        </div>
+        <div>
+        <i class="fa fa-volume-up" aria-hidden="true" onclick="mute_sound()" id="volume_icon"></i>
+        <input type="range" min="0" max="100" value="90" onchange="volume_change()" id="volume">  
+        </div>
+    </div>
+
+<div style="height:8px">
 </div>
 
 </div>

@@ -48,10 +48,9 @@ function repeat_song() {
 }
 
 function random_song() {
-
     random++
     if (random % 2) {
-        $('#random').removeClass('text-white').addClass('text-danger');
+        $('#random').removeClass('text-white').addClass('text-info');
         console.log(random, 'random')
         playlist.sort(() => Math.random() - 0.5)
     } else {
@@ -68,12 +67,12 @@ function load_playlist() {
         track[0].src = playlist[index].song_url;
         $(
             "#current_song"
-        )[0].innerHTML = `<p>You are currently playing:</p><p>${playlist[index].song_name} by ${playlist[index].artist_name}</p>`;
+        )[0].innerHTML = `<p>Now playing:</p><p>${playlist[index].song_name}</p> <p>${playlist[index].artist_name}</p>`;
     } else {
         track[0].src = songList[index].song_url;
         $(
             "#current_song"
-        )[0].innerHTML = `<p>You are currently playing:</p> <p>${songList[index].song_name} by ${songList[index].artist_name}</p>`;
+        )[0].innerHTML = `<p>Now playing:</p> <p>${songList[index].song_name}</p> <p>${songList[index].artist_name}</p>`;
     }
 }
 load_playlist();
@@ -152,7 +151,7 @@ function playsong() {
     track[0].play();
     Playing_song = true;
     play[0].innerHTML =
-        "<span class='fa-stack'><i class='fas fa-circle fa-stack-2x text-white'></i><i class='fa fa-pause fa-stack-1x text-dark' aria-hidden='true'></i></span>";
+        "<span class='fa-stack'><i class='fas fa-circle fa-stack-2x text-white'></i><i class='fa fa-pause fa-stack-1x' aria-hidden='true'></i></span>";
 }
 
 function pausesong() {
@@ -160,7 +159,7 @@ function pausesong() {
     Playing_song = false;
     console.log("paused");
     play[0].innerHTML =
-        "<span class='fa-stack'><i class='fas fa-circle fa-stack-2x text-white'></i><i class='fa fa-play fa-stack-1x text-dark' aria-hidden='true'></i></span>";
+        "<span class='fa-stack'><i class='fas fa-circle fa-stack-2x text-white'></i><i class='fa fa-play fa-stack-1x' aria-hidden='true'></i></span>";
     console.log(loop)
 }
 
