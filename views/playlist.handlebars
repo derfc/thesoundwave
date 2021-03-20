@@ -3,16 +3,18 @@
 <span class="display-6">welcome to your profile, {{user}} </span>
 <img src="{{thumbnail}}" alt="thumbnail" height="60px" width="60px">
 
-<p>math.random generating songs/news</p>
+<div class="playlist" data-library_id="{{libraryId}}">
 {{#each playlistSongArr}}
 <div class="">
      {{!-- btn > add to playlist  select playlist maybe?--}}
-<ul>
+<ul><li>{{libraryId}}</li>
      <li>{{this.id}}</li>
      <li>{{this.song_name}}</li>
      <li>{{this.song_url}}</li>
      <li>{{this.artist_id}}</li>
      <li>{{this.artist_name}}</li>
 </ul>
+<button data-song_id="{{this.id}}" class="delete-song">delete song</button>
 </div>
 {{/each}}
+</div>

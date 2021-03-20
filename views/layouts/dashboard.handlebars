@@ -39,28 +39,23 @@
 <div>
     <p>select playlist sql</p>
     {{#each playlist}}
-<a href="/playlist/{{this.id}}"><button type="button" class="select-playlist" data-library_id="{{this.id}}">{{this.playlist_name}}</button></a>
+<a href="/library/{{this.id}}"><button type="button" class="select-playlist" data-library_id="{{this.id}}">{{this.playlist_name}}</button></a>
 <button data-library_id="{{this.id}}" class="delete-playlist">delete playlist</button>
     </br>
     {{/each}}
     <button class="open-button" onclick="openForm()">add playlist</button>
 
 <div class="form-popup" id="myForm">
-  <form action="/playlist" method="post" class="form-container">
-    <h1>add playlist</h1>
+    <form action="/library" method="post" class="form-container">
+        <h1>add playlist</h1>
 
-    <label for="playlistName"><b>playlist name</b></label>
-    <input type="text" placeholder="myPlaylist" name="playlistName" required>
+        <label for="playlistName"><b>playlist name</b></label>
+        <input type="text" placeholder="myPlaylist" name="playlistName" required>
 
-    {{!-- <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="psw" required> --}}
-
-    <button type="submit" class="btn">add playlist</button>
-    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-  </form>
+        <button type="submit" class="btn">add playlist</button>
+        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+    </form>
 </div>
-
-    {{!-- <button class="add-playlist" method="POST"  data-user_id="1">add playlist</button> --}}
 </div>
 
     {{{body}}}
@@ -88,7 +83,7 @@
             <i class="fa fa-play fa-stack-1x" aria-hidden="true"></i>
         </span>
     </button>
-  	<button class="btn text-white" onclick="next_song()" id="next"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
+    <button class="btn text-white" onclick="next_song()" id="next"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
     <button class="btn text-white" onclick="repeat_song()" id="repeat"><i class="fas fa-repeat-alt" id="repeating" aria-hidden="true"></i></button>
 
     <div class="current-song">
@@ -143,9 +138,8 @@ document.getElementById("myForm").style.display = "none";
 
 $(".delete-playlist").click((e) => {
 		e.preventDefault();
-        console.log(e.target.dataset.library_id)
 		$.ajax({
-			url: `/playlist/${e.target.dataset.library_id}`,
+			url: `/library/${e.target.dataset.library_id}`,
 			type: "DELETE",
 			success: function () {
 				console.log("success del");
@@ -158,7 +152,23 @@ $(".delete-playlist").click((e) => {
 			.always(() => console.log("running"));
 	});
 
-    
+    $(".delete-song").click((e) => {
+		e.preventDefault();
+        let library_id = $(".playlist")[0].dataset.library_id
+		$.ajax({
+			url: `/playlist/${library_id}/${e.target.dataset.song_id}`,
+			type: "DELETE",
+			success: function () {
+				console.log("success del");
+			},
+		})
+			.done(function () {
+				window.location.href=`/library/${library_id}`
+			})
+			.fail(() => console.log("hahafail"))
+			.always(() => console.log("running"));
+	});
+
 </script>
 
 </html>

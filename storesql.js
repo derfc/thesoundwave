@@ -126,23 +126,41 @@ module.exports = class StoreSQL {
 			.returning("id");
 	}
 
-	delPlaylistSong(deleteID) {
-		return knex(this.playlist).where("library_id", deleteID).del();
+	delAllSongsInPlaylist(deleteId) {
+		return knex(this.playlist).where("library_id", deleteId).del();
 	}
 
-	delPlaylistInLibrary(deleteID) {
-		return knex(this.library).where("id", deleteID).del();
+	delPlaylistInLibrary(deleteId) {
+		return knex(this.library).where("id", deleteId).del();
+	}
+
+	delOneSongInPlaylist(libraryId, deleteSongId) {
+		return knex(this.playlist)
+			.where("library_id", libraryId)
+			.andWhere("song_id", deleteSongId)
+			.del();
+	}
+	searchSongInPlaylist(libraryId, addSongId) {
+		return knex(this.playlist)
+			.where("library_id", libraryId)
+			.andWhere("song_id", addSongId);
+	}
+	addSongToPlaylist(libraryId, addSongId) {
+		return knex(this.playlist).insert({
+			library_id: libraryId,
+			song_id: addSongId,
+		});
 	}
 
 	searchForArtist(keywords) {
-		return knex(this.artist).where("artist_name", "like", `%${keywords}%`);
+		return knex(this.artist).where("artist_name", "ilike", `%${keywords}%`);
 	}
 
 	searchForAlbum(keywords) {
-		return knex(this.album).where("album_name", "like", `%${keywords}%`);
+		return knex(this.album).where("album_name", "ilike", `%${keywords}%`);
 	}
 
 	searchForSong(keywords) {
-		return knex(this.song).where("song_name", "like", `%${keywords}%`);
+		return knex(this.song).where("song_name", "ilike", `%${keywords}%`);
 	}
 };
