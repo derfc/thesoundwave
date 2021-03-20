@@ -48,7 +48,6 @@ function repeat_song() {
 }
 
 function random_song() {
-
     random++
     if (random % 2) {
         $('#random').removeClass('text-white').addClass('text-info');
