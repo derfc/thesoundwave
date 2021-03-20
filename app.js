@@ -98,11 +98,6 @@ const authCheck = (req, res, next) => {
 	}
 };
 
-// const hello = () => {
-// 	console.log(stripeSecretKey);
-// };
-// hello();
-
 //landing page
 app.get("/", (req, res) => {
 	res.render("index");
@@ -147,18 +142,26 @@ app.get("/home", authCheck, (req, res) => {
 //search
 app.post("/home", (req, res) => {
 	let keywords = req.body.keywords;
+	let user_id = 1;
 	return storeSQL.searchForArtist(keywords).then((artist) => {
 		storeSQL.searchForAlbum(keywords).then((album) => {
 			storeSQL.searchForSong(keywords).then((song) => {
-				let searchResult = { artist: artist, album: album, song: song };
-				res.send(searchResult);
+				storeSQL.getPlaylist(user_id).then((playlist) => {
+					let searchResult = {
+						artist: artist,
+						album: album,
+						song: song,
+						playlist: playlist,
+					};
+					res.send(searchResult);
+				});
 			});
 		});
 	});
 });
 
 //get playlist
-app.get("/playlist/:library_id", (req, res) => {
+app.get("/library/:library_id", (req, res) => {
 	// console.log("hi", req.params.playlist_id);
 	let library_id = req.params.library_id;
 	let count = 0;
@@ -178,6 +181,7 @@ app.get("/playlist/:library_id", (req, res) => {
 						storeSQL.getPlaylist(user_id).then((playlist) => {
 							// console.log("PL outpout", playlist);
 							res.render("playlist", {
+								libraryId: library_id,
 								playlist: playlist,
 								playlistSongArr: playlistSongArr,
 								layout: "dashboard",
@@ -190,10 +194,9 @@ app.get("/playlist/:library_id", (req, res) => {
 			});
 		} else {
 			storeSQL.getPlaylist(user_id).then((playlist) => {
-				console.log("PL outpout", playlist);
+				// console.log("PL outpout", playlist);
 				res.render("playlist", {
 					playlist: playlist,
-					// playlistSongArr: playlistSongArr,
 					layout: "dashboard",
 					stripePublicKey: stripePublicKey,
 					css: "../css/index.css",
@@ -203,27 +206,54 @@ app.get("/playlist/:library_id", (req, res) => {
 	});
 });
 
-app.post("/playlist", (req, res) => {
+app.post("/library", (req, res) => {
 	let user_id = 1;
-	console.log("hello", req.body.playlistName);
+	// console.log("hello", req.body.playlistName);
 	let newPlaylistName = req.body.playlistName;
 	return storeSQL.addPlaylist(newPlaylistName, user_id).then((library_id) => {
 		console.log("hihihihi", library_id[0]);
-		res.redirect(`/playlist/${library_id[0]}`);
+		res.redirect(`/library/${library_id[0]}`);
 	});
-	// return storeSQL.getLatestLibraryId().then((id) => {
-	// 	console.log("done", id);
-	// });
 });
 
-app.delete("/playlist/:library_id", (req, res) => {
-	console.log("hello", req.params.library_id);
-	let deleteID = req.params.library_id;
-	return storeSQL.delPlaylistSong(deleteID).then(() => {
-		storeSQL.delPlaylistInLibrary(deleteID).then(() => {
-			res.send("deleted");
+//add song to playlist
+app.post("/playlist/:library_id/:song_id", (req, res) => {
+	let libraryId = req.params.library_id;
+	let addSongId = req.params.song_id;
+	// console.log("lid", libraryId);
+	// console.log("asid", addSongId);
+	return storeSQL.searchSongInPlaylist(libraryId, addSongId).then((result) => {
+		if (result[0]) {
+			// console.log("yes", result);
+			res.send("already in playlist!");
+		} else {
+			storeSQL.addSongToPlaylist(libraryId, addSongId).then(() => {
+				res.send("added to playlist!");
+			});
+		}
+	});
+});
+
+//del playlist
+app.delete("/library/:library_id", (req, res) => {
+	// console.log("hello", req.params.library_id);
+	let deleteId = req.params.library_id;
+	return storeSQL.delAllSongsInPlaylist(deleteId).then(() => {
+		storeSQL.delPlaylistInLibrary(deleteId).then(() => {
+			res.send("playlist deleted");
 		});
 	});
+});
+
+//del song
+app.delete("/playlist/:library_id/:song_id", (req, res) => {
+	let libraryId = req.params.library_id;
+	let deleteSongId = req.params.song_id;
+	// console.log("hello PLID", libraryId);
+	// console.log("hello SID", deleteSongId);
+	return storeSQL
+		.delOneSongInPlaylist(libraryId, deleteSongId)
+		.then(() => res.send("song deleted"));
 });
 
 //setting route
