@@ -1,17 +1,41 @@
+<section class="container-fluid">
 <h1>home</h1>
+     <span class="display-6">
+     Welcome to your profile, {{user}}
+     </span>
+     <img src="{{thumbnail}}" alt="thumbnail" height="60px" width="60px" />
+     <p>math.random generating songs/news</p>
 
-<span class="display-6">welcome to your profile, {{user}} </span>
-<img src="{{thumbnail}}" alt="thumbnail" height="60px" width="60px">
+<div class="title row">
+     <div class="col">
+          <p>#</p>
+     </div>
+     <div class="col">
+          <p>SONG</p>
+     </div>
+     <div class="col">
+          <p>ARTIST</p>
+     </div>
+</div>
 
-<p>math.random generating songs/news</p>
 {{#each playlistSongArr}}
-<div class="">
-<ul>
-     <li>{{this.id}}</li>
-     <li>{{this.song_name}}</li>
-     <li>{{this.song_url}}</li>
-     <li>{{this.artist_id}}</li>
-     <li>{{this.artist_name}}</li>
-</ul>
+<div class="album__tracks row">
+     <div class="col">
+          <p>{{this.id}}</p>
+     </div>
+     <div class="col">
+          <p>{{this.song_name}}</p>
+     </div>
+     <div class="col">
+          <p>{{this.artist_name}}</p>
+     </div>
 </div>
 {{/each}}
+</section>
+{{!-- <ul>
+          <li>{{this.id}}</li>
+          <li>{{this.song_name}}</li>
+          <li>{{this.song_url}}</li>
+          <li>{{this.artist_id}}</li>
+          <li>{{this.artist_name}}</li>
+</ul> --}}
