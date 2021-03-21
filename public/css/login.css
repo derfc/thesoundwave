@@ -1,0 +1,224 @@
+.login_content:before {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+  display: block;
+  background-image: url("../image/loginBackground.jpeg");
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  filter: blur(1px);
+}
+
+.login_content .left {
+  position: absolute;
+  float: left;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 400px;
+  height: 512px;
+  background-color: rgba(33, 157, 228, 0.616);
+  margin: auto auto;
+  padding: 40px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px black;
+}
+.login_content .right {
+  position: absolute;
+  float: right;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 400px;
+  height: 540px;
+  background-color: rgba(10, 10, 10, 0.5);
+  margin: auto auto;
+  padding: 40px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px black;
+}
+.login_content .title {
+  border: 2px solid black;
+  border-radius: 20px;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  padding-bottom: 7px;
+  padding-top: 7px;
+  background-color: rgb(72, 116, 7);
+}
+.login_content input {
+  width: 100%;
+  font-size: 1.2rem;
+  font-family: "Open Sans";
+  margin: 5px 0px;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.logopic {
+  margin-top: -60px;
+}
+
+.psw {
+  text-align: center;
+  font-size: small;
+}
+
+.login_content label {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  position: relative;
+  margin-left: 5px;
+  margin-right: 10px;
+  top: 5px;
+}
+/* .login_content label:before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    position: absolute;
+    left: 0;
+    bottom: 1px;
+    background-color: #aaa;
+    box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, 0.3),
+      0px 1px 0px 0px rgba(255, 255, 255, 0.8);
+  } */
+.login_content input[type="checkbox"]:checked + label:before {
+  content: "\2713";
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  font-size: 20px;
+  color: Black;
+  text-align: center;
+  line-height: 20px;
+}
+.login_content span {
+  font-size: 0.9rem;
+}
+.login_content button {
+  width: 80%;
+  font-size: 1.2rem;
+  padding: 5px;
+  margin: 10px 0px;
+  background-color: #0f8f44;
+  color: White;
+  border: none;
+  border-radius: 6px;
+}
+
+.login_content button:hover {
+  background-color: #4e973d;
+}
+
+.login_content .social {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.login_content .social span {
+  display: inline-block;
+  vertical-align: baseline;
+  padding: 0 20px;
+}
+.goog {
+  text-align: center;
+  width: 225px;
+  padding: 5px;
+  padding-left: 27px;
+  margin-bottom: 5px;
+  font-size: 13px;
+}
+.faceb {
+  width: 225px;
+  text-align: center;
+  font-size: 13px;
+}
+.login_content .social span:before,
+.login_content .social span:after {
+  content: "";
+  display: block;
+  width: 500px;
+  position: absolute;
+  top: 0.9em;
+  border-top: 1px solid White;
+}
+.login_content .social span:before {
+  right: 75%;
+}
+.login_content .social span:after {
+  left: 75%;
+}
+
+/* buttons */
+
+.login_content .buttons {
+  width: 100%;
+  margin: 15px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login_content .buttons button {
+  width: 40%;
+  margin: 0px 1.5%;
+}
+.cancelButton {
+  align-content: center;
+  width: 20px;
+}
+.login_content .buttons button i {
+  padding-right: 7px;
+}
+.login_content .buttons button.facebook {
+  background-color: #4464b2;
+}
+
+.login_content .buttons button.facebook:hover {
+  background-color: #163e9c;
+}
+
+.login_content .buttons button.twitter {
+  background-color: #28a9e0;
+}
+
+.login_content .buttons button.twitter:hover {
+  background-color: #1c82ad;
+}
+
+.login_content .buttons button.google {
+  width: 50px;
+  background-color: #d13d18;
+  padding: 5px;
+  border: 2px solid red;
+  border-radius: 20px;
+}
+
+.login_content .buttons button.google:hover {
+  padding: 5px;
+  background-color: #b61c1c;
+  border: 2px solid red;
+  border-radius: 20px;
+}
+
+.login_content .buttons:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+.login_content .already {
+  text-align: center;
+  font-size: 0.9rem;
+}

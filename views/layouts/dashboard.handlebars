@@ -100,15 +100,17 @@
 
     <div class="col text-center">
         <div class="volume">
-        <span>Volume: </span><span id="volume_show">90</span>
+        <span>Volume: </span><span id="volume_show">80</span>
         </div>
         <div>
-        <i class="fa fa-volume-up" aria-hidden="true" onclick="mute_sound()" id="volume_icon"></i>
-        <input type="range" min="0" max="100" value="90" onchange="volume_change()" id="volume">  
+        <button class="btn vol-mute text-white" onclick="mute_sound()" >
+            <i class="fa fa-volume-up" id="vol-mute" aria-hidden="true"id="volume_icon"></i>
+        </button>
+        <input type="range" min="0" max="100" value="80" onchange="volume_change()" id="volume">  
         </div>
     </div>
 
-<div style="height:8px">
+<div style="height:15px">
 </div>
 
 </div>

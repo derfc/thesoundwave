@@ -27,6 +27,9 @@
      <div class="col">
           <p>ARTIST</p>
      </div>
+      <div class="col">
+          <p>LENGTH</p>
+     </div>
 </div>
 
 {{#each playlistSongArr}}
@@ -40,9 +43,16 @@
      <div class="col">
           <p>{{this.artist_name}}</p>
      </div>
+     <div class="col" id="song_length">
+     <p>need to get length</p>
+     </div>
 </div>
 {{/each}}
 </section>
+
+
+
+
 {{!-- <ul>
           <li>{{this.id}}</li>
           <li>{{this.song_name}}</li>

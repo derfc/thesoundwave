@@ -83,13 +83,6 @@ app.use(express.static(__dirname + "/public"));
 
 //authcheck
 const authCheck = (req, res, next) => {
-	console.log("requser", req.user);
-	// if (!req.user) {
-	// 	console.log('auth check fail?')
-	// 	res.redirect('/auth/login');
-	// } else {
-	// 	next();
-	// }
 	if (req.isAuthenticated()) {
 		console.log("He is allowed!");
 		return next();
@@ -105,11 +98,10 @@ app.get("/", (req, res) => {
 
 //home route
 app.get("/home", authCheck, (req, res) => {
+	// console.log(req.session, 'session')
 	let pic;
 	let user;
-
 	let user_id = 1;
-	// console.log("this is requser", req.user);
 
 	let id = req.user.id;
 	if (req.user.provider === "google") {

@@ -190,61 +190,53 @@ a {
 } */
 
 /* music player */
-.music-bar p{
-  margin:5px;
-
+.music-bar p {
+  margin: 5px;
 }
 
-
 .music-player {
-  height:100%;
-  width: 100%;
+  height: 100%;
   border-color: black;
   border-style: double;
   background-color: rgb(82, 80, 80);
 }
 
-.music-player button:focus{
-box-shadow: none;
+.music-player button:focus {
+  box-shadow: none;
 }
 
-.music-player i:hover{
-	color: rgb(46, 205, 226);
+.music-player i:hover {
+  color: rgb(46, 205, 226);
   transform: scale(1.15);
 }
 
-.music-player .fa-stack:hover{
+.music-player .fa-stack:hover {
   transform: scale(1.15);
 }
 
-.music-player .volume{
-	font-family:Arial, Helvetica, sans-serif;
-	font-size: 18px;
-	margin: 7px 0px;
+.music-player .volume {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  margin: 7px 0px;
 }
 
-.current-song{
-font-family:Arial, Helvetica, sans-serif;
-font-size: 16px;
-font-weight: 400;
-display: flex;
-align-items: center;
+.current-song {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
 }
 
-.current-song #duration_slider{
-	width:80%;
-	margin-left: 6px;
-	margin-right: 6px;
+.current-song #duration_slider {
+  width: 80%;
+  margin-left: 6px;
+  margin-right: 6px;
 }
 
-
-.music-buttons{
-color:#fff;
+.music-buttons {
+  color: #fff;
 }
-
-
-
-
 
 /*testing*/
 /* Button used to open the contact form - fixed at the bottom of the page */

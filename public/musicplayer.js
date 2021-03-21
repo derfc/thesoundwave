@@ -18,6 +18,8 @@ let Playing_song = false;
 let index = 0;
 let random = 0;
 let loop = 0;
+let ismute = 0;
+let vol = 80;
 
 let songList = [];
 let songNameArr = songName.split("/");
@@ -33,17 +35,35 @@ for (let i = 0; i < songNameArr.length - 1; i++) {
 }
 let playlist = JSON.parse(JSON.stringify(songList));
 
+
+// let source = track[0].src
+// for (let i = 0; i < songList.length; i++) {
+//     source = songList[i].song_url
+//     song_length(source)
+// }
+
+// function song_length(src) {
+//     let audio = new Audio();
+//     $(audio).on("loadedmetadata", function () {
+//         console.log(audio.duration);
+//         console.log($('#song_length'))
+//         $('#song_length')
+//     });
+//     audio.src = src;
+// }
+
+// song_length()
+
+// {/* <p>${audio.duration}</p> */ }
+
 function repeat_song() {
     loop++
-    console.log(loop)
     if (loop % 2) {
         $('#repeating').removeClass().addClass('fas fa-repeat-1-alt')
         track[0].loop = true;
-        console.log('repeat 1')
     } else {
         $('#repeating').removeClass().addClass('fas fa-repeat-alt')
         track[0].loop = false;
-        console.log('no repeat')
     }
 }
 
@@ -51,11 +71,9 @@ function random_song() {
     random++
     if (random % 2) {
         $('#random').removeClass('text-white').addClass('text-info');
-        console.log(random, 'random')
         playlist.sort(() => Math.random() - 0.5)
     } else {
         $('#random').removeClass('text-danger').addClass('text-white');
-        console.log(random, 'not random')
         index = songList.findIndex(x => x.song_name == playlist[index].song_name)
         // load_playlist()
         playsong();
@@ -79,7 +97,6 @@ load_playlist();
 
 // next song
 function next_song() {
-
     loop = 0;
     track[0].loop = false;
     if (index < songList.length - 1) {
@@ -105,7 +122,6 @@ function previous_song() {
         index -= 1;
         load_playlist();
         playsong();
-
     } else {
         index = songList.length;
         load_playlist();
@@ -147,7 +163,6 @@ function justplay() {
 }
 
 function playsong() {
-    console.log("playing");
     track[0].play();
     Playing_song = true;
     play[0].innerHTML =
@@ -157,10 +172,8 @@ function playsong() {
 function pausesong() {
     track[0].pause();
     Playing_song = false;
-    console.log("paused");
     play[0].innerHTML =
         "<span class='fa-stack'><i class='fas fa-circle fa-stack-2x text-white'></i><i class='fa fa-play fa-stack-1x' aria-hidden='true'></i></span>";
-    console.log(loop)
 }
 
 function audio_end() {
@@ -178,6 +191,29 @@ function change_duration() {
 function volume_change() {
     displayVolume[0].innerHTML = volume[0].value;
     track[0].volume = volume[0].value / 100;
+    vol = volume[0].value;
+}
+
+function mute_sound() {
+    ismute++
+    if (ismute % 2) {
+        $('#vol-mute').removeClass().addClass("fas fa-volume-mute")
+        track[0].volume = 0;
+        volume[0].value = 0;
+        displayVolume[0].innerHTML = volume[0].value;
+    } else {
+        if (vol !== 80) {
+            $('#vol-mute').removeClass().addClass("fa fa-volume-up")
+            volume[0].value = vol;
+            track[0].volume = volume[0].value / 100;
+            displayVolume[0].innerHTML = volume[0].value;
+        } else {
+            $('#vol-mute').removeClass().addClass("fa fa-volume-up")
+            volume[0].value = 80
+            track[0].volume = volume[0].value / 100;
+            displayVolume[0].innerHTML = volume[0].value;
+        }
+    }
 }
 
 function formatSecondsAsTime(secs, format) {
