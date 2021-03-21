@@ -7,12 +7,12 @@
 {{#each playlistSongArr}}
 <div class="">
      {{!-- btn > add to playlist  select playlist maybe?--}}
-<ul><li>{{libraryId}}</li>
+<ul>
      <li>{{this.id}}</li>
      <li>{{this.song_name}}</li>
      <li>{{this.song_url}}</li>
-     <li>{{this.artist_id}}</li>
-     <li>{{this.artist_name}}</li>
+     <li><a href="/album/{{this.album_id}}">{{this.album_name}}</a></li>
+     <li><a href="/artist/{{this.artist_id}}">{{this.artist_name}}</a></li>
 </ul>
 <button data-song_id="{{this.id}}" class="delete-song">delete song</button>
 </div>
