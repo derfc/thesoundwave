@@ -19,7 +19,7 @@ let index = 0;
 let random = 0;
 let loop = 0;
 let ismute = 0;
-let vol
+let vol = 80;
 
 let songList = [];
 let songNameArr = songName.split("/");
@@ -202,25 +202,28 @@ function volume_change() {
     displayVolume[0].innerHTML = volume[0].value;
     track[0].volume = volume[0].value / 100;
     vol = volume[0].value;
+    console.log(volume[0].value)
 }
 
 function mute_sound() {
     ismute++
     if (ismute % 2) {
+        console.log('is mute')
         $('#vol-mute').removeClass().addClass("fas fa-volume-mute")
         track[0].volume = 0;
         volume[0].value = 0;
         displayVolume[0].innerHTML = volume[0].value;
     } else {
-        if (volume[0].value !== 80) {
+        console.log('is not mute')
+        if (vol !== 80) {
             $('#vol-mute').removeClass().addClass("fa fa-volume-up")
             track[0].volume = volume[0].value / 100;
             volume[0].value = vol;
             displayVolume[0].innerHTML = volume[0].value;
         } else {
             $('#vol-mute').removeClass().addClass("fa fa-volume-up")
-            track[0].volume = 0.8;
             volume[0].value = 80
+            track[0].volume = volume[0].value / 100;
             displayVolume[0].innerHTML = volume[0].value;
         }
     }
