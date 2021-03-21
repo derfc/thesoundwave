@@ -159,6 +159,64 @@ app.post("/home", (req, res) => {
 		});
 	});
 });
+//get all artist
+app.get("/artist", (req, res) => {
+	return storeSQL.getArtist().then((artist) => {
+		console.log(artist);
+		res.render("artist", { layout: "dashboard", artist: artist });
+	});
+});
+
+//artist page
+app.get("/artist/:artist_id", (req, res) => {
+	let artist_id = req.params.artist_id;
+	return storeSQL.getArtist(artist_id).then((artistInfo) => {
+		console.log(artistInfo);
+		storeSQL.getAlbumByArtist(artistInfo[0].id).then((album) => {
+			res.render("artist", {
+				layout: "dashboard",
+				artist: artistInfo,
+				album: album,
+				css: "../css/index.css",
+			});
+		});
+		// res.render("artist", { layout: "dashboard", artist: artist });
+	});
+});
+
+//get album
+app.get("/album", (req, res) => {
+	return storeSQL.getAlbum().then((album) => {
+		console.log(album);
+		res.render("album", { layout: "dashboard", album: album });
+	});
+});
+
+//album page
+app.get("/album/:album_id", (req, res) => {
+	let user_id = 1;
+	let album_id = req.params.album_id;
+	return storeSQL.getAlbum(album_id).then((albumInfo) => {
+		// console.log(albumInfo);
+		storeSQL.getSongByAlbum(albumInfo[0].id).then((song) => {
+			// console.log("haha", song);
+			storeSQL.getPlaylist(user_id).then((playlist) => {
+				// console.log("playlist", playlist);
+				// song.push({ albumName: playlist });
+				// console.log("haha", song);
+				res.render("album", {
+					layout: "dashboard",
+					song: song,
+					album: albumInfo,
+					playlist: playlist,
+					css: "../css/index.css",
+					script: "../album.js",
+					musicPlayerScript: "../musicplayer.js",
+				});
+			});
+		});
+	});
+});
 
 //get playlist
 app.get("/library/:library_id", (req, res) => {
@@ -211,7 +269,7 @@ app.post("/library", (req, res) => {
 	// console.log("hello", req.body.playlistName);
 	let newPlaylistName = req.body.playlistName;
 	return storeSQL.addPlaylist(newPlaylistName, user_id).then((library_id) => {
-		console.log("hihihihi", library_id[0]);
+		// console.log("hihihihi", library_id[0]);
 		res.redirect(`/library/${library_id[0]}`);
 	});
 });

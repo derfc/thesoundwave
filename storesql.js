@@ -102,9 +102,12 @@ module.exports = class StoreSQL {
 				"s.song_url",
 				"a.id as artist_id",
 				"a.artist_name",
+				"alb.id as album_id",
+				"alb.album_name",
 			])
 			.from(`song as s`)
 			.join(`artist as a`, "s.artist_id", "a.id")
+			.join(`album as alb`, "s.album_id", "alb.id")
 			.where("s.id", song_id)
 			.orderBy("id");
 	}
@@ -162,5 +165,61 @@ module.exports = class StoreSQL {
 
 	searchForSong(keywords) {
 		return knex(this.song).where("song_name", "ilike", `%${keywords}%`);
+	}
+
+	getArtist(artist_id) {
+		if (!artist_id) {
+			return knex(this.artist);
+		} else {
+			return knex(this.artist).where("id", artist_id);
+		}
+	}
+
+	getAlbumByArtist(artist_id) {
+		return knex(this.album).where("artist_id", artist_id);
+	}
+
+	getAlbum(album_id) {
+		if (!album_id) {
+			// return knex(this.album);
+			return knex
+				.select([
+					"s.id",
+					"s.album_name",
+					"s.album_photo",
+					"a.id as artist_id",
+					"a.artist_name",
+				])
+				.from(`album as s`)
+				.join(`artist as a`, "s.artist_id", "a.id")
+				.orderBy("id");
+		} else {
+			return knex
+				.select([
+					"s.id",
+					"s.album_name",
+					"s.album_photo",
+					"a.id as artist_id",
+					"a.artist_name",
+				])
+				.from(`album as s`)
+				.join(`artist as a`, "s.artist_id", "a.id")
+				.where("s.id", album_id);
+		}
+	}
+
+	getSongByAlbum(album_id) {
+		return knex
+			.select([
+				"s.id",
+				"s.song_name",
+				"s.song_url",
+				"a.id as artist_id",
+				"a.artist_name",
+			])
+			.from(`song as s`)
+			.join(`artist as a`, "s.artist_id", "a.id")
+			.where("s.album_id", album_id)
+			.orderBy("id");
 	}
 };

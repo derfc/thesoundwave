@@ -2,7 +2,7 @@ exports.up = function (knex) {
 	return knex.schema.createTable("album", (table) => {
 		table.increments();
 		table.string("album_name").notNull();
-		table.binary("album_photo");
+		table.string("album_photo");
 		table.integer("artist_id").references("id").inTable("artist");
 		table.timestamps(true, true);
 	});

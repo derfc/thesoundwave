@@ -1,0 +1,58 @@
+<h1>album</h1>
+
+<span class="display-6">welcome to your profile, {{user}} </span>
+<img src="{{thumbnail}}" alt="thumbnail" height="60px" width="60px">
+
+{{#if song}}
+{{#each album}}
+<div class="album-info">
+     <img src="{{this.album_photo}}" alt="{{this.album_name}} cover photo"/>
+<ul>
+     {{!-- <li>{{this.id}}</li> --}}
+     <li><a href="/artist/{{this.artist_id}}">{{this.artist_name}}</a></li>
+     <li>{{this.album_name}}</li>
+</ul>
+{{/each}}
+
+
+{{#each song}}
+<div class="song">
+<ul>
+     <li>{{this.song_name}}</li>
+     <li><a href="/artist/{{this.artist_id}}">{{this.artist_name}}</a></li>
+     <button class="add-album-song-to-playlist" data-song_id="{{this.id}}">add to playlist</button class="select-playlist"><ul class="list" id="list{{@index}}"></ul>
+</ul>
+{{!-- <a href="/album/{{this.id}}"><button class="go-to-album">go to {{this.album_name}}</button></a>  --}}
+</div>
+{{!-- {{#each loop.albumName as |albumloop|}}
+{{albumloop.playlist_name}}
+{{albumloop.id}}
+{{/each}} --}}
+{{/each}}
+</div>
+
+
+{{else}}
+<div class="album">
+{{#each album}}
+<div class="album-all">
+     <img src="{{this.album_photo}}" alt="{{this.album_name}} cover photo"/>
+<ul>
+     <li>album id: {{this.id}}</li>
+     <li>artist id: {{this.artist_id}}</li>
+     <li><a href="/artist/{{this.artist_id}}">{{this.artist_name}}</a></li>
+     <li><a href="/album/{{this.id}}">{{this.album_name}}</a></li>
+</ul>
+</div>
+{{/each}}
+</div>
+{{/if}}
+
+{{!-- 
+{{#each song as |song|}}
+{{log song.song_name}}
+{{#each song.albumName as |album|}}
+{{log album.playlist_name}}
+{{/each}}
+{{/each}} --}}
+
