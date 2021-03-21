@@ -216,9 +216,10 @@ function mute_sound() {
     } else {
         console.log('is not mute')
         if (vol !== 80) {
+            console.log(vol)
             $('#vol-mute').removeClass().addClass("fa fa-volume-up")
-            track[0].volume = volume[0].value / 100;
             volume[0].value = vol;
+            track[0].volume = volume[0].value / 100;
             displayVolume[0].innerHTML = volume[0].value;
         } else {
             $('#vol-mute').removeClass().addClass("fa fa-volume-up")
