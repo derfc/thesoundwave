@@ -18,6 +18,8 @@ let Playing_song = false;
 let index = 0;
 let random = 0;
 let loop = 0;
+let ismute = 0;
+let vol
 
 let songList = [];
 let songNameArr = songName.split("/");
@@ -32,6 +34,27 @@ for (let i = 0; i < songNameArr.length - 1; i++) {
     });
 }
 let playlist = JSON.parse(JSON.stringify(songList));
+
+
+// let source = track[0].src
+// for (let i = 0; i < songList.length; i++) {
+//     source = songList[i].song_url
+//     song_length(source)
+// }
+
+// function song_length(src) {
+//     let audio = new Audio();
+//     $(audio).on("loadedmetadata", function () {
+//         console.log(audio.duration);
+//         console.log($('#song_length'))
+//         $('#song_length')
+//     });
+//     audio.src = src;
+// }
+
+// song_length()
+
+// {/* <p>${audio.duration}</p> */ }
 
 function repeat_song() {
     loop++
@@ -178,6 +201,29 @@ function change_duration() {
 function volume_change() {
     displayVolume[0].innerHTML = volume[0].value;
     track[0].volume = volume[0].value / 100;
+    vol = volume[0].value;
+}
+
+function mute_sound() {
+    ismute++
+    if (ismute % 2) {
+        $('#vol-mute').removeClass().addClass("fas fa-volume-mute")
+        track[0].volume = 0;
+        volume[0].value = 0;
+        displayVolume[0].innerHTML = volume[0].value;
+    } else {
+        if (volume[0].value !== 80) {
+            $('#vol-mute').removeClass().addClass("fa fa-volume-up")
+            track[0].volume = volume[0].value / 100;
+            volume[0].value = vol;
+            displayVolume[0].innerHTML = volume[0].value;
+        } else {
+            $('#vol-mute').removeClass().addClass("fa fa-volume-up")
+            track[0].volume = 0.8;
+            volume[0].value = 80
+            displayVolume[0].innerHTML = volume[0].value;
+        }
+    }
 }
 
 function formatSecondsAsTime(secs, format) {
