@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/derfc/thesoundwave#readme",
   "dependencies": {
+    "aws-sdk": "^2.868.0",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "cookie-session": "^1.4.0",
