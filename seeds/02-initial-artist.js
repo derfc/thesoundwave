@@ -1,5 +1,6 @@
 exports.seed = function (knex) {
 	// Deletes ALL existing entries
+	console.log("seed file 2");
 	return knex("artist")
 		.del()
 		.then(function () {
