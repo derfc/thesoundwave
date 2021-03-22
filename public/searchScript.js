@@ -48,8 +48,8 @@ $("#filter_songs").on("keyup search", function (e) {
 					}
 				}
 				if (song.length > 0) {
+					$(".song").append(`<h3>Song</h3>`);
 					for (let i = 0; i < song.length; i++) {
-						$(".song").append(`<h3>Song</h3>`);
 						let songName = song[i].song_name;
 						let songId = song[i].id;
 						console.log(song[0]);

@@ -1,20 +1,53 @@
-<h1>playlist</h1>
+<h1>Playlist</h1>
+<p>{{libraryId}}</p>
 
-<span class="display-6">welcome to your profile, {{user}} </span>
-<img src="{{thumbnail}}" alt="thumbnail" height="60px" width="60px">
 
 <div class="playlist" data-library_id="{{libraryId}}">
-{{#each playlistSongArr}}
-<div class="">
-     {{!-- btn > add to playlist  select playlist maybe?--}}
-<ul>
-     <li>{{this.id}}</li>
-     <li>{{this.song_name}}</li>
-     <li>{{this.song_url}}</li>
-     <li><a href="/album/{{this.album_id}}">{{this.album_name}}</a></li>
-     <li><a href="/artist/{{this.artist_id}}">{{this.artist_name}}</a></li>
-</ul>
-<button data-song_id="{{this.id}}" class="delete-song">delete song</button>
-</div>
-{{/each}}
+     <div class="title row">
+          <div class="col">
+               <p>#</p>
+          </div>
+          <div class="col">
+               <p>SONG</p>
+          </div>
+          <div class="col">
+               <p>ALBUM</p>
+          </div>
+          <div class="col">
+               <p>ARTIST</p>
+          </div>
+          <div class="col">
+               <p>DURATION</p>
+          </div>
+          <div class="col">
+               <p>ACTION</p>
+          </div>
+     </div>
+
+
+     <div class="song-list">
+          {{#each playlistSongArr}}
+          <div class="album__tracks row">
+               <div class="col">
+                    <p>{{this.id}}</p>
+               </div>
+               <div class="col">
+                    <p>{{this.song_name}}</p>
+               </div>
+               <div class="col">
+                    <p><a href="/album/{{this.album_id}}">{{this.album_name}}</a></p>
+               </div>
+               <div class="col">
+                    <p><a href="/artist/{{this.artist_id}}">{{this.artist_name}}</a></p>
+               </div>
+               <div class="col" id="song_length">
+                    <p>need to get length</p>
+               </div>
+               <div class="col">
+                    <button data-song_id="{{this.id}}" class="delete-song">delete song</button>
+               </div>
+
+          </div>
+          {{/each}}
+     </div>
 </div>

@@ -30,26 +30,26 @@ const aws = require("aws-sdk");
 const cookieSession = require("cookie-session");
 const { default: knex } = require("knex");
 
-(async function () {
-	try {
-		aws.config.setPromisesDependency();
-		aws.config.update({
-			accessKeyId: keys.accessKeyId,
-			secretAccessKey: keys.secretAccessKey,
-			region: "us-west-1",
-		});
-		const s3 = new aws.S3();
-		const response = await s3
-			.listObjectsV2({
-				Bucket: "thesoundwave",
-			})
-			.promise();
-		console.log(response);
-	} catch (e) {
-		console.log("error", e);
-	}
-	debugger;
-})();
+// (async function () {
+// 	try {
+// 		aws.config.setPromisesDependency();
+// 		aws.config.update({
+// 			accessKeyId: keys.accessKeyId,
+// 			secretAccessKey: keys.secretAccessKey,
+// 			region: "us-west-1",
+// 		});
+// 		const s3 = new aws.S3();
+// 		const response = await s3
+// 			.listObjectsV2({
+// 				Bucket: "thesoundwave",
+// 			})
+// 			.promise();
+// 		console.log(response);
+// 	} catch (e) {
+// 		console.log("error", e);
+// 	}
+// 	debugger;
+// })();
 
 app.use(
 	cookieSession({
@@ -101,7 +101,21 @@ app.use(bodyParser.json());
 //static files
 app.use(express.static(__dirname + "/public"));
 
-//knex
+// get Picture and Name
+let pic;
+let user;
+
+function getNamePic(req) {
+	if (req.user.provider === "google") {
+		pic = req.user._json.picture;
+		user = req.user.displayName;
+	} else if (req.user.provider === "facebook") {
+		pic = req.user.photos[0].value;
+		user = req.user.displayName;
+	} else {
+		user = req.user.username;
+	}
+}
 
 //authcheck
 const authCheck = (req, res, next) => {
@@ -120,21 +134,10 @@ app.get("/", (req, res) => {
 
 //home route
 app.get("/home", authCheck, (req, res) => {
-	// console.log(req.session, 'session')
-	let pic;
-	let user;
 	let user_id = 1;
-
 	let id = req.user.id;
-	if (req.user.provider === "google") {
-		pic = req.user._json.picture;
-		user = req.user.displayName;
-	} else if (req.user.provider === "facebook") {
-		pic = req.user.photos[0].value;
-		user = req.user.displayName;
-	} else {
-		user = req.user.username;
-	}
+
+	getNamePic(req);
 
 	return storeSQL.getPlaylist(user_id).then((playlist) => {
 		// console.log("PL outpout", playlist);
@@ -177,7 +180,7 @@ app.post("/home", (req, res) => {
 app.get("/artist", (req, res) => {
 	return storeSQL.getArtist().then((artist) => {
 		console.log(artist);
-		res.render("artist", { layout: "dashboard", artist: artist });
+		res.render("artist", { layout: "dashboard", artist: artist, user: user, thumbnail: pic });
 	});
 });
 
@@ -202,7 +205,8 @@ app.get("/artist/:artist_id", (req, res) => {
 app.get("/album", (req, res) => {
 	return storeSQL.getAlbum().then((album) => {
 		console.log(album);
-		res.render("album", { layout: "dashboard", album: album });
+		console.log(req.user.displayName)
+		res.render("album", { layout: "dashboard", album: album, user: user, thumbnail: pic });
 	});
 });
 
@@ -253,10 +257,10 @@ app.get("/library/:library_id", (req, res) => {
 						storeSQL.getPlaylist(user_id).then((playlist) => {
 							// console.log("PL outpout", playlist);
 							res.render("playlist", {
+								layout: "dashboard",
 								libraryId: library_id,
 								playlist: playlist,
 								playlistSongArr: playlistSongArr,
-								layout: "dashboard",
 								stripePublicKey: stripePublicKey,
 								css: "../css/index.css",
 							});
@@ -268,8 +272,8 @@ app.get("/library/:library_id", (req, res) => {
 			storeSQL.getPlaylist(user_id).then((playlist) => {
 				// console.log("PL outpout", playlist);
 				res.render("playlist", {
-					playlist: playlist,
 					layout: "dashboard",
+					playlist: playlist,
 					stripePublicKey: stripePublicKey,
 					css: "../css/index.css",
 				});
@@ -330,7 +334,7 @@ app.delete("/playlist/:library_id/:song_id", (req, res) => {
 
 //setting route
 app.get("/setting", (req, res) => {
-	res.render("setting", { layout: "dashboard" });
+	res.render("setting", { layout: "dashboard", user: user, thumbnail: pic });
 });
 
 //setting route
@@ -345,6 +349,8 @@ app.get("/store", (req, res) => {
 			item: item,
 			layout: "dashboard",
 			stripePublicKey: stripePublicKey,
+			user: user,
+			thumbnail: pic,
 		});
 	});
 });
@@ -357,6 +363,8 @@ app.get("/cart", (req, res) => {
 			item: item,
 			layout: "dashboard",
 			stripePublicKey: stripePublicKey,
+			user: user,
+			thumbnail: pic,
 		});
 	});
 });
