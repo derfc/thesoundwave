@@ -14,6 +14,19 @@
           <div class="song"> </div>
      </div>
 
+     <div class="d-flex flex-wrap">
+          {{#each playlistSongArr}}
+          <div class="album-card">
+               <img class="image" src="http://placehold.it/150x150" alt="Living Things" />
+               <div class="album-info">
+                    <h6 class="name">{{this.song_name}}</h6>
+                    <h6 class="meta">{{this.artist_name}}</h6>
+               </div>
+               <div class="album-page"></div>
+          </div>
+          {{/each}}
+     </div>
+
      <div class="title row">
           <div class="col">
                <p>#</p>
