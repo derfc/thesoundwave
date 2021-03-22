@@ -11,7 +11,8 @@
 
 
     <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v5.15.1/css/pro.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     {{#if css}}
     <link rel="stylesheet" href="{{css}}">
     {{else}}
@@ -30,154 +31,172 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
 
-<body>
-<h1>dashboard layout</h1>
-{{!-- //navbar --}}
-<a href="/home"><button id="go-to-home" class="button-home" value="home">home</button></a>
-<a href="/setting"><button id="go-to-setting" class="button-setting" value="setting">setting</button></a>
-<a href="/artist"><button id="go-to-artist" class="button-artist" value="artist">artist</button></a>
-<a href="/album"><button id="go-to-album" class="button-album" value="album">album</button></a>
-<a href="/store"><button id="go-to-store" class="button-store" value="store">store</button></a>
-<a href="/cart"><button id="go-to-cart" class="button-cart" value="cart">cart</button></a>
-<a href="/auth/logout"><button id="logout" class="button-logout" value="logout">logout</button></a>
+<body class="">
 
-<div>
-    {{#each playlist}}
-<a href="/library/{{this.id}}"><button type="button" class="select-playlist" data-library_id="{{this.id}}">{{this.playlist_name}}</button></a>
-<button data-library_id="{{this.id}}" class="delete-playlist">delete playlist</button>
-    </br>
-    {{/each}}
-    <button class="open-button" onclick="openForm()">add playlist</button>
+    <h1>dashboard layout</h1>
 
-<div class="form-popup" id="myForm">
-    <form action="/library" method="post" class="form-container">
-        <h1>add playlist</h1>
-
-        <label for="playlistName"><b>playlist name</b></label>
-        <input type="text" placeholder="myPlaylist" name="playlistName" required>
-
-        <button type="submit" class="btn">add playlist</button>
-        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-    </form>
-</div>
-</div>
-
-    {{{body}}}
-
-{{!-- //footer --}}
-
-<section class="music-bar text-white">
-<div class="music-player row">
-<p>music player</p>
-
-    <div class="col current-song">
-    <div id="current_song"></div>
-    <div id="current_artist"></div>
+    {{!-- //navbar --}}
+    <div class="text-center">
+        <a href="/home"><button id="go-to-home" class="button-home" value="home">home</button></a>
+        <a href="/artist"><button id="go-to-artist" class="button-artist" value="artist">artist</button></a>
+        <a href="/album"><button id="go-to-album" class="button-album" value="album">album</button></a>
+        <a href="/store"><button id="go-to-store" class="button-store" value="store">store</button></a>
+        <a href="/cart"><button id="go-to-cart" class="button-cart" value="cart">cart</button></a>
+        <a href="/setting"><button id="go-to-setting" class="button-setting" value="setting">setting</button></a>
+        <a href="/auth/logout"><button id="logout" class="button-logout" value="logout">logout</button></a>
     </div>
 
-<audio id="myTrack" ontimeupdate="updateTrackTime(this)" onended="audio_end()" src="" type="audio/mp3"/>
-</audio>
+    <section class="side-bar row">
+        <div class="col-2">
+            <div>
+                <img src="{{thumbnail}}" alt="thumbnail" height="60px" width="60px" />
+            </div>
+            <p class="display-6">{{user}}</p>
 
-<div class="middle col-6 text-center music-buttons">
-    <button class="btn text-white" onclick="random_song()" id="random"><i class="fa fa-random" aria-hidden="true"></i></button>
-    <button class="btn text-white" onclick="previous_song()" id="previous"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
-    <button class="btn" onclick="justplay()" id="play">
-        <span class="fa-stack">
-            <i class="fas fa-circle fa-stack-2x text-white" id="circleplay"></i>
-            <i class="fa fa-play fa-stack-1x" aria-hidden="true"></i>
-        </span>
-    </button>
-    <button class="btn text-white" onclick="next_song()" id="next"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
-    <button class="btn text-white" onclick="repeat_song()" id="repeat"><i class="fas fa-repeat-alt" id="repeating" aria-hidden="true"></i></button>
+            <div>
+                <p>Your Playlist</p>
+                <button class="open-button" onclick="openForm()">add playlist</button>
+                {{#each playlist}}
+                <a href="/library/{{this.id}}"><button type="button" class="select-playlist"
+                        data-library_id="{{this.id}}">{{this.playlist_name}}</button></a>
+                <button data-library_id="{{this.id}}" class="delete-playlist">delete playlist</button>
+                </br>
+                {{/each}}
 
-    <div class="current-song">
-        <span id="current_time"> 00:00 </span>
-        <input type="range" min="0" max="100" value="0" id="duration_slider" onchange="change_duration()"/>
-        <span id="show_duration"> 00:00 </span>
-    </div>
 
-</div>
-
-    <div class="col text-center">
-        <div class="volume">
-        <span>Volume: </span><span id="volume_show">80</span>
+                {{!-- pop-up form for inserting new playlist --}}
+                <div class="form-popup" id="myForm">
+                    <form action="/library" method="post" class="form-container">
+                        <h1>add playlist</h1>
+                        <label for="playlistName"><b>playlist name</b></label>
+                        <input type="text" placeholder="myPlaylist" name="playlistName" required>
+                        <button type="submit" class="btn">add playlist</button>
+                        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div>
-        <button class="btn vol-mute text-white" onclick="mute_sound()" >
-            <i class="fa fa-volume-up" id="vol-mute" aria-hidden="true"id="volume_icon"></i>
-        </button>
-        <input type="range" min="0" max="100" value="80" onchange="volume_change()" id="volume">  
+
+        <div class="col">
+            {{{body}}}
         </div>
-    </div>
 
-<div style="height:15px">
-</div>
+    </section>
 
-</div>
-</section>
+    {{!-- //footer --}}
+
+    <section class="music-bar text-white">
+        <div class="music-player row">
+            <p>music player</p>
+
+            <div class="col current-song">
+                <div id="current_song"></div>
+                <div id="current_artist"></div>
+            </div>
+
+            <audio id="myTrack" ontimeupdate="updateTrackTime(this)" onended="audio_end()" src="" type="audio/mp3" />
+            </audio>
+
+            <div class="middle col-6 text-center music-buttons">
+                <button class="btn text-white" onclick="random_song()" id="random"><i class="fa fa-random"
+                        aria-hidden="true"></i></button>
+                <button class="btn text-white" onclick="previous_song()" id="previous"><i class="fa fa-step-backward"
+                        aria-hidden="true"></i></button>
+                <button class="btn" onclick="justplay()" id="play">
+                    <span class="fa-stack">
+                        <i class="fas fa-circle fa-stack-2x text-white" id="circleplay"></i>
+                        <i class="fa fa-play fa-stack-1x" aria-hidden="true"></i>
+                    </span>
+                </button>
+                <button class="btn text-white" onclick="next_song()" id="next"><i class="fa fa-step-forward"
+                        aria-hidden="true"></i></button>
+                <button class="btn text-white" onclick="repeat_song()" id="repeat"><i class="fas fa-repeat-alt"
+                        id="repeating" aria-hidden="true"></i></button>
+
+                <div class="current-song">
+                    <span id="current_time"> 00:00 </span>
+                    <input type="range" min="0" max="100" value="0" id="duration_slider" onchange="change_duration()" />
+                    <span id="show_duration"> 00:00 </span>
+                </div>
+
+            </div>
+
+            <div class="col text-center">
+                <div class="volume">
+                    <span>Volume: </span><span id="volume_show">80</span>
+                </div>
+                <div>
+                    <button class="btn vol-mute text-white" onclick="mute_sound()">
+                        <i class="fa fa-volume-up" id="vol-mute" aria-hidden="true" id="volume_icon"></i>
+                    </button>
+                    <input type="range" min="0" max="100" value="80" onchange="volume_change()" id="volume">
+                </div>
+            </div>
+
+            <div style="height:15px">
+            </div>
+
+        </div>
+    </section>
 
 
 </body>
-    {{!-- <script??? src="https://code.jquery.com/jquery-3.1.1.min.js"></script???> --}}
-    <script
-    src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+{{!-- <script??? src="https://code.jquery.com/jquery-3.1.1.min.js"></script???> --}}
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
     integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-    crossorigin="anonymous"
-    ></script>
-    <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
     integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
-    crossorigin="anonymous"
-    ></script>
-    {{#if script}}
-    <script src={{script}}></script>
-    {{/if}}
-    {{#if musicPlayerScript}}
-    <script src={{script}}></script>
-    {{else}}
-    <script src="/musicplayer.js"></script>
-    {{/if}}
-    <script>
-function openForm() {
-document.getElementById("myForm").style.display = "block";
-}
+    crossorigin="anonymous"></script>
+{{#if script}}
+<script src={{script}}></script>
+{{/if}}
+{{#if musicPlayerScript}}
+<script src={{script}}></script>
+{{else}}
+<script src="/musicplayer.js"></script>
+{{/if}}
+<script>
+    function openForm() {
+        document.getElementById("myForm").style.display = "block";
+    }
 
-function closeForm() {
-document.getElementById("myForm").style.display = "none";
-}
+    function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+    }
 
-$(".delete-playlist").click((e) => {
-		e.preventDefault();
-		$.ajax({
-			url: `/library/${e.target.dataset.library_id}`,
-			type: "DELETE",
-			success: function () {
-				console.log("success del");
-			},
-		})
-			.done(function () {
-				window.location.href="/home"
-			})
-			.fail(() => console.log("hahafail"))
-			.always(() => console.log("running"));
-	});
+    $(".delete-playlist").click((e) => {
+        e.preventDefault();
+        $.ajax({
+            url: `/library/${e.target.dataset.library_id}`,
+            type: "DELETE",
+            success: function () {
+                console.log("success del");
+            },
+        })
+            .done(function () {
+                window.location.href = "/home"
+            })
+            .fail(() => console.log("hahafail"))
+            .always(() => console.log("running"));
+    });
 
     $(".delete-song").click((e) => {
-		e.preventDefault();
+        e.preventDefault();
         let library_id = $(".playlist")[0].dataset.library_id
-		$.ajax({
-			url: `/playlist/${library_id}/${e.target.dataset.song_id}`,
-			type: "DELETE",
-			success: function () {
-				console.log("success del");
-			},
-		})
-			.done(function () {
-				window.location.href=`/library/${library_id}`
-			})
-			.fail(() => console.log("hahafail"))
-			.always(() => console.log("running"));
-	});
+        $.ajax({
+            url: `/playlist/${library_id}/${e.target.dataset.song_id}`,
+            type: "DELETE",
+            success: function () {
+                console.log("success del");
+            },
+        })
+            .done(function () {
+                window.location.href = `/library/${library_id}`
+            })
+            .fail(() => console.log("hahafail"))
+            .always(() => console.log("running"));
+    });
 
 </script>
 

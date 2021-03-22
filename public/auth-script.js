@@ -49,8 +49,9 @@ $(document).ready(() => {
     })
 
     $('#cancelButton').click((e) => {
-        $('#loginUsername').val('')
-        $('#loginPassword').val('')
+        // $('#loginUsername').val('')
+        // $('#loginPassword').val('')
+        window.location.href = "/"
     })
 });
 
