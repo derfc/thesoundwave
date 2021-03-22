@@ -48,13 +48,14 @@ $("#filter_songs").on("keyup search", function (e) {
 					}
 				}
 				if (song.length > 0) {
+					$(".song").append(`<h3>Song</h3>`);
 					for (let i = 0; i < song.length; i++) {
-						$(".song").append(`<h3>Song</h3>`);
-						let songName = song[i].song_name;
 						let songId = song[i].id;
+						let songName = song[i].song_name;
+						let songUrl = song[i].song_url;
 						console.log(song[0]);
 						$(".song").append(
-							`<p>returning ${songName}</p><button class="select-playlist" data-song_id="${songId}">add to playlist</button><ul class="list" id="list${i}"></ul>`
+							`<p>returning ${songName}</p><button class="playSong" data-song_id="${songId}" data-song_url="${songUrl}">play ${songName}</button><button class="select-playlist" data-song_id="${songId}">add to playlist</button><ul class="list" id="list${i}"></ul>`
 						);
 						for (let y = 0; y < playlist.length; y++) {
 							let playlistName = playlist[y].playlist_name;

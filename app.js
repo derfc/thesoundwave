@@ -30,26 +30,26 @@ const aws = require("aws-sdk");
 const cookieSession = require("cookie-session");
 const { default: knex } = require("knex");
 
-(async function () {
-	try {
-		aws.config.setPromisesDependency();
-		aws.config.update({
-			accessKeyId: keys.accessKeyId,
-			secretAccessKey: keys.secretAccessKey,
-			region: "us-west-1",
-		});
-		const s3 = new aws.S3();
-		const response = await s3
-			.listObjectsV2({
-				Bucket: "thesoundwave",
-			})
-			.promise();
-		console.log(response);
-	} catch (e) {
-		console.log("error", e);
-	}
-	debugger;
-})();
+// (async function () {
+// 	try {
+// 		aws.config.setPromisesDependency();
+// 		aws.config.update({
+// 			accessKeyId: keys.accessKeyId,
+// 			secretAccessKey: keys.secretAccessKey,
+// 			region: "us-west-1",
+// 		});
+// 		const s3 = new aws.S3();
+// 		const response = await s3
+// 			.listObjectsV2({
+// 				Bucket: "thesoundwave",
+// 			})
+// 			.promise();
+// 		console.log(response);
+// 	} catch (e) {
+// 		console.log("error", e);
+// 	}
+// 	// debugger;
+// })();
 
 app.use(
 	cookieSession({
