@@ -5,7 +5,7 @@
 <div class="artist-info">
      <ul>
           <li>{{this.artist_photo}}</li>
-          <li>{{this.artist_name}}'s Profile</li>
+          <li>{{this.artist_name_eng}}'s Profile</li>
      </ul>
      {{/each}}
      {{#each album}}
@@ -28,7 +28,7 @@
           <ul>
                <li>{{this.id}}</li>
                <li>{{this.artist_photo}}</li>
-               <li>{{this.artist_name}}</li>
+               <li>{{this.artist_name_eng}}</li>
           </ul>
           <a href="/artist/{{this.id}}"><button class="go-to-artist">go to {{this.artist_name}}</button></a>
      </div>

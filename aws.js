@@ -42,7 +42,7 @@ module.exports.getAwsObject = () => {
 			if (!artistArr.includes(objArr[0])) {
 				// console.log("new artist, push to arr", objArr[0]);
 				// console.log(objArr[0].split("-"));
-				let artistNameEng = objArr[0].split("-")[0].replaceAll("_", " ");
+				let artistNameEng = objArr[0].split("-")[0].replace(/_/g, " ");
 				let artistNameChi = objArr[0].split("-")[1];
 				artistArr.push(objArr[0]);
 				// console.log(artistArr, "artistArr 1");
@@ -108,7 +108,7 @@ module.exports.getAwsObject = () => {
 				// console.log(albumId, "album id 3");
 				// console.log(albumArr, "albumArr 3");
 				await songKnex.push({
-					song_name: objArr[3],
+					song_name: objArr[3].replace(".mp3", ""),
 					song_url: `https://thesoundwave.s3-us-west-1.amazonaws.com/${objArr[0]}/album/${objArr[2]}/${objArr[3]}`,
 					artist_id: artistId,
 					album_id: albumId,
