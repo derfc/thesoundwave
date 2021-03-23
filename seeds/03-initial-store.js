@@ -1,5 +1,6 @@
 exports.seed = function (knex) {
 	// Deletes ALL existing entries
+	console.log("seed file 3");
 	return knex("store")
 		.del()
 		.then(function () {
