@@ -1,8 +1,80 @@
 <h1>store page</h1>
-navbar: featured product search for artist/ product
-same as personal site
+<section class="mainhomepage">
 
-{{#each item}}
+
+     <div class="instant-search d-inline mx-3">
+          <input type="search" spellcheck="false" placeholder="Search store" id="filter_store" />
+     </div>
+
+     {{!-- <button class="btn btn-info button-artist search-artist" value="artist">artist</button>
+     <button class="btn btn-info button-album search-album" value="album">album</button> --}}
+
+     <div class="greetings text-white">
+     </div>
+
+     <div class="results mb-2">
+          <div class="store"><p>hihi</p></div>
+          <div class="item"></div>
+          {{!-- <div class="song"> </div> --}}
+     </div>
+
+     {{!-- <div class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+               <div class="carousel-item active">
+                    <div class="row">
+                         <div class="col-sm"><img class="d-block w-100" src="./image/musicposter1.jpeg" alt="1 slide">
+                         </div>
+                         <div class="col-sm"><img class="d-block w-100" src="./image/musicposter2.jpeg" alt="2 slide">
+                         </div>
+                         <div class="col-sm"><img class="d-block w-100" src="./image/musicposter3.jpeg" alt="3 slide">
+                         </div>
+                    </div>
+               </div>
+               <div class="carousel-item">
+                    <div class="row">
+                         <div class="col-sm"><img class="d-block w-100" src="./image/musicposter2.jpeg" alt="4 slide">
+                         </div>
+                         <div class="col-sm"><img class="d-block w-100" src="./image/musicposter3.jpeg" alt="5 slide">
+                         </div>
+                         <div class="col-sm"><img class="d-block w-100" src="./image/musicposter1.jpeg" alt="6 slide">
+                         </div>
+                    </div>
+               </div>
+          </div>
+     </div> --}}
+
+
+     {{!-- <div class="song d-flex flex-wrap">
+          {{#each playlistSongArr}}
+          <div class="album-card m-4">
+               <img class="image" src="http://placehold.it/160x160" alt="Living Things" />
+               <div class="album-info">
+                    <h6 class="name text-white">{{this.song_name}}</h6>
+                    <h6><a href="/artist/{{this.artist_id}}">{{this.artist_name_eng}} {{this.artist_name_chi}}</a></h6>
+               </div>
+               <div class="album-page"></div>
+          </div>
+          {{/each}}
+     </div> --}}
+</section>
+
+
+
+
+
+
+
+
+
+{{!-- <ul>
+     <li>{{this.id}}</li>
+     <li>{{this.song_name}}</li>
+     <li>{{this.song_url}}</li>
+     <li>{{this.artist_id}}</li>
+     <li>{{this.artist_name}}</li>
+</ul> --}}
+
+{{!-- {{#each item}}
 <div class="">
 <ul>
      <li>{{this.id}}</li>
@@ -15,7 +87,7 @@ same as personal site
 <button class="add-to-cart" method="POST" data-item_id="{{this.id}}" data-user_id="1" data-store_id={{this.store_id}}>add to cart</button>
 </div>
 {{/each}}
-{{!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> --}}
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script>
      $(".add-to-cart").click((e) => {
 		e.preventDefault();
@@ -37,4 +109,4 @@ same as personal site
 				console.log("failed");
 			});
 	});
-</script>
+</script> --}}

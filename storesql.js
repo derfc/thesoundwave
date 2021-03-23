@@ -237,4 +237,12 @@ module.exports = class StoreSQL {
 			.where("s.album_id", album_id)
 			.orderBy("id");
 	}
+
+	searchForStore(keywords) {
+		return knex(this.store).where("store_name", "ilike", `%${keywords}%`);
+	}
+
+	searchForItem(keywords) {
+		return knex(this.item).where("item_name", "ilike", `%${keywords}%`);
+	}
 };

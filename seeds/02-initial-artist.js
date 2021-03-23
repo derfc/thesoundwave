@@ -8,7 +8,7 @@ exports.seed = function (knex) {
 			// Inserts seed entries
 			// console.log("try");
 			let result = await awsObject.getAwsObject();
-			// console.log(result[0], "after return");
+			// console.log(result, "after return");
 			return knex("artist").insert(result[0]);
 		});
 };

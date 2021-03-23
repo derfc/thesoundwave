@@ -8,7 +8,9 @@ module.exports.getAwsObject = () => {
 	let artistKnex = [];
 	let albumKnex = [];
 	let songKnex = [];
-	let albumPhotoKnex = [];
+	let storeKnex = [];
+	let itemKnex = [];
+
 	const getAll = async () => {
 		return await (async function () {
 			try {
@@ -24,8 +26,6 @@ module.exports.getAwsObject = () => {
 						Bucket: "thesoundwave",
 					})
 					.promise();
-				// console.log(response);
-				// console.log("-------------------------------------------");
 				return response.Contents;
 			} catch (e) {
 				console.log("error", e);
@@ -72,21 +72,10 @@ module.exports.getAwsObject = () => {
 				objArr[1] &&
 				objArr[2] &&
 				objArr[1] == "album" &&
-				!albumArr.includes(objArr[1]) &&
+				// !albumArr.includes(objArr[1]) &&
 				!albumArr.includes(objArr[2])
 			) {
-				// console.log("new album, push to arr", objArr[2]);
-				// let artistId = (await artistArr.indexOf(objArr[0])) + 1;
-				// console.log(objArr, "all");
-				// console.log(artistId, "artist id 2");
-				// console.log(artistArr, "artistArr 2");
-				// console.log(objArr, "working on this");
 				albumArr.push(objArr[2]);
-				// console.log("jm9");
-				// await albumKnex.push(
-				// 	`{album_name: ${objArr[2]},album_photo:"#",artist_id: ${artistId},}`
-				// );
-				// albumArr.push(objArr[1]);
 			}
 		}
 		return;
@@ -95,7 +84,7 @@ module.exports.getAwsObject = () => {
 
 	const insertSong = async () => {
 		let awsObj = await getAll();
-		console.log("calling insertsong ");
+		// console.log("calling insertsong ");
 		for (let i = 0; i < awsObj.length; i++) {
 			let objArr = awsObj[i].Key.split("/");
 			// console.log(objArr, "working");
@@ -103,10 +92,6 @@ module.exports.getAwsObject = () => {
 				// console.log(objArr[3], "am i here?");
 				let artistId = (await artistArr.indexOf(objArr[0])) + 1;
 				let albumId = (await albumArr.indexOf(objArr[2])) + 1;
-				// console.log(artistId, "artist id 3");
-				// console.log(artistArr, "artistArr 3");
-				// console.log(albumId, "album id 3");
-				// console.log(albumArr, "albumArr 3");
 				await songKnex.push({
 					song_name: objArr[3].replace(".mp3", ""),
 					song_url: `https://thesoundwave.s3-us-west-1.amazonaws.com/${objArr[0]}/album/${objArr[2]}/${objArr[3]}`,
@@ -129,10 +114,64 @@ module.exports.getAwsObject = () => {
 		return [albumKnex, songKnex];
 	};
 
+	const insertStore = async () => {
+		let awsObj = await getAll();
+		for (let i = 0; i < awsObj.length; i++) {
+			let objArr = awsObj[i].Key.split("/");
+			// console.log(objArr[1], "here");
+			let artistNameEng = objArr[0].split("-")[0].replace(/_/g, " ");
+			if (
+				objArr[1] &&
+				objArr[2] &&
+				objArr[1] == "store" &&
+				// !albumArr.includes(objArr[1]) &&
+				!storeArr.includes(`${artistNameEng}'s Store`)
+			) {
+				storeArr.push(`${artistNameEng}'s Store`);
+				let artistId = (await artistArr.indexOf(objArr[0])) + 1;
+				await storeKnex.push({
+					store_name: `${artistNameEng}'s Store`,
+					artist_id: artistId,
+				});
+			}
+		}
+		return storeKnex;
+	};
+
+	const insertItem = async () => {
+		let awsObj = await getAll();
+		for (let i = 0; i < awsObj.length; i++) {
+			let objArr = awsObj[i].Key.split("/");
+			// console.log(objArr[1], "here");
+			let artistNameEng = objArr[0].split("-")[0].replace(/_/g, " ");
+			if (
+				objArr[2] &&
+				objArr[3] &&
+				objArr[1] == "store"
+				// !albumArr.includes(objArr[1]) &&
+				// !storeArr.includes(`${artistNameEng}'s Store`)
+			) {
+				let storeId = (await storeArr.indexOf(`${artistNameEng}'s Store`)) + 1;
+				await itemKnex.push({
+					item_name: objArr[3].replace(".jpg", "").replace(/_/g, " "),
+					item_photo: `https://thesoundwave.s3-us-west-1.amazonaws.com/${objArr[0]}/store/${objArr[2]}/${objArr[3]}`,
+					item_price: objArr[2],
+					store_id: storeId,
+				});
+			}
+		}
+		return itemKnex;
+	};
+
 	return insertArtist().then((artistKnex) => {
 		return insertAlbum().then(() => {
 			return insertSong().then((albumSongKnex) => {
-				return [artistKnex, albumSongKnex];
+				return insertStore().then((storeKnex) => {
+					return insertItem().then((itemKnex) => {
+						// console.log(itemKnex, "trytry");
+						return [artistKnex, albumSongKnex, storeKnex, itemKnex];
+					});
+				});
 			});
 		});
 	});
