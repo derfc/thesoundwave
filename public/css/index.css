@@ -295,7 +295,8 @@ a {
 
 /* mainHomepage */
 .mainHomepage {
-	background-color: rgb(41, 41, 41);
+  background-color: rgb(41, 41, 41);
+  min-height: 80.5vh;
 }
 
 section.row {

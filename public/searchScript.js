@@ -268,20 +268,29 @@ const appendAlbum = (result) => {
 
 const appendArtist = (result) => {
 	// console.log(result);
+	$(".artist").append('<div class="song d-flex helloArtist flex-wrap"></div>');
 	for (let i = 0; i < result.artist.length; i++) {
 		let artistNameEng = result.artist[i].artist_name_eng;
 		let artistNameChi = result.artist[i].artist_name_chi;
 		let artistPhoto = result.artist[i].artist_photo;
 		let artistId = result.artist[i].id;
 		if (artistNameChi) {
-			$(".artist").append(
-				`<img src="${artistPhoto}" alt="${artistNameEng} ${artistNameChi} Photo"/></br>
-				<button class="go-to-artist" data-artist_id ="${artistId}">${artistNameEng} ${artistNameChi}</button></br>`
+			$(".helloArtist").append(
+				`
+				<div class="album-card m-4">
+				<img src="${artistPhoto}" alt="${artistNameEng} ${artistNameChi} Photo"/></br>
+				<button class="btn btn-info go-to-artist" data-artist_id ="${artistId}">${artistNameEng} ${artistNameChi}</button></br>
+				</div>
+				`
 			);
 		} else {
-			$(".artist").append(
-				`<img src="${artistPhoto}" alt="${artistNameEng} Photo"/></br>
-				<button class="go-to-artist" data-artist_id ="${artistId}">${artistNameEng}</button></br>`
+			$(".helloArtist").append(
+				`
+				<div class="album-card m-4">
+				<img src="${artistPhoto}" alt="${artistNameEng} Photo"/></br>
+				<button class="btn btn-info go-to-artist" data-artist_id ="${artistId}">${artistNameEng}</button></br>
+				</div>
+				`
 			);
 		}
 	}
