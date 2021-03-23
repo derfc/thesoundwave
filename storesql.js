@@ -35,7 +35,9 @@ module.exports = class StoreSQL {
 		return knex(this.users).select("username").where("user_id", user_id);
 	}
 	selectArtistId(artistName) {
-		return knex(this.artist).select("id").where("artist_name", `${artistName}`);
+		return knex(this.artist)
+			.select("id")
+			.where("artist_name_eng", `${artistName}`);
 	}
 	selectStoreId(storeName) {
 		return knex(this.store).select("id").where("store_name", `${storeName}`);
@@ -83,7 +85,8 @@ module.exports = class StoreSQL {
 				"s.song_name",
 				"s.song_url",
 				"a.id as artist_id",
-				"a.artist_name",
+				"a.artist_name_eng",
+				"a.artist_name_chi",
 			])
 			.from(`song as s`)
 			.join(`artist as a`, "s.artist_id", "a.id");
@@ -101,7 +104,8 @@ module.exports = class StoreSQL {
 				"s.song_name",
 				"s.song_url",
 				"a.id as artist_id",
-				"a.artist_name",
+				"a.artist_name_eng",
+				"a.artist_name_chi",
 				"alb.id as album_id",
 				"alb.album_name",
 			])
@@ -156,7 +160,7 @@ module.exports = class StoreSQL {
 	}
 
 	searchForArtist(keywords) {
-		return knex(this.artist).where("artist_name", "ilike", `%${keywords}%`);
+		return knex(this.artist).where("artist_name_eng", "ilike", `%${keywords}%`);
 	}
 
 	searchForAlbum(keywords) {
@@ -188,7 +192,8 @@ module.exports = class StoreSQL {
 					"s.album_name",
 					"s.album_photo",
 					"a.id as artist_id",
-					"a.artist_name",
+					"a.artist_name_eng",
+					"a.artist_name_chi",
 				])
 				.from(`album as s`)
 				.join(`artist as a`, "s.artist_id", "a.id")
@@ -200,7 +205,8 @@ module.exports = class StoreSQL {
 					"s.album_name",
 					"s.album_photo",
 					"a.id as artist_id",
-					"a.artist_name",
+					"a.artist_name_eng",
+					"a.artist_name_chi",
 				])
 				.from(`album as s`)
 				.join(`artist as a`, "s.artist_id", "a.id")
@@ -215,7 +221,8 @@ module.exports = class StoreSQL {
 				"s.song_name",
 				"s.song_url",
 				"a.id as artist_id",
-				"a.artist_name",
+				"a.artist_name_eng",
+				"a.artist_name_chi",
 			])
 			.from(`song as s`)
 			.join(`artist as a`, "s.artist_id", "a.id")

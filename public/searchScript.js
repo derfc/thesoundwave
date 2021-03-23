@@ -28,7 +28,7 @@ $("#filter_songs").on("keyup search", function (e) {
 				if (artist.length > 0) {
 					$(".artist").append(`<a href="/artist"><h3>Artist</h3></a>`);
 					for (let i = 0; i < artist.length; i++) {
-						let artistName = artist[i].artist_name;
+						let artistName = artist[i].artist_name_eng;
 						let artistPhoto = artist[i].artist_photo;
 						let artistId = artist[i].id;
 						$(".artist").append(

@@ -6,8 +6,8 @@
      <img src="{{this.album_photo}}" alt="{{this.album_name}} cover photo" />
      <ul>
           {{!-- <li>{{this.id}}</li> --}}
-          <li><a href="/artist/{{this.artist_id}}">{{this.artist_name}}</a></li>
-          <li>{{this.album_name}}</li>
+          <li><a href="/artist/{{this.artist_id}}">{{this.artist_name_eng}}</a></li>
+          <li>{{this.album_name_eng}}</li>
      </ul>
      {{/each}}
 
@@ -16,7 +16,7 @@
      <div class="song">
           <ul>
                <li>{{this.song_name}}</li>
-               <li><a href="/artist/{{this.artist_id}}">{{this.artist_name}}</a></li>
+               <li><a href="/artist/{{this.artist_id}}">{{this.artist_name_eng}}</a></li>
                <button class="add-album-song-to-playlist" data-song_id="{{this.id}}">add to playlist</button
                     class="select-playlist">
                <ul class="list" id="list{{@index}}"></ul>
@@ -39,7 +39,7 @@
           <ul>
                <li>album id: {{this.id}}</li>
                <li>artist id: {{this.artist_id}}</li>
-               <li><a href="/artist/{{this.artist_id}}">{{this.artist_name}}</a></li>
+               <li><a href="/artist/{{this.artist_id}}">{{this.artist_name_eng}}</a></li>
                <li><a href="/album/{{this.id}}">{{this.album_name}}</a></li>
           </ul>
      </div>
