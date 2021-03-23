@@ -128,7 +128,7 @@ app.get("/home", authCheck, (req, res) => {
 				stripePublicKey: stripePublicKey,
 				user: user,
 				thumbnail: pic,
-				script: "./searchScript.js",
+				searchScript: "./searchScript.js",
 				honeMusicPlayer: "/musicplayer.js",
 			});
 		});
@@ -317,8 +317,45 @@ app.get("/store", (req, res) => {
 			stripePublicKey: stripePublicKey,
 			user: user,
 			thumbnail: pic,
+			storeScript: "./storeScript.js",
 		});
 	});
+});
+
+app.post("/store", (req, res) => {
+	let keywords = req.body.keywords;
+	let user_id = 1;
+	return storeSQL.searchForStore(keywords).then((store) => {
+		return storeSQL.searchForItem(keywords).then((items) => {
+			let result = { store: store, items: items };
+			res.send(result);
+		});
+	});
+	// if (keywords == "artist") {
+	// 	return storeSQL.searchForArtist().then((artist) => {
+	// 		res.send({ artist: artist });
+	// 	});
+	// } else if (keywords == "album") {
+	// 	return storeSQL.searchForAlbum().then((album) => {
+	// 		res.send({ album: album });
+	// 	});
+	// } else {
+	// 	return storeSQL.searchForArtist(keywords).then((artist) => {
+	// 		storeSQL.searchForAlbum(keywords).then((album) => {
+	// 			storeSQL.searchForSong(keywords).then((song) => {
+	// 				storeSQL.getPlaylist(user_id).then((playlist) => {
+	// 					let searchResult = {
+	// 						artist: artist,
+	// 						album: album,
+	// 						song: song,
+	// 						playlist: playlist,
+	// 					};
+	// 					res.send(searchResult);
+	// 				});
+	// 			});
+	// 		});
+	// 	});
+	// }
 });
 
 //cart route
