@@ -50,12 +50,13 @@
                 <div>
                     <img class="pro-pic" src="{{thumbnail}}" alt="thumbnail" height="80px" width="80px" />
                 </div>
-                <h4 class="text-white">{{user}}</h4>
+                <h3 class="mt-2">{{user}}</h3>
             </div>
-            <div>
-                <h5>PLAYLIST</h5>
-                <button class="btn open-button" onclick="openForm()"><i class="fal fa-plus-square"></i>Create
+            <div class="sidebar-playlist">
+                <p>PLAYLIST</p>
+                <button class="btn open-button" onclick="openForm()"><i class="fal fa-plus-square"></i> Create
                     playlist</button>
+                <hr>
                 {{#each playlist}}
                 <div>
                     <a href="/library/{{this.id}}"><button type="button" class="btn select-playlist"
@@ -165,7 +166,8 @@
 {{#if honeMusicPlayer}}
 <script src={{honeMusicPlayer}}></script>
 {{/if}}
-{{!-- <script src="/carousel.js"></script> --}}
+{{!--
+<script src="/carousel.js"></script> --}}
 
 <script>
     function openForm() {
@@ -213,14 +215,13 @@
     var curHr = today.getHours()
 
     if (curHr < 12) {
-        $('.greetings')[0].innerHTML = '<h3 class="m-3 fw-bolder">Good Morning</h3>'
+        $('.greetings')[0].innerHTML = '<h3 class="mx-4 my-3 fw-bolder">Good Morning</h3>'
     } else if (curHr < 18) {
-        $('.greetings')[0].innerHTML = '<h3 class="m-3 fw-bolder">Good Afternoon</h3>'
+        $('.greetings')[0].innerHTML = '<h3 class="mx-4 my-3 fw-bolder">Good Afternoon</h3>'
     } else {
-        $('.greetings')[0].innerHTML = '<h3 class="m-3 fw-bolder">Good Evening</h3>'
+        $('.greetings')[0].innerHTML = '<h3 class="mx-4 my-3 fw-bolder">Good Evening</h3>'
     }
 
 </script>
 
 </html>
-
