@@ -68,7 +68,7 @@ $(".search-artist").click((e) => {
 		.done(function (data) {
 			console.log(data.artist);
 			// let artist = data.artist;
-			$(".artist").append(`<p>Artist</p>`);
+			// $(".artist").append(`<p>Artist</p>`);
 			appendArtist(data);
 
 			$(".go-to-artist").click((e) => {
@@ -151,7 +151,7 @@ $(".search-album").click((e) => {
 		.done(function (data) {
 			console.log(data.album);
 			let album = data.album;
-			$(".album").append(`<p>Album</p>`);
+			// $(".album").append(`<p>Album</p>`);
 			// $(".album").append(
 			// 	`<button  class="button-album search-album" value="album">album</button>`
 			// );
@@ -255,13 +255,18 @@ const appendSong = (result) => {
 
 const appendAlbum = (result) => {
 	// console.log(result);
+	$(".artist").append('<div class="song d-flex helloArtist flex-wrap"></div>');
 	for (let i = 0; i < result.album.length; i++) {
 		let albumName = result.album[i].album_name;
 		let albumPhoto = result.album[i].album_photo;
 		let albumId = result.album[i].id;
-		$(".album").append(
-			`<img src="${albumPhoto}" alt="${albumName} Photo"/></br>
-			<button class="go-to-album" data-album_id ="${albumId}">${albumName}</button></br>`
+		$(".helloArtist").append(
+			`
+			<div class="album-card m-4">
+			<img class="photo-pic" src="${albumPhoto}" alt="${albumName} Photo"/></br>
+			<button class="btn btn-info go-to-album my-2" data-album_id ="${albumId}">${albumName}</button></br>
+			</div>
+			`
 		);
 	}
 };
@@ -278,8 +283,8 @@ const appendArtist = (result) => {
 			$(".helloArtist").append(
 				`
 				<div class="album-card m-4">
-				<img src="${artistPhoto}" alt="${artistNameEng} ${artistNameChi} Photo"/></br>
-				<button class="btn btn-info go-to-artist" data-artist_id ="${artistId}">${artistNameEng} ${artistNameChi}</button></br>
+				<img class="photo-pic" src="${artistPhoto}" alt="${artistNameEng} ${artistNameChi} Photo"/></br>
+				<button class="btn btn-info go-to-artist" my-2 data-artist_id ="${artistId}">${artistNameEng} ${artistNameChi}</button></br>
 				</div>
 				`
 			);
@@ -288,7 +293,7 @@ const appendArtist = (result) => {
 				`
 				<div class="album-card m-4">
 				<img src="${artistPhoto}" alt="${artistNameEng} Photo"/></br>
-				<button class="btn btn-info go-to-artist" data-artist_id ="${artistId}">${artistNameEng}</button></br>
+				<button class="btn btn-info go-to-artist" my-2 data-artist_id ="${artistId}">${artistNameEng}</button></br>
 				</div>
 				`
 			);

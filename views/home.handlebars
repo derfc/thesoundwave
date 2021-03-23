@@ -1,49 +1,56 @@
 <section class="mainHomepage">
 
+     <section class="searching pt-3">
+          <div class="instant-search d-inline mx-4">
+               <input type="search" spellcheck="false" placeholder="Search songs" id="filter_songs" />
+          </div>
 
-     <div class="instant-search d-inline mx-3">
-          <input type="search" spellcheck="false" placeholder="Search songs" id="filter_songs" />
-     </div>
+          <button class="btn btn-info button-artist search-artist" value="artist">artist</button>
+          <button class="btn btn-info button-album search-album" value="album">album</button>
 
-     <button class="btn btn-info button-artist search-artist" value="artist">artist</button>
-     <button class="btn btn-info button-album search-album" value="album">album</button>
+          <div class="greetings text-white">
+          </div>
 
-     <div class="greetings text-white">
-     </div>
+          <div class="results mb-2">
+               <div class="artist"></div>
+               <div class="album"></div>
+          </div>
+     </section>
 
-     <div class="results mb-2">
-          <div class="artist"></div>
-          <div class="album"></div>
-          {{!-- <div class="song"> </div> --}}
-     </div>
-
-     <div class="carousel slide" data-ride="carousel">
-          <div class="carousel-inner">
-               <div class="carousel-item active">
-                    <div class="row">
-                         <div class="col-sm"><img class="d-block w-100" src="./image/musicposter1.jpeg" alt="1 slide">
-                         </div>
-                         <div class="col-sm"><img class="d-block w-100" src="./image/musicposter2.jpeg" alt="2 slide">
-                         </div>
-                         <div class="col-sm"><img class="d-block w-100" src="./image/musicposter3.jpeg" alt="3 slide">
+     <section class="container-fluid px-4">
+          <div class="carousel slide" data-ride="carousel">
+               <div class="carousel-inner">
+                    <div class="carousel-item active">
+                         <div class="row">
+                              <div class="col-sm"><img class="d-block w-100" src="./image/musicposter1.jpeg"
+                                        alt="1 slide">
+                              </div>
+                              <div class="col-sm"><img class="d-block w-100" src="./image/musicposter2.jpeg"
+                                        alt="2 slide">
+                              </div>
+                              <div class="col-sm"><img class="d-block w-100" src="./image/musicposter3.jpeg"
+                                        alt="3 slide">
+                              </div>
                          </div>
                     </div>
-               </div>
-               <div class="carousel-item">
-                    <div class="row">
-                         <div class="col-sm"><img class="d-block w-100" src="./image/musicposter2.jpeg" alt="4 slide">
-                         </div>
-                         <div class="col-sm"><img class="d-block w-100" src="./image/musicposter3.jpeg" alt="5 slide">
-                         </div>
-                         <div class="col-sm"><img class="d-block w-100" src="./image/musicposter1.jpeg" alt="6 slide">
+                    <div class="carousel-item">
+                         <div class="row">
+                              <div class="col-sm"><img class="d-block w-100" src="./image/musicposter2.jpeg"
+                                        alt="4 slide">
+                              </div>
+                              <div class="col-sm"><img class="d-block w-100" src="./image/musicposter3.jpeg"
+                                        alt="5 slide">
+                              </div>
+                              <div class="col-sm"><img class="d-block w-100" src="./image/musicposter1.jpeg"
+                                        alt="6 slide">
+                              </div>
                          </div>
                     </div>
                </div>
           </div>
-     </div>
+     </section>
 
-
-     <div class="song d-flex flex-wrap">
+     <div class="song d-flex flex-wrap flex-fill">
           {{#each playlistSongArr}}
           <div class="album-card m-4">
                <img class="image" src="http://placehold.it/160x160" alt="Living Things" />
