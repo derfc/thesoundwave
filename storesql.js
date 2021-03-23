@@ -160,10 +160,18 @@ module.exports = class StoreSQL {
 	}
 
 	searchForArtist(keywords) {
-		return knex(this.artist).where("artist_name_eng", "ilike", `%${keywords}%`);
+		if (!keywords) {
+			return knex(this.artist);
+		}
+		return knex(this.artist)
+			.where("artist_name_eng", "ilike", `%${keywords}%`)
+			.orWhere("artist_name_chi", "ilike", `%${keywords}%`);
 	}
 
 	searchForAlbum(keywords) {
+		if (!keywords) {
+			return knex(this.album);
+		}
 		return knex(this.album).where("album_name", "ilike", `%${keywords}%`);
 	}
 

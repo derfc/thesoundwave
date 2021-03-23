@@ -1,5 +1,7 @@
 <section>
      <h1>home</h1>
+     <button class="button-artist search-artist" value="artist">artist</button>
+     <button  class="button-album search-album" value="album">album</button>
 
      <div class="instant-search">
           <input type="search" spellcheck="false" placeholder="Search songs" id="filter_songs" />
@@ -11,7 +13,7 @@
           </div>
           <div class="artist"></div>
           <div class="album"></div>
-          <div class="song"> </div>
+          {{!-- <div class="song"> </div> --}}
      </div>
 
      <div class="carousel slide" data-ride="carousel">
@@ -40,13 +42,13 @@
      </div>
 
 
-     <div class="d-flex flex-wrap">
+     <div class="song d-flex flex-wrap">
           {{#each playlistSongArr}}
           <div class="album-card m-4">
                <img class="image" src="http://placehold.it/150x150" alt="Living Things" />
                <div class="album-info">
                     <h6 class="name">{{this.song_name}}</h6>
-                    <h6><a href="/artist/{{this.artist_id}}">{{this.artist_name}}</a></h6>
+                    <h6><a href="/artist/{{this.artist_id}}">{{this.artist_name_eng}} {{this.artist_name_chi}}</a></h6>
                </div>
                <div class="album-page"></div>
           </div>

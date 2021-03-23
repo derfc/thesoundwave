@@ -23,7 +23,7 @@
         var stripePK = "{{stripePublicKey}}"
         var songName = "{{#each playlistSongArr}}{{this.song_name}}/{{/each}}"
         var songUrl = "{{#each playlistSongArr}}{{this.song_url}}[split]{{/each}}"
-        var artistName = "{{#each playlistSongArr}}{{this.artist_name}}/{{/each}}"
+        var artistName = "{{#each playlistSongArr}}{{this.artist_name_eng}} {{this.artist_name_chi}}/{{/each}}"
         var albumName = "{{#each playlist}}{{this.playlist_name}}[split]{{/each}}"
         var albumId = "{{#each playlist}}{{this.id}}[split]{{/each}}"
         var albumSongId = "{{#each song}}{{this.id}}[split]{{/each}}"
@@ -38,8 +38,6 @@
     {{!-- //navbar --}}
     <div class="text-center">
         <a href="/home"><button id="go-to-home" class="button-home" value="home">home</button></a>
-        <a href="/artist"><button id="go-to-artist" class="button-artist" value="artist">artist</button></a>
-        <a href="/album"><button id="go-to-album" class="button-album" value="album">album</button></a>
         <a href="/store"><button id="go-to-store" class="button-store" value="store">store</button></a>
         <a href="/cart"><button id="go-to-cart" class="button-cart" value="cart">cart</button></a>
         <a href="/setting"><button id="go-to-setting" class="button-setting" value="setting">setting</button></a>
@@ -153,10 +151,12 @@
 {{/if}}
 {{#if musicPlayerScript}}
 <script src={{script}}></script>
-{{else}}
-<script src="/musicplayer.js"></script>
-<script src="/carousel.js"></script>
 {{/if}}
+{{#if honeMusicPlayer}}
+<script src={{honeMusicPlayer}}></script>
+{{/if}}
+{{!-- <script src="/carousel.js"></script> --}}
+
 <script>
     function openForm() {
         document.getElementById("myForm").style.display = "block";
@@ -202,3 +202,4 @@
 </script>
 
 </html>
+

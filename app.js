@@ -151,6 +151,7 @@ app.get("/home", authCheck, (req, res) => {
 				user: user,
 				thumbnail: pic,
 				script: "./searchScript.js",
+				honeMusicPlayer: "/musicplayer.js",
 			});
 		});
 	});
@@ -160,60 +161,91 @@ app.get("/home", authCheck, (req, res) => {
 app.post("/home", (req, res) => {
 	let keywords = req.body.keywords;
 	let user_id = 1;
-	return storeSQL.searchForArtist(keywords).then((artist) => {
-		storeSQL.searchForAlbum(keywords).then((album) => {
-			storeSQL.searchForSong(keywords).then((song) => {
-				storeSQL.getPlaylist(user_id).then((playlist) => {
-					let searchResult = {
-						artist: artist,
-						album: album,
-						song: song,
-						playlist: playlist,
-					};
-					res.send(searchResult);
+	if (keywords == "artist") {
+		return storeSQL.searchForArtist().then((artist) => {
+			res.send({ artist: artist });
+		});
+	} else if (keywords == "album") {
+		return storeSQL.searchForAlbum().then((album) => {
+			res.send({ album: album });
+		});
+	} else {
+		return storeSQL.searchForArtist(keywords).then((artist) => {
+			storeSQL.searchForAlbum(keywords).then((album) => {
+				storeSQL.searchForSong(keywords).then((song) => {
+					storeSQL.getPlaylist(user_id).then((playlist) => {
+						let searchResult = {
+							artist: artist,
+							album: album,
+							song: song,
+							playlist: playlist,
+						};
+						res.send(searchResult);
+					});
 				});
 			});
 		});
-	});
+	}
 });
 //get all artist
-app.get("/artist", (req, res) => {
-	return storeSQL.getArtist().then((artist) => {
-		console.log(artist);
-		res.render("artist", { layout: "dashboard", artist: artist, user: user, thumbnail: pic });
-	});
-});
+// app.get("/artist", (req, res) => {
+// 	return storeSQL.getArtist().then((artist) => {
+// 		console.log(artist);
+// 		res.render("artist", {
+// 			layout: "dashboard",
+// 			artist: artist,
+// 			user: user,
+// 			thumbnail: pic,
+// 		});
+// 	});
+// });
 
 //artist page
-app.get("/artist/:artist_id", (req, res) => {
+// app.get("/artist/:artist_id", (req, res) => {
+// 	let artist_id = req.params.artist_id;
+// 	return storeSQL.getArtist(artist_id).then((artistInfo) => {
+// 		console.log(artistInfo);
+// 		storeSQL.getAlbumByArtist(artistInfo[0].id).then((album) => {
+// 			res.render("artist", {
+// 				layout: "dashboard",
+// 				artist: artistInfo,
+// 				album: album,
+// 				css: "../css/index.css",
+// 			});
+// 		});
+// 		// res.render("artist", { layout: "dashboard", artist: artist });
+// 	});
+// });
+
+app.post("/home/artist/:artist_id", (req, res) => {
 	let artist_id = req.params.artist_id;
 	return storeSQL.getArtist(artist_id).then((artistInfo) => {
 		console.log(artistInfo);
 		storeSQL.getAlbumByArtist(artistInfo[0].id).then((album) => {
-			res.render("artist", {
-				layout: "dashboard",
-				artist: artistInfo,
-				album: album,
-				css: "../css/index.css",
-			});
+			let result = { artist: artistInfo, album: album };
+			res.send(result);
 		});
-		// res.render("artist", { layout: "dashboard", artist: artist });
 	});
 });
 
 //get album
-app.get("/album", (req, res) => {
-	return storeSQL.getAlbum().then((album) => {
-		console.log(album);
-		console.log(req.user.displayName)
-		res.render("album", { layout: "dashboard", album: album, user: user, thumbnail: pic });
-	});
-});
+// app.get("/album", (req, res) => {
+// 	return storeSQL.getAlbum().then((album) => {
+// 		console.log(album);
+// 		console.log(req.user.displayName);
+// 		res.render("album", {
+// 			layout: "dashboard",
+// 			album: album,
+// 			user: user,
+// 			thumbnail: pic,
+// 		});
+// 	});
+// });
 
-//album page
-app.get("/album/:album_id", (req, res) => {
+app.post("/home/album/:album_id", (req, res) => {
 	let user_id = 1;
 	let album_id = req.params.album_id;
+	console.log(album_id, "geeez");
 	return storeSQL.getAlbum(album_id).then((albumInfo) => {
 		// console.log(albumInfo);
 		storeSQL.getSongByAlbum(albumInfo[0].id).then((song) => {
@@ -222,19 +254,42 @@ app.get("/album/:album_id", (req, res) => {
 				// console.log("playlist", playlist);
 				// song.push({ albumName: playlist });
 				// console.log("haha", song);
-				res.render("album", {
-					layout: "dashboard",
+				let result = {
 					song: song,
 					album: albumInfo,
 					playlist: playlist,
-					css: "../css/index.css",
-					script: "../album.js",
-					musicPlayerScript: "../musicplayer.js",
-				});
+				};
+				res.send(result);
 			});
 		});
 	});
 });
+
+//album page
+// app.get("/album/:album_id", (req, res) => {
+// 	let user_id = 1;
+// 	let album_id = req.params.album_id;
+// 	return storeSQL.getAlbum(album_id).then((albumInfo) => {
+// 		// console.log(albumInfo);
+// 		storeSQL.getSongByAlbum(albumInfo[0].id).then((song) => {
+// 			// console.log("haha", song);
+// 			storeSQL.getPlaylist(user_id).then((playlist) => {
+// 				// console.log("playlist", playlist);
+// 				// song.push({ albumName: playlist });
+// 				// console.log("haha", song);
+// 				res.render("album", {
+// 					layout: "dashboard",
+// 					song: song,
+// 					album: albumInfo,
+// 					playlist: playlist,
+// 					css: "../css/index.css",
+// 					script: "../album.js",
+// 					musicPlayerScript: "../musicplayer.js",
+// 				});
+// 			});
+// 		});
+// 	});
+// });
 
 //get playlist
 app.get("/library/:library_id", (req, res) => {

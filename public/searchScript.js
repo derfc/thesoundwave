@@ -1,9 +1,6 @@
 $("#filter_songs").on("keyup search", function (e) {
-	console.log("hello", e.target.value);
-	$(".featuring").empty();
-	$(".artist").empty();
-	$(".album").empty();
-	$(".song").empty();
+	// console.log("hello", e.target.value);
+	clearAll();
 	let keywords = e.target.value;
 	if (!keywords) {
 		$(".featuring").append("<p>featuring stuff</p>");
@@ -26,45 +23,16 @@ $("#filter_songs").on("keyup search", function (e) {
 					$(".artist").append(`<p>no result found</p>`);
 				}
 				if (artist.length > 0) {
-					$(".artist").append(`<a href="/artist"><h3>Artist</h3></a>`);
-					for (let i = 0; i < artist.length; i++) {
-						let artistName = artist[i].artist_name_eng;
-						let artistPhoto = artist[i].artist_photo;
-						let artistId = artist[i].id;
-						$(".artist").append(
-							`<img src="${artistPhoto}" alt="${artistName} Photo"/></br><a href="/artist/${artistId}">${artistName}</a></br>`
-						);
-					}
+					$(".artist").append(`<h3>Artist</h3>`);
+					appendArtist(data);
 				}
 				if (album.length > 0) {
-					$(".album").append(`<a href="/album"><h3>album</h3></a>`);
-					for (let i = 0; i < album.length; i++) {
-						let albumName = album[i].album_name;
-						let albumPhoto = album[i].album_photo;
-						let albumId = album[i].id;
-						$(".album").append(
-							`<img src="${albumPhoto}" alt="${albumName} Photo"/></br><a href="/album/${albumId}">${albumName}</a></br>`
-						);
-					}
+					$(".album").append(`<h3>Album</h3>`);
+					appendAlbum(data);
 				}
 				if (song.length > 0) {
-					$(".song").append(`<h3>Song</h3>`);
-					for (let i = 0; i < song.length; i++) {
-						let songId = song[i].id;
-						let songName = song[i].song_name;
-						let songUrl = song[i].song_url;
-						console.log(song[0]);
-						$(".song").append(
-							`<p>returning ${songName}</p><button class="playSong" data-song_id="${songId}" data-song_url="${songUrl}">play ${songName}</button><button class="select-playlist" data-song_id="${songId}">add to playlist</button><ul class="list" id="list${i}"></ul>`
-						);
-						for (let y = 0; y < playlist.length; y++) {
-							let playlistName = playlist[y].playlist_name;
-							let libraryId = playlist[y].id;
-							$(`#list${i}`).append(
-								`<li><button class="add-to-playlist" data-song_id="${songId}" data-library_id="${libraryId}">add to here ${playlistName}</button></li>`
-							);
-						}
-					}
+					$(".song").append(`<h3>Song</h3></br>`);
+					appendSong(data);
 				}
 
 				$(".select-playlist").click((e) => {
@@ -78,26 +46,233 @@ $("#filter_songs").on("keyup search", function (e) {
 				});
 
 				$(".add-to-playlist").click((e) => {
-					e.preventDefault();
-					let song_id = e.target.dataset.song_id;
-					let library_id = e.target.dataset.library_id;
-					console.log(" songid", song_id);
-					console.log(" plid ", library_id);
-					$.ajax({
-						url: `/playlist/${library_id}/${song_id}`,
-						type: "post",
-						success: function () {
-							console.log("add fired");
-						},
-					})
-						.done(function (result) {
-							console.log(result);
-						})
-						.fail(() => console.log("fail add"))
-						.always(() => console.log("runrunrun"));
+					addToPlaylist(e);
 				});
 			})
 			.fail(() => console.log("hahafail"))
 			.always(() => console.log("running"));
 	}
 });
+
+$(".search-artist").click((e) => {
+	// console.log(e.target.value);
+	clearAll();
+	$.ajax({
+		url: `/home`,
+		type: "POST",
+		data: { keywords: e.target.value },
+		success: function () {
+			console.log("success search artist");
+		},
+	})
+		.done(function (data) {
+			console.log(data.artist);
+			// let artist = data.artist;
+			$(".artist").append(`<p>Artist</p>`);
+			appendArtist(data);
+
+			$(".go-to-artist").click((e) => {
+				// console.log(e.target);
+				clearAll();
+				let artistId = e.target.dataset.artist_id;
+				$.ajax({
+					url: `/home/artist/${artistId}`,
+					type: "post",
+					success: function () {
+						console.log("go-to-artist");
+					},
+				})
+					.done(function (result) {
+						// console.log(result);
+						let artist = result.artist[0];
+						// let album = result.album;
+						if (artist.artist_name_chi) {
+							$(".album").append(
+								`<h3>${artist.artist_name_eng} ${artist.artist_name_chi}</h3>`
+							);
+						} else {
+							$(".album").append(`<h3>${artist.artist_name_eng}</h3>`);
+						}
+						appendAlbum(result);
+
+						$(".go-to-album").click((e) => {
+							clearAll();
+							let albumId = e.target.dataset.album_id;
+							$.ajax({
+								url: `/home/album/${albumId}`,
+								type: "post",
+								success: function () {
+									console.log("add fired");
+								},
+							})
+								.done(function (result) {
+									console.log(result);
+									let playlist = result.playlist;
+									let album = result.album[0];
+									$(".song").append(`<h3>${album.album_name}</h3></br>`);
+									appendSong(result);
+									$(".select-playlist").click((e) => {
+										// e.preventDefault();
+										console.log("hello", e.target);
+										// if ($(".list")[0].style.display == "block") {
+										// 	$(".list")[0].style.display = "none";
+										// } else {
+										// 	$(".list")[0].style.display = "block";
+										// }
+									});
+
+									$(".add-to-playlist").click((e) => {
+										addToPlaylist(e);
+									});
+								})
+								.fail(() => console.log("fail add"))
+								.always(() => console.log("runrunrun"));
+						});
+					})
+					.fail(() => console.log("fail add"))
+					.always(() => console.log("runrunrun"));
+			});
+		})
+		.fail(() => console.log("hahafail inside"))
+		.always(() => console.log("running inside"));
+});
+
+$(".search-album").click((e) => {
+	// console.log(e.target.value);
+	clearAll();
+	$.ajax({
+		url: `/home`,
+		type: "POST",
+		data: { keywords: e.target.value },
+		success: function () {
+			console.log("success search artist");
+		},
+	})
+		.done(function (data) {
+			console.log(data.album);
+			let album = data.album;
+			$(".album").append(`<p>Album</p>`);
+			// $(".album").append(
+			// 	`<button  class="button-album search-album" value="album">album</button>`
+			// );
+			appendAlbum(data);
+
+			$(".go-to-album").click((e) => {
+				// console.log(e.target);
+				clearAll();
+				let albumId = e.target.dataset.album_id;
+				$.ajax({
+					url: `/home/album/${albumId}`,
+					type: "post",
+					success: function () {
+						console.log("add fired");
+					},
+				})
+					.done(function (result) {
+						console.log(result);
+						let playlist = result.playlist;
+						let album = result.album[0];
+						$(".song").append(`<h3>${album.album_name}</h3></br>`);
+						appendSong(result);
+						$(".select-playlist").click((e) => {
+							// e.preventDefault();
+							console.log("hello", e.target);
+							// if ($(".list")[0].style.display == "block") {
+							// 	$(".list")[0].style.display = "none";
+							// } else {
+							// 	$(".list")[0].style.display = "block";
+							// }
+						});
+
+						$(".add-to-playlist").click((e) => {
+							addToPlaylist(e);
+						});
+					})
+					.fail(() => console.log("fail add"))
+					.always(() => console.log("runrunrun"));
+			});
+		})
+		.fail(() => console.log("hahafail inside"))
+		.always(() => console.log("running inside"));
+});
+
+const clearAll = () => {
+	$(".featuring").empty();
+	$(".artist").empty();
+	$(".album").empty();
+	$(".song").empty();
+	$(".carousel").empty();
+};
+
+const appendSong = (result) => {
+	for (let i = 0; i < result.song.length; i++) {
+		let songId = result.song[i].id;
+		let songName = result.song[i].song_name;
+		let songUrl = result.song[i].song_url;
+		// console.log(result.song[0]);
+		$(".song").append(
+			`<p>returning ${songName}</p><button class="playSong" data-song_id="${songId}" data-song_url="${songUrl}">play ${songName}</button><button class="select-playlist" data-song_id="${songId}">add to playlist</button><ul class="list" id="list${i}"></ul></br>`
+		);
+		for (let y = 0; y < result.playlist.length; y++) {
+			let playlistName = result.playlist[y].playlist_name;
+			let libraryId = result.playlist[y].id;
+			$(`#list${i}`).append(
+				`<li><button class="add-to-playlist" data-song_id="${songId}" data-library_id="${libraryId}">add to here ${playlistName}</button></li>`
+			);
+		}
+	}
+};
+
+const appendAlbum = (result) => {
+	// console.log(result);
+	for (let i = 0; i < result.album.length; i++) {
+		let albumName = result.album[i].album_name;
+		let albumPhoto = result.album[i].album_photo;
+		let albumId = result.album[i].id;
+		$(".album").append(
+			`<img src="${albumPhoto}" alt="${albumName} Photo"/></br>
+			<button class="go-to-album" data-album_id ="${albumId}">${albumName}</button></br>`
+		);
+	}
+};
+
+const appendArtist = (result) => {
+	// console.log(result);
+	for (let i = 0; i < result.artist.length; i++) {
+		let artistNameEng = result.artist[i].artist_name_eng;
+		let artistNameChi = result.artist[i].artist_name_chi;
+		let artistPhoto = result.artist[i].artist_photo;
+		let artistId = result.artist[i].id;
+		if (artistNameChi) {
+			$(".artist").append(
+				`<img src="${artistPhoto}" alt="${artistNameEng} ${artistNameChi} Photo"/></br>
+				<button class="go-to-artist" data-artist_id ="${artistId}">${artistNameEng} ${artistNameChi}</button></br>`
+			);
+		} else {
+			$(".artist").append(
+				`<img src="${artistPhoto}" alt="${artistNameEng} Photo"/></br>
+				<button class="go-to-artist" data-artist_id ="${artistId}">${artistNameEng}</button></br>`
+			);
+		}
+	}
+};
+
+const addToPlaylist = (e) => {
+	e.preventDefault();
+	let song_id = e.target.dataset.song_id;
+	let library_id = e.target.dataset.library_id;
+	console.log(" songid", song_id);
+	console.log(" plid ", library_id);
+	$.ajax({
+		url: `/playlist/${library_id}/${song_id}`,
+		type: "post",
+		success: function () {
+			console.log("add fired");
+		},
+	})
+		.done(function (result) {
+			console.log(result);
+		})
+		.fail(() => console.log("fail add"))
+		.always(() => console.log("runrunrun"));
+};
