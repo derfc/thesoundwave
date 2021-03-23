@@ -33,7 +33,7 @@
 
 <body class="">
 
-    <h1>dashboard layout</h1>
+    <h5>dashboard layout</h5>
 
     {{!-- //navbar --}}
     <div class="text-center">
@@ -44,21 +44,26 @@
         <a href="/auth/logout"><button id="logout" class="button-logout" value="logout">logout</button></a>
     </div>
 
-    <section class="side-bar row">
-        <div class="col-2">
-            <div>
-                <img src="{{thumbnail}}" alt="thumbnail" height="60px" width="60px" />
+    <section class="row">
+        <div class="col-2 side-bar">
+            <div class="profile text-center">
+                <div>
+                    <img class="pro-pic" src="{{thumbnail}}" alt="thumbnail" height="80px" width="80px" />
+                </div>
+                <h4 class="text-white">{{user}}</h4>
             </div>
-            <p class="display-6">{{user}}</p>
-
             <div>
-                <p>Your Playlist</p>
-                <button class="open-button" onclick="openForm()">add playlist</button>
+                <h5>PLAYLIST</h5>
+                <button class="btn open-button" onclick="openForm()"><i class="fal fa-plus-square"></i>Create
+                    playlist</button>
                 {{#each playlist}}
-                <a href="/library/{{this.id}}"><button type="button" class="select-playlist"
-                        data-library_id="{{this.id}}">{{this.playlist_name}}</button></a>
-                <button data-library_id="{{this.id}}" class="delete-playlist">delete playlist</button>
-                </br>
+                <div>
+                    <a href="/library/{{this.id}}"><button type="button" class="btn select-playlist"
+                            data-library_id="{{this.id}}">{{this.playlist_name}}</button></a>
+                    <button data-library_id="{{this.id}}" class="btn delete-playlist"><i
+                            class="fad fa-trash"></i></button>
+                    </br>
+                </div>
                 {{/each}}
 
 
@@ -85,7 +90,9 @@
 
     <section class="music-bar text-white">
         <div class="music-player row">
-            <p>music player</p>
+            <div style="height:15px">
+            </div>
+
 
             <div class="col current-song">
                 <div id="current_song"></div>
@@ -95,26 +102,29 @@
             <audio id="myTrack" ontimeupdate="updateTrackTime(this)" onended="audio_end()" src="" type="audio/mp3" />
             </audio>
 
-            <div class="middle col-6 text-center music-buttons">
-                <button class="btn text-white" onclick="random_song()" id="random"><i class="fa fa-random"
-                        aria-hidden="true"></i></button>
-                <button class="btn text-white" onclick="previous_song()" id="previous"><i class="fa fa-step-backward"
-                        aria-hidden="true"></i></button>
-                <button class="btn" onclick="justplay()" id="play">
-                    <span class="fa-stack">
-                        <i class="fas fa-circle fa-stack-2x text-white" id="circleplay"></i>
-                        <i class="fa fa-play fa-stack-1x" aria-hidden="true"></i>
-                    </span>
-                </button>
-                <button class="btn text-white" onclick="next_song()" id="next"><i class="fa fa-step-forward"
-                        aria-hidden="true"></i></button>
-                <button class="btn text-white" onclick="repeat_song()" id="repeat"><i class="fas fa-repeat-alt"
-                        id="repeating" aria-hidden="true"></i></button>
+            <div class="middle col-lg-6 text-center">
+                <div class="music-buttons pt-2">
+                    <button class="btn text-white" onclick="random_song()" id="random"><i class="fa fa-random"
+                            aria-hidden="true"></i></button>
+                    <button class="btn text-white" onclick="previous_song()" id="previous"><i
+                            class="fa fa-step-backward" aria-hidden="true"></i></button>
+                    <button class="btn" onclick="justplay()" id="play">
+                        <span class="fa-stack">
+                            <i class="fas fa-circle fa-stack-2x text-white" id="circleplay"></i>
+                            <i class="fa fa-play fa-stack-1x" aria-hidden="true"></i>
+                        </span>
+                    </button>
+                    <button class="btn text-white" onclick="next_song()" id="next"><i class="fa fa-step-forward"
+                            aria-hidden="true"></i></button>
+                    <button class="btn text-white" onclick="repeat_song()" id="repeat"><i class="fas fa-repeat-alt"
+                            id="repeating" aria-hidden="true"></i></button>
 
-                <div class="current-song">
-                    <span id="current_time"> 00:00 </span>
-                    <input type="range" min="0" max="100" value="0" id="duration_slider" onchange="change_duration()" />
-                    <span id="show_duration"> 00:00 </span>
+                    <div class="current-song">
+                        <span id="current_time"> 00:00 </span>
+                        <input type="range" min="0" max="100" value="0" id="duration_slider"
+                            onchange="change_duration()" />
+                        <span id="show_duration"> 00:00 </span>
+                    </div>
                 </div>
 
             </div>
@@ -198,6 +208,17 @@
             .fail(() => console.log("hahafail"))
             .always(() => console.log("running"));
     });
+
+    var today = new Date()
+    var curHr = today.getHours()
+
+    if (curHr < 12) {
+        $('.greetings')[0].innerHTML = '<h3 class="m-3 fw-bolder">Good Morning</h3>'
+    } else if (curHr < 18) {
+        $('.greetings')[0].innerHTML = '<h3 class="m-3 fw-bolder">Good Afternoon</h3>'
+    } else {
+        $('.greetings')[0].innerHTML = '<h3 class="m-3 fw-bolder">Good Evening</h3>'
+    }
 
 </script>
 

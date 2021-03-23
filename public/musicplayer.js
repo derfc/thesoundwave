@@ -85,12 +85,12 @@ function load_playlist() {
         track[0].src = playlist[index].song_url;
         $(
             "#current_song"
-        )[0].innerHTML = `<p>Now playing:</p><p>${playlist[index].song_name}</p> <p>${playlist[index].artist_name}</p>`;
+        )[0].innerHTML = `<h5 style="margin: 5px">NOW PLAYING:</h5><p>${playlist[index].song_name}</p> <p>${playlist[index].artist_name}</p>`;
     } else {
         track[0].src = songList[index].song_url;
         $(
             "#current_song"
-        )[0].innerHTML = `<p>Now playing:</p> <p>${songList[index].song_name}</p> <p>${songList[index].artist_name}</p>`;
+        )[0].innerHTML = `<h5 style="margin: 5px">NOW PLAYING:</h5> <p>${songList[index].song_name}</p> <p>${songList[index].artist_name}</p>`;
     }
 }
 load_playlist();

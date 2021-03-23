@@ -318,6 +318,8 @@ app.get("/library/:library_id", (req, res) => {
 								playlistSongArr: playlistSongArr,
 								stripePublicKey: stripePublicKey,
 								css: "../css/index.css",
+								user: user,
+								thumbnail: pic,
 							});
 						});
 					}
