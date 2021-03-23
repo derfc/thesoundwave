@@ -1,11 +1,12 @@
-
 <section class="mainHomepage">
-     <button class="button-artist search-artist" value="artist">artist</button>
-     <button  class="button-album search-album" value="album">album</button>
 
-     <div class="instant-search">
+
+     <div class="instant-search d-inline mx-3">
           <input type="search" spellcheck="false" placeholder="Search songs" id="filter_songs" />
      </div>
+
+     <button class="btn btn-info button-artist search-artist" value="artist">artist</button>
+     <button class="btn btn-info button-album search-album" value="album">album</button>
 
      <div class="greetings text-white">
      </div>
@@ -47,11 +48,7 @@
           <div class="album-card m-4">
                <img class="image" src="http://placehold.it/160x160" alt="Living Things" />
                <div class="album-info">
-
-
-
                     <h6 class="name text-white">{{this.song_name}}</h6>
-
                     <h6><a href="/artist/{{this.artist_id}}">{{this.artist_name_eng}} {{this.artist_name_chi}}</a></h6>
                </div>
                <div class="album-page"></div>
