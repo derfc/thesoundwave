@@ -87,9 +87,11 @@ module.exports = class StoreSQL {
 				"a.id as artist_id",
 				"a.artist_name_eng",
 				"a.artist_name_chi",
+				"alb.album_photo",
 			])
 			.from(`song as s`)
-			.join(`artist as a`, "s.artist_id", "a.id");
+			.join(`artist as a`, "s.artist_id", "a.id")
+			.join(`album as alb`, "s.album_id", "alb.id")
 		// .orderBy("id");
 		// return knex
 		// 	.from(this.song)
