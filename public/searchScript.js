@@ -3,7 +3,9 @@ $("#filter_songs").on("keyup search", function (e) {
 	clearAll();
 	let keywords = e.target.value;
 	if (!keywords) {
-		$(".featuring").append("<p>featuring stuff</p>");
+		// $(".featuring").append("<p>featuring stuff</p>");
+		$(".noneWhenSearch")[0].style.display = "block";
+		$(".noneWhenSearch")[1].style.display = "block";
 	} else {
 		$.ajax({
 			url: `/home`,
@@ -60,6 +62,13 @@ $("#filter_songs").on("keyup search", function (e) {
 	}
 });
 
+$(".clear-search").click((e) => {
+	e.preventDefault();
+	clearAll();
+	$(".noneWhenSearch")[0].style.display = "block";
+	$(".noneWhenSearch")[1].style.display = "block";
+});
+
 $(".search-artist").click((e) => {
 	// console.log(e.target.value);
 	clearAll();
@@ -101,51 +110,53 @@ $(".search-album").click((e) => {
 			// );
 			appendAlbum(data);
 
-			$(".go-to-album").click((e) => {
-				// console.log(e.target);
-				clearAll();
-				let albumId = e.target.dataset.album_id;
-				$.ajax({
-					url: `/home/album/${albumId}`,
-					type: "post",
-					success: function () {
-						console.log("add fired");
-					},
-				})
-					.done(function (result) {
-						console.log(result);
-						let playlist = result.playlist;
-						let album = result.album[0];
-						$(".song").append(`<h3 class="songsong mx-4">${album.album_name}</h3></br>`);
-						appendSong(result);
-						$(".select-playlist").click((e) => {
-							// e.preventDefault();
-							console.log("hello", e.target);
-							// if ($(".list")[0].style.display == "block") {
-							// 	$(".list")[0].style.display = "none";
-							// } else {
-							// 	$(".list")[0].style.display = "block";
-							// }
-						});
+			// $(".go-to-album").click((e) => {
+			// 	// console.log(e.target);
+			// 	clearAll();
+			// 	let albumId = e.target.dataset.album_id;
+			// 	$.ajax({
+			// 		url: `/home/album/${albumId}`,
+			// 		type: "post",
+			// 		success: function () {
+			// 			console.log("add fired");
+			// 		},
+			// 	})
+			// 		.done(function (result) {
+			// 			console.log(result);
+			// 			let playlist = result.playlist;
+			// 			let album = result.album[0];
+			// 			$(".song").append(
+			// 				`<h3 class="songsong mx-4">${album.album_name}</h3></br>`
+			// 			);
+			// 			appendSong(result);
+			// 			$(".select-playlist").click((e) => {
+			// 				// e.preventDefault();
+			// 				console.log("hello", e.target);
+			// 				// if ($(".list")[0].style.display == "block") {
+			// 				// 	$(".list")[0].style.display = "none";
+			// 				// } else {
+			// 				// 	$(".list")[0].style.display = "block";
+			// 				// }
+			// 			});
 
-						$(".add-to-playlist").click((e) => {
-							addToPlaylist(e);
-						});
-					})
-					.fail(() => console.log("fail add"))
-					.always(() => console.log("runrunrun"));
-			});
+			// 			$(".add-to-playlist").click((e) => {
+			// 				addToPlaylist(e);
+			// 			});
+			// 		})
+			// 		.fail(() => console.log("fail add"))
+			// 		.always(() => console.log("runrunrun"));
+			// });
 		})
 		.fail(() => console.log("hahafail inside"))
 		.always(() => console.log("running inside"));
 });
 
 const clearAll = () => {
-	$(".featuring").empty();
+	$(".noneWhenSearch")[0].style.display = "none";
+	$(".noneWhenSearch")[1].style.display = "none";
 	$(".artist").empty();
 	$(".album").empty();
 	$(".song").empty();
-	$(".carousel").empty();
 };
 
 const appendSong = (result) => {
@@ -159,12 +170,12 @@ const appendSong = (result) => {
 			`<span class="mx-4 songName">${songName}</span>
 			<button class="btn btn-warning playSong" data-song_id="${songId}" data-song_url="${songUrl}"><i class="fal fa-play-circle"></i></button>
 			<button class="btn select-playlist" data-song_id="${songId}">add to playlist</button>
-			<ul class="list" id="list${i}"></ul></br>`
+			<ul style="display:none;" class="list" id="list${songId}"></ul></br>`
 		);
 		for (let y = 0; y < result.playlist.length; y++) {
 			let playlistName = result.playlist[y].playlist_name;
 			let libraryId = result.playlist[y].id;
-			$(`#list${i}`).append(
+			$(`#list${songId}`).append(
 				`<li><button class="btn btn-success add-to-playlist" data-song_id="${songId}" data-library_id="${libraryId}">add to here ${playlistName}</button></li>`
 			);
 		}
@@ -172,9 +183,10 @@ const appendSong = (result) => {
 
 	$(".select-playlist").click((e) => {
 		// e.preventDefault();
-		console.log("hello", e.target);
+		console.log("target", e.target);
 		let song_id = e.target.dataset.song_id;
-		console.log("hello", $(`#list${song_id}`));
+		console.log(song_id, "song id");
+		console.log("working on this", $(`#list${song_id}`));
 
 		if ($(`#list${song_id}`)[0].style.display == "block") {
 			$(`#list${song_id}`)[0].style.display = "none";
