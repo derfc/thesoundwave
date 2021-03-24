@@ -1,53 +1,57 @@
-<h1>Playlist</h1>
-<p>{{libraryId}}</p>
+<section class="mainHomepage">
+
+     <h1>Playlist</h1>
+     <p>{{libraryId}}</p>
 
 
-<div class="playlist" data-library_id="{{libraryId}}">
-     <div class="title row">
-          <div class="col">
-               <p>#</p>
+     <div class="playlist" data-library_id="{{libraryId}}">
+          <div class="title row">
+               <div class="col">
+                    <p>#</p>
+               </div>
+               <div class="col">
+                    <p>SONG</p>
+               </div>
+               <div class="col">
+                    <p>ALBUM</p>
+               </div>
+               <div class="col">
+                    <p>ARTIST</p>
+               </div>
+               <div class="col">
+                    <p>DURATION</p>
+               </div>
+               <div class="col">
+                    <p>ACTION</p>
+               </div>
           </div>
-          <div class="col">
-               <p>SONG</p>
-          </div>
-          <div class="col">
-               <p>ALBUM</p>
-          </div>
-          <div class="col">
-               <p>ARTIST</p>
-          </div>
-          <div class="col">
-               <p>DURATION</p>
-          </div>
-          <div class="col">
-               <p>ACTION</p>
+
+
+          <div class="song-list">
+               {{#each playlistSongArr}}
+               <div class="album__tracks row">
+                    <div class="col">
+                         <p>{{this.id}}</p>
+                    </div>
+                    <div class="col">
+                         <p>{{this.song_name}}</p>
+                    </div>
+                    <div class="col">
+                         <p>{{this.album_name}}</p>
+                    </div>
+                    <div class="col">
+                         <p>{{this.artist_name_eng}}</p>
+                    </div>
+                    <div class="col" id="song_length">
+                         <p>need to get length</p>
+                    </div>
+                    <div class="col">
+                         <button data-song_id="{{this.id}}" class="delete-song">delete song</button>
+                    </div>
+
+               </div>
+               {{/each}}
           </div>
      </div>
 
-
-     <div class="song-list">
-          {{#each playlistSongArr}}
-          <div class="album__tracks row">
-               <div class="col">
-                    <p>{{this.id}}</p>
-               </div>
-               <div class="col">
-                    <p>{{this.song_name}}</p>
-               </div>
-               <div class="col">
-                    <p><a href="/album/{{this.album_id}}">{{this.album_name}}</a></p>
-               </div>
-               <div class="col">
-                    <p><a href="/artist/{{this.artist_id}}">{{this.artist_name_eng}}</a></p>
-               </div>
-               <div class="col" id="song_length">
-                    <p>need to get length</p>
-               </div>
-               <div class="col">
-                    <button data-song_id="{{this.id}}" class="delete-song">delete song</button>
-               </div>
-
-          </div>
-          {{/each}}
-     </div>
-</div>
+</section>
