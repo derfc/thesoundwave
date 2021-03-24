@@ -2,11 +2,19 @@
 <section class="mainhomepage">
 
 
-     <div class="instant-search d-inline mx-3">
-          <input type="search" spellcheck="false" placeholder="Search store" id="filter_store" />
+     <div class="instant-search d-inline mx-3" >
+		<input type="search" spellcheck="false" placeholder="Search store" id="filter_store"/>
      </div>
+	<div class="sort">
+		<label for="sort">Sort By:</label>
+			<select name="sort" id="sort">
+				<option value="---">---</option>
+				<option value="$down">Price High to Low</option>
+				<option value="$up">Price Low to High</option>
+			</select>
+	</div>
 
-     {{!-- <button class="btn btn-info button-artist search-artist" value="artist">artist</button>
+     {{!-- <button class="btn btn-info button-store search-artist" value="artist">artist</button>
      <button class="btn btn-info button-album search-album" value="album">album</button> --}}
 
      <div class="greetings text-white">
@@ -87,26 +95,5 @@
 <button class="add-to-cart" method="POST" data-item_id="{{this.id}}" data-user_id="1" data-store_id={{this.store_id}}>add to cart</button>
 </div>
 {{/each}}
+--}}
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script>
-     $(".add-to-cart").click((e) => {
-		e.preventDefault();
-		let item_id = e.target.dataset.item_id;
-		let user_id = e.target.dataset.user_id;
-
-		$.ajax({
-			type: "POST",
-			url: `/cart`,
-			data: { item_id: item_id, user_id: user_id },
-			success: function () {
-				console.log("success");
-			},
-		})
-			.done(function () {
-				window.location.reload();
-			})
-			.fail(function () {
-				console.log("failed");
-			});
-	});
-</script> --}}
