@@ -23,15 +23,21 @@ $("#filter_songs").on("keyup search", function (e) {
 					$(".artist").append(`<p class="mx-4">No results found</p>`);
 				}
 				if (artist.length > 0) {
-					$(".artist").append(`<h3 class="mx-4" style="text-decoration: underline">Artist</h3>`);
+					$(".artist").append(
+						`<h3 class="mx-4" style="text-decoration: underline">Artist</h3>`
+					);
 					appendArtist(data);
 				}
 				if (album.length > 0) {
-					$(".album").append(`<h3 class="mx-4" style="text-decoration: underline">Album</h3>`);
+					$(".album").append(
+						`<h3 class="mx-4" style="text-decoration: underline">Album</h3>`
+					);
 					appendAlbum(data);
 				}
 				if (song.length > 0) {
-					$(".song").append(`<h3 class="mx-4 songsong" style="text-decoration: underline">Song</h3></br>`);
+					$(".song").append(
+						`<h3 class="mx-4 songsong" style="text-decoration: underline">Song</h3></br>`
+					);
 					appendSong(data);
 				}
 
@@ -70,68 +76,6 @@ $(".search-artist").click((e) => {
 			// let artist = data.artist;
 			// $(".artist").append(`<p>Artist</p>`);
 			appendArtist(data);
-
-			$(".go-to-artist").click((e) => {
-				// console.log(e.target);
-				clearAll();
-				let artistId = e.target.dataset.artist_id;
-				$.ajax({
-					url: `/home/artist/${artistId}`,
-					type: "post",
-					success: function () {
-						console.log("go-to-artist");
-					},
-				})
-					.done(function (result) {
-						// console.log(result);
-						let artist = result.artist[0];
-						// let album = result.album;
-						if (artist.artist_name_chi) {
-							$(".artist").append(
-								`<h1 class="mx-4"><b>${artist.artist_name_eng} &nbsp;${artist.artist_name_chi}</b></h1>`
-							);
-						} else {
-							$(".artist").append(`<h1 class="mx-4"><b>${artist.artist_name_eng}</b></h1>`);
-						}
-						appendAlbum(result);
-
-						$(".go-to-album").click((e) => {
-							clearAll();
-							let albumId = e.target.dataset.album_id;
-							$.ajax({
-								url: `/home/album/${albumId}`,
-								type: "post",
-								success: function () {
-									console.log("add fired");
-								},
-							})
-								.done(function (result) {
-									console.log(result);
-									let playlist = result.playlist;
-									let album = result.album[0];
-									$(".song").append(`<h3>${album.album_name}</h3></br>`);
-									appendSong(result);
-									$(".select-playlist").click((e) => {
-										// e.preventDefault();
-										console.log("hello", e.target);
-										// if ($(".list")[0].style.display == "block") {
-										// 	$(".list")[0].style.display = "none";
-										// } else {
-										// 	$(".list")[0].style.display = "block";
-										// }
-									});
-
-									$(".add-to-playlist").click((e) => {
-										addToPlaylist(e);
-									});
-								})
-								.fail(() => console.log("fail add"))
-								.always(() => console.log("runrunrun"));
-						});
-					})
-					.fail(() => console.log("fail add"))
-					.always(() => console.log("runrunrun"));
-			});
 		})
 		.fail(() => console.log("hahafail inside"))
 		.always(() => console.log("running inside"));
@@ -207,6 +151,7 @@ const clearAll = () => {
 const appendSong = (result) => {
 	for (let i = 0; i < result.song.length; i++) {
 		let songId = result.song[i].id;
+		console.log(songId, "what are u");
 		let songName = result.song[i].song_name;
 		let songUrl = result.song[i].song_url;
 		// console.log(result.song[0]);
@@ -227,11 +172,14 @@ const appendSong = (result) => {
 
 	$(".select-playlist").click((e) => {
 		// e.preventDefault();
-		// console.log("hello", e.target);
-		if ($(".list")[0].style.display == "block") {
-			$(".list")[0].style.display = "none";
+		console.log("hello", e.target);
+		let song_id = e.target.dataset.song_id;
+		console.log("hello", $(`#list${song_id}`));
+
+		if ($(`#list${song_id}`)[0].style.display == "block") {
+			$(`#list${song_id}`)[0].style.display = "none";
 		} else {
-			$(".list")[0].style.display = "block";
+			$(`#list${song_id}`)[0].style.display = "block";
 		}
 	});
 
@@ -250,6 +198,7 @@ const appendSong = (result) => {
 		})
 			.done(function (result) {
 				console.log(result);
+				$(`#list${song_id}`)[0].style.display = "none";
 			})
 			.fail(() => console.log("fail add"))
 			.always(() => console.log("runrunrun"));
@@ -274,6 +223,28 @@ const appendAlbum = (result) => {
 			`
 		);
 	}
+
+	//$go to alb
+	$(".go-to-album").click((e) => {
+		clearAll();
+		let albumId = e.target.dataset.album_id;
+		$.ajax({
+			url: `/home/album/${albumId}`,
+			type: "post",
+			success: function () {
+				console.log("add fired");
+			},
+		})
+			.done(function (result) {
+				console.log(result);
+				let playlist = result.playlist;
+				let album = result.album[0];
+				$(".song").append(`<h3>${album.album_name}</h3></br>`);
+				appendSong(result);
+			})
+			.fail(() => console.log("fail add"))
+			.always(() => console.log("runrunrun"));
+	});
 };
 
 const appendArtist = (result) => {
@@ -304,4 +275,34 @@ const appendArtist = (result) => {
 			);
 		}
 	}
+	$(".go-to-artist").click((e) => {
+		console.log(e.target);
+		clearAll();
+		let artistId = e.target.dataset.artist_id;
+		$.ajax({
+			url: `/home/artist/${artistId}`,
+			type: "post",
+			success: function () {
+				console.log("go-to-artist");
+			},
+		})
+			.done(function (result) {
+				// console.log(result);
+				let artist = result.artist[0];
+				// let album = result.album;
+				if (artist.artist_name_chi) {
+					$(".artist").append(
+						`<h1 class="mx-4"><b>${artist.artist_name_eng} &nbsp;${artist.artist_name_chi}</b></h1>`
+					);
+				} else {
+					$(".artist").append(
+						`<h1 class="mx-4"><b>${artist.artist_name_eng}</b></h1>`
+					);
+				}
+				appendAlbum(result);
+			})
+			.fail(() => console.log("fail add"))
+			.always(() => console.log("runrunrun"));
+	});
+	//$go to art
 };
