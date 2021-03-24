@@ -116,7 +116,7 @@ $(".search-album").click((e) => {
 						console.log(result);
 						let playlist = result.playlist;
 						let album = result.album[0];
-						$(".song").append(`<h3>${album.album_name}</h3></br>`);
+						$(".song").append(`<h3 class="songsong mx-4">${album.album_name}</h3></br>`);
 						appendSong(result);
 						$(".select-playlist").click((e) => {
 							// e.preventDefault();
@@ -156,14 +156,16 @@ const appendSong = (result) => {
 		let songUrl = result.song[i].song_url;
 		// console.log(result.song[0]);
 		$(".song").append(
-			`<span class="mx-4 songName">${songName}</span><button class="playSong" data-song_id="${songId}" data-song_url="${songUrl}">play ${songName}</button><button class="select-playlist" data-song_id="${songId}">add to playlist</button><ul class="list" id="list${songId}"></ul></br>`
+			`<span class="mx-4 songName">${songName}</span>
+			<button class="btn btn-warning playSong" data-song_id="${songId}" data-song_url="${songUrl}"><i class="fal fa-play-circle"></i></button>
+			<button class="btn select-playlist" data-song_id="${songId}">add to playlist</button>
+			<ul class="list" id="list${i}"></ul></br>`
 		);
 		for (let y = 0; y < result.playlist.length; y++) {
 			let playlistName = result.playlist[y].playlist_name;
 			let libraryId = result.playlist[y].id;
-			console.log(songId, "what are u 2");
-			$(`#list${songId}`).append(
-				`<li><button class="add-to-playlist" data-song_id="${songId}" data-library_id="${libraryId}">add to here ${playlistName}</button></li>`
+			$(`#list${i}`).append(
+				`<li><button class="btn btn-success add-to-playlist" data-song_id="${songId}" data-library_id="${libraryId}">add to here ${playlistName}</button></li>`
 			);
 		}
 	}

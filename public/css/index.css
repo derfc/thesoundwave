@@ -194,6 +194,7 @@ a {
   /* background-color: rgb(43, 43, 48); */
   background-image: linear-gradient(to top, rgba(41, 41, 41), rgb(83, 35, 35));
   border-right: 1px solid rgb(19, 18, 18);
+  min-height: 88.5vh;
 }
 
 .side-bar .profile {
@@ -351,7 +352,9 @@ a {
 .mainHomepage {
   /* background-color: rgb(41, 41, 41); */
   background-image: linear-gradient(to top, rgba(41, 41, 41), rgb(122, 48, 48));
-  min-height: 88vh;
+  min-height: 88.5vh;
+  max-height: 88.5vh;
+  overflow: scroll;
 }
 
 .mainHomepage .searching .instant-search {
