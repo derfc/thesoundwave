@@ -87,16 +87,21 @@ const appendStore = (result) => {
 
 const appendItem = (result) => {
 	// console.log(result);
+	$(".item").append('<div class="item-inside row"></div>');
 	for (let i = 0; i < result.item.length; i++) {
 		let itemName = result.item[i].item_name;
 		let itemPhoto = result.item[i].item_photo;
 		let itemPrice = result.item[i].item_price;
 		let itemId = result.item[i].id;
-		$(".item").append(
-			`<img src=${itemPhoto} alt="${itemName} Photo"/></br>
+		$(".item-inside").append(
+			`
+			<div class="col-lg-2 col-md-3 col-sm-4 my-3">
+			<img style="max-height:200px; max-width:200px;" src=${itemPhoto} alt="${itemName} Photo"/></br>
 			<p>$${itemPrice / 100}</p>
 			<p>${itemName}</>
-			<button class="add-to-cart" data-item_id ="${itemId}" data-user_id="1">add to cart</button></br>`
+			<button class="add-to-cart" data-item_id ="${itemId}" data-user_id="1">add to cart</button></br>
+			</div>
+			`
 		);
 	}
 	$(".add-to-cart").click((e) => {
