@@ -201,8 +201,12 @@ a {
 }
 
 .side-bar h3 {
-  font-size: 30px;
+  font-size: 26px;
   color: rgb(184, 179, 179);
+}
+
+.side-bar {
+  font-size: 18px;
 }
 
 .side-bar p {
@@ -213,6 +217,18 @@ a {
   margin-top: 20px;
   margin-bottom: 0px;
   margin-left: 26px;
+}
+
+.side-bar .navroutes i {
+  padding-right: 10px;
+}
+
+.side-bar .navroutes .fa-home-lg {
+  padding-right: 12px;
+}
+
+.side-bar .navroutes .fa-bags-shopping {
+  padding-right: 12.1px;
 }
 
 .side-bar hr {
@@ -229,6 +245,10 @@ a {
 
 .side-bar button:hover {
   color: rgb(236, 236, 236);
+}
+
+.side-bar button:focus {
+  box-shadow: none;
 }
 
 .side-bar .profile .pro-pic {
@@ -331,6 +351,21 @@ a {
   /* background-color: rgb(41, 41, 41); */
   background-image: linear-gradient(to top, rgba(41, 41, 41), rgb(122, 48, 48));
   min-height: 80.5vh;
+}
+
+.mainHomepage .searching button {
+  color: rgb(184, 179, 179);
+  font-size: 18px;
+}
+
+.mainHomepage .searching button:focus {
+  box-shadow: none;
+  background-color: #8168aa8f;
+}
+
+.mainHomepage .searching button:hover {
+  color: rgb(236, 236, 236);
+  background-color: #8168aa8f;
 }
 
 section.row {
