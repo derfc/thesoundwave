@@ -101,40 +101,40 @@ $(".search-album").click((e) => {
 			// );
 			appendAlbum(data);
 
-			$(".go-to-album").click((e) => {
-				// console.log(e.target);
-				clearAll();
-				let albumId = e.target.dataset.album_id;
-				$.ajax({
-					url: `/home/album/${albumId}`,
-					type: "post",
-					success: function () {
-						console.log("add fired");
-					},
-				})
-					.done(function (result) {
-						console.log(result);
-						let playlist = result.playlist;
-						let album = result.album[0];
-						$(".song").append(`<h3 class="songsong mx-4">${album.album_name}</h3></br>`);
-						appendSong(result);
-						$(".select-playlist").click((e) => {
-							// e.preventDefault();
-							console.log("hello", e.target);
-							// if ($(".list")[0].style.display == "block") {
-							// 	$(".list")[0].style.display = "none";
-							// } else {
-							// 	$(".list")[0].style.display = "block";
-							// }
-						});
+			// $(".go-to-album").click((e) => {
+			// 	// console.log(e.target);
+			// 	clearAll();
+			// 	let albumId = e.target.dataset.album_id;
+			// 	$.ajax({
+			// 		url: `/home/album/${albumId}`,
+			// 		type: "post",
+			// 		success: function () {
+			// 			console.log("add fired");
+			// 		},
+			// 	})
+			// 		.done(function (result) {
+			// 			console.log(result);
+			// 			let playlist = result.playlist;
+			// 			let album = result.album[0];
+			// 			$(".song").append(`<h3 class="songsong mx-4">${album.album_name}</h3></br>`);
+			// 			appendSong(result);
+			// 			$(".select-playlist").click((e) => {
+			// 				// e.preventDefault();
+			// 				console.log("hello", e.target);
+			// 				// if ($(".list")[0].style.display == "block") {
+			// 				// 	$(".list")[0].style.display = "none";
+			// 				// } else {
+			// 				// 	$(".list")[0].style.display = "block";
+			// 				// }
+			// 			});
 
-						$(".add-to-playlist").click((e) => {
-							addToPlaylist(e);
-						});
-					})
-					.fail(() => console.log("fail add"))
-					.always(() => console.log("runrunrun"));
-			});
+			// 			$(".add-to-playlist").click((e) => {
+			// 				addToPlaylist(e);
+			// 			});
+			// 		})
+			// 		.fail(() => console.log("fail add"))
+			// 		.always(() => console.log("runrunrun"));
+			// });
 		})
 		.fail(() => console.log("hahafail inside"))
 		.always(() => console.log("running inside"));
@@ -159,12 +159,12 @@ const appendSong = (result) => {
 			`<span class="mx-4 songName">${songName}</span>
 			<button class="btn btn-warning playSong" data-song_id="${songId}" data-song_url="${songUrl}"><i class="fal fa-play-circle"></i></button>
 			<button class="btn select-playlist" data-song_id="${songId}">add to playlist</button>
-			<ul class="list" id="list${i}"></ul></br>`
+			<ul class="list" id="list${songId}"></ul></br>`
 		);
 		for (let y = 0; y < result.playlist.length; y++) {
 			let playlistName = result.playlist[y].playlist_name;
 			let libraryId = result.playlist[y].id;
-			$(`#list${i}`).append(
+			$(`#list${songId}`).append(
 				`<li><button class="btn btn-success add-to-playlist" data-song_id="${songId}" data-library_id="${libraryId}">add to here ${playlistName}</button></li>`
 			);
 		}
