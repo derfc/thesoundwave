@@ -3,7 +3,9 @@ $("#filter_songs").on("keyup search", function (e) {
 	clearAll();
 	let keywords = e.target.value;
 	if (!keywords) {
-		$(".featuring").append("<p>featuring stuff</p>");
+		// $(".featuring").append("<p>featuring stuff</p>");
+		$(".noneWhenSearch")[0].style.display = "block";
+		$(".noneWhenSearch")[1].style.display = "block";
 	} else {
 		$.ajax({
 			url: `/home`,
@@ -58,6 +60,13 @@ $("#filter_songs").on("keyup search", function (e) {
 			.fail(() => console.log("hahafail"))
 			.always(() => console.log("running"));
 	}
+});
+
+$(".clear-search").click((e) => {
+	e.preventDefault();
+	clearAll();
+	$(".noneWhenSearch")[0].style.display = "block";
+	$(".noneWhenSearch")[1].style.display = "block";
 });
 
 $(".search-artist").click((e) => {
@@ -141,11 +150,11 @@ $(".search-album").click((e) => {
 });
 
 const clearAll = () => {
-	$(".featuring").empty();
+	$(".noneWhenSearch")[0].style.display = "none";
+	$(".noneWhenSearch")[1].style.display = "none";
 	$(".artist").empty();
 	$(".album").empty();
 	$(".song").empty();
-	$(".carousel").empty();
 };
 
 const appendSong = (result) => {
@@ -172,9 +181,10 @@ const appendSong = (result) => {
 
 	$(".select-playlist").click((e) => {
 		// e.preventDefault();
-		console.log("hello", e.target);
+		console.log("target", e.target);
 		let song_id = e.target.dataset.song_id;
-		console.log("hello", $(`#list${song_id}`));
+		console.log(song_id, "song id");
+		console.log("working on this", $(`#list${song_id}`));
 
 		if ($(`#list${song_id}`)[0].style.display == "block") {
 			$(`#list${song_id}`)[0].style.display = "none";

@@ -6,6 +6,7 @@
                     id="filter_songs" />
           </div>
 
+          <button class="btn button-clear-search clear-search" value="">CLEAR</button>
           <button class="btn button-artist search-artist" value="artist">ARTIST</button>
           <button class="btn button-album search-album" value="album">ALBUM</button>
 
@@ -15,10 +16,11 @@
           <div class="results mb-2">
                <div class="artist"></div>
                <div class="album"></div>
+               <div class="song"></div>
           </div>
      </section>
 
-     <section class="container-fluid px-4">
+     <section class="noneWhenSearch container-fluid px-4">
           <div class="carousel slide" data-ride="carousel">
                <div class="carousel-inner">
                     <div class="carousel-item active">
@@ -52,7 +54,7 @@
      </section>
 
      {{!-- d-flex flex-wrap flex-fillalbum-card --}}
-     <div class="song">
+     <div class="noneWhenSearch homeSong">
           <div class="random-album px-4 row">
                {{#each playlistSongArr}}
                <div class="col-lg-2 col-md-3 col-sm-4 my-3">
