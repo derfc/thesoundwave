@@ -14,6 +14,7 @@
           </div>
 
           <div class="results mb-2">
+               <div class="title"></div>
                <div class="artist"></div>
                <div class="album"></div>
                <div class="song"></div>
@@ -63,8 +64,8 @@
                     </div>
                     <div class="album-info">
                          <h6 class="name mt-2 text-white">{{this.song_name}}</h6>
-                         <h6><a href="/artist/{{this.artist_id}}">{{this.artist_name_eng}} {{this.artist_name_chi}}</a>
-                         </h6>
+                         <button class="btn go-to-artist" data-artist_id="{{this.artist_id}}">{{this.artist_name_eng}}
+                              {{this.artist_name_chi}}</button>
                     </div>
                </div>
                {{/each}}
