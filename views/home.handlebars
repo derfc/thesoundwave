@@ -1,8 +1,9 @@
 <section class="mainHomepage">
 
      <section class="searching pt-3">
-          <div class="instant-search d-inline mx-4">
-               <input type="search" spellcheck="false" placeholder="Search songs" id="filter_songs" />
+          <div class="d-inline mx-4">
+               <input class="instant-search" type="search" spellcheck="false" placeholder="Artists, albums and songs"
+                    id="filter_songs" />
           </div>
 
           <button class="btn button-artist search-artist" value="artist">ARTIST</button>
@@ -22,26 +23,26 @@
                <div class="carousel-inner">
                     <div class="carousel-item active">
                          <div class="row">
-                              <div class="col-sm"><img class="d-block w-100" src="./image/musicposter1.jpeg"
+                              <div class="col-sm"><img class="d-block w-100 img-fluid" src="./image/musicposter1.jpeg"
                                         alt="1 slide">
                               </div>
-                              <div class="col-sm"><img class="d-block w-100" src="./image/musicposter2.jpeg"
+                              <div class="col-sm"><img class="d-block w-100 img-fluid" src="./image/musicposter2.jpeg"
                                         alt="2 slide">
                               </div>
-                              <div class="col-sm"><img class="d-block w-100" src="./image/musicposter3.jpeg"
+                              <div class="col-sm"><img class="d-block w-100 img-fluid" src="./image/musicposter3.jpeg"
                                         alt="3 slide">
                               </div>
                          </div>
                     </div>
                     <div class="carousel-item">
                          <div class="row">
-                              <div class="col-sm"><img class="d-block w-100" src="./image/musicposter2.jpeg"
+                              <div class="col-sm"><img class="d-block w-100 img-fluid" src="./image/musicposter2.jpeg"
                                         alt="4 slide">
                               </div>
-                              <div class="col-sm"><img class="d-block w-100" src="./image/musicposter3.jpeg"
+                              <div class="col-sm"><img class="d-block w-100 img-fluid" src="./image/musicposter3.jpeg"
                                         alt="5 slide">
                               </div>
-                              <div class="col-sm"><img class="d-block w-100" src="./image/musicposter1.jpeg"
+                              <div class="col-sm"><img class="d-block w-100 img-fluid" src="./image/musicposter1.jpeg"
                                         alt="6 slide">
                               </div>
                          </div>
@@ -50,18 +51,24 @@
           </div>
      </section>
 
-     <div class="song d-flex flex-wrap flex-fill">
-          {{#each playlistSongArr}}
-          <div class="album-card m-4">
-               <img class="image" src="{{this.album_photo}}" alt="Living Things" />
-               <div class="album-info">
-                    <h6 class="name text-white">{{this.song_name}}</h6>
-                    <h6><a href="/artist/{{this.artist_id}}">{{this.artist_name_eng}} {{this.artist_name_chi}}</a></h6>
+     {{!-- d-flex flex-wrap flex-fillalbum-card --}}
+     <div class="song">
+          <div class="random-album px-4 row">
+               {{#each playlistSongArr}}
+               <div class="col-lg-2 col-md-3 col-sm-4 my-3">
+                    <div class="album-img">
+                         <img class="image img-fluid" src="{{this.album_photo}}" alt="Living Things" />
+                    </div>
+                    <div class="album-info">
+                         <h6 class="name mt-2 text-white">{{this.song_name}}</h6>
+                         <h6><a href="/artist/{{this.artist_id}}">{{this.artist_name_eng}} {{this.artist_name_chi}}</a>
+                         </h6>
+                    </div>
                </div>
-               <div class="album-page"></div>
+               {{/each}}
           </div>
-          {{/each}}
      </div>
+
 </section>
 
 {{!-- <div class="title row">

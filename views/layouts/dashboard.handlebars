@@ -34,7 +34,7 @@
 <body class="">
 
     <section class="row">
-        <div class="col-2 side-bar">
+        <div class="col-md-2 side-bar">
             <div class="profile text-center">
                 <div>
                     <img class="pro-pic" src="{{thumbnail}}" alt="thumbnail" height="80px" width="80px" />
@@ -66,8 +66,20 @@
             {{#if playlist}}
             <div class="sidebar-playlist">
                 <p>PLAYLIST</p>
-                <button class="btn open-button" onclick="openForm()"><i class="fal fa-plus-square"></i> Create
-                    playlist</button>
+                <button class="btn open-button" id="create-list"><i class="fal fa-plus-square"></i>
+                    &nbsp;Create playlist</button>
+
+                {{!-- pop-up form for inserting new playlist --}}
+                <div class="form-popup " id="myForm">
+                    <form action="/library" method="post" class="form-container px-2 py-1">
+                        <input class="py-1" type="text" placeholder="playlist name" name="playlistName" required>
+                        <button type="submit" class="btn"><i class="fad fa-plus-circle"></i> ADD
+                            PLAYLIST</button>
+                        <button type="button" class="btn" onclick="closeForm()"><i class="fad fa-window-close"></i>
+                            CLOSE</button>
+                    </form>
+                </div>
+
                 <hr>
                 {{#each playlist}}
                 <div>
@@ -78,39 +90,28 @@
                     </br>
                 </div>
                 {{/each}}
-            {{/if}}
-
-            {{#if allStore}}
-            <div class="sidebar-playlist">
-                <p>STORE</p>
-                <hr>
-                {{#each allStore}}
-                <div>
-                    <button type="button" class="btn select-store"
-                            data-store_id="{{this.id}}" value="{{this.store_name}}">{{this.store_name}}</button>
-                    </br>
-                </div>
-                {{/each}}
-            {{/if}}
+                {{/if}}
 
 
-                {{!-- pop-up form for inserting new playlist --}}
-                <div class="form-popup" id="myForm">
-                    <form action="/library" method="post" class="form-container">
-                        <h1>add playlist</h1>
-                        <label for="playlistName"><b>playlist name</b></label>
-                        <input type="text" placeholder="myPlaylist" name="playlistName" required>
-                        <button type="submit" class="btn">add playlist</button>
-                        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-                    </form>
+                {{#if allStore}}
+                <div class="sidebar-playlist">
+                    <p>STORE</p>
+                    <hr>
+                    {{#each allStore}}
+                    <div>
+                        <button type="button" class="btn select-store" data-store_id="{{this.id}}"
+                            value="{{this.store_name}}">{{this.store_name}}</button>
+                        </br>
+                    </div>
+                    {{/each}}
+                    {{/if}}
                 </div>
             </div>
-        </div>
 
-        <div class="col">
-            {{{body}}}
+            <div class="col">
+                {{{body}}}
+            </div>
         </div>
-
     </section>
 
     {{!-- //footer --}}
@@ -197,12 +198,23 @@
 {{/if}}
 
 <script>
+    let create = 0;
+    $('#create-list').click((e) => {
+        if (create % 2) {
+            closeForm();
+        } else {
+            openForm();
+        }
+    })
+
     function openForm() {
         document.getElementById("myForm").style.display = "block";
+        create++;
     }
 
     function closeForm() {
         document.getElementById("myForm").style.display = "none";
+        create++;
     }
 
     $(".delete-playlist").click((e) => {

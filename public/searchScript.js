@@ -20,18 +20,18 @@ $("#filter_songs").on("keyup search", function (e) {
 				let song = data.song;
 				let playlist = data.playlist;
 				if (artist.length == 0 && album.length == 0 && song.length == 0) {
-					$(".artist").append(`<p>no result found</p>`);
+					$(".artist").append(`<p class="mx-4">No results found</p>`);
 				}
 				if (artist.length > 0) {
-					$(".artist").append(`<h3>Artist</h3>`);
+					$(".artist").append(`<h3 class="mx-4" style="text-decoration: underline">Artist</h3>`);
 					appendArtist(data);
 				}
 				if (album.length > 0) {
-					$(".album").append(`<h3>Album</h3>`);
+					$(".album").append(`<h3 class="mx-4" style="text-decoration: underline">Album</h3>`);
 					appendAlbum(data);
 				}
 				if (song.length > 0) {
-					$(".song").append(`<h3>Song</h3></br>`);
+					$(".song").append(`<h3 class="mx-4 songsong" style="text-decoration: underline">Song</h3></br>`);
 					appendSong(data);
 				}
 
@@ -87,11 +87,11 @@ $(".search-artist").click((e) => {
 						let artist = result.artist[0];
 						// let album = result.album;
 						if (artist.artist_name_chi) {
-							$(".album").append(
-								`<h3>${artist.artist_name_eng} ${artist.artist_name_chi}</h3>`
+							$(".artist").append(
+								`<h1 class="mx-4"><b>${artist.artist_name_eng} &nbsp;${artist.artist_name_chi}</b></h1>`
 							);
 						} else {
-							$(".album").append(`<h3>${artist.artist_name_eng}</h3>`);
+							$(".artist").append(`<h1 class="mx-4"><b>${artist.artist_name_eng}</b></h1>`);
 						}
 						appendAlbum(result);
 
@@ -211,7 +211,7 @@ const appendSong = (result) => {
 		let songUrl = result.song[i].song_url;
 		// console.log(result.song[0]);
 		$(".song").append(
-			`<p>returning ${songName}</p><button class="playSong" data-song_id="${songId}" data-song_url="${songUrl}">play ${songName}</button><button class="select-playlist" data-song_id="${songId}">add to playlist</button><ul class="list" id="list${i}"></ul></br>`
+			`<span class="mx-4 songName">${songName}</span><button class="playSong" data-song_id="${songId}" data-song_url="${songUrl}">play ${songName}</button><button class="select-playlist" data-song_id="${songId}">add to playlist</button><ul class="list" id="list${i}"></ul></br>`
 		);
 		for (let y = 0; y < result.playlist.length; y++) {
 			let playlistName = result.playlist[y].playlist_name;
@@ -255,16 +255,18 @@ const appendSong = (result) => {
 
 const appendAlbum = (result) => {
 	// console.log(result);
-	$(".artist").append('<div class="song d-flex helloArtist flex-wrap"></div>');
+	$(".album").append('<div class="random-album appendAlbum px-4 row"></div>');
 	for (let i = 0; i < result.album.length; i++) {
 		let albumName = result.album[i].album_name;
 		let albumPhoto = result.album[i].album_photo;
 		let albumId = result.album[i].id;
-		$(".helloArtist").append(
+		$(".appendAlbum").append(
 			`
-			<div class="album-card m-4">
-			<img class="photo-pic" src="${albumPhoto}" alt="${albumName} Photo"/></br>
-			<button class="btn btn-info go-to-album my-2" data-album_id ="${albumId}">${albumName}</button></br>
+			<div class="col-lg-2 col-md-3 col-sm-4 my-3">
+			<div class="album-img">
+			<img class="image img-fluid" src="${albumPhoto}" alt="${albumName} Photo"/>
+			</div>
+			<button class="btn go-to-album my-2" data-album_id ="${albumId}">${albumName}</button></br>
 			</div>
 			`
 		);
@@ -273,27 +275,27 @@ const appendAlbum = (result) => {
 
 const appendArtist = (result) => {
 	// console.log(result);
-	$(".artist").append('<div class="song d-flex helloArtist flex-wrap"></div>');
+	$(".artist").append('<div class="random-album appendArtist px-4 row"></div>');
 	for (let i = 0; i < result.artist.length; i++) {
 		let artistNameEng = result.artist[i].artist_name_eng;
 		let artistNameChi = result.artist[i].artist_name_chi;
 		let artistPhoto = result.artist[i].artist_photo;
 		let artistId = result.artist[i].id;
 		if (artistNameChi) {
-			$(".helloArtist").append(
+			$(".appendArtist").append(
 				`
-				<div class="album-card m-4">
-				<img class="photo-pic" src="${artistPhoto}" alt="${artistNameEng} ${artistNameChi} Photo"/></br>
-				<button class="btn btn-info go-to-artist" my-2 data-artist_id ="${artistId}">${artistNameEng} ${artistNameChi}</button></br>
+				<div class="col-lg-2 col-md-3 col-sm-4 my-3">
+				<img class="image img-fluid" src="${artistPhoto}" alt="${artistNameEng} ${artistNameChi} Photo"/></br>
+				<button class="btn go-to-artist" my-2 data-artist_id ="${artistId}">${artistNameEng} ${artistNameChi}</button></br>
 				</div>
 				`
 			);
 		} else {
-			$(".helloArtist").append(
+			$(".appendArtist").append(
 				`
-				<div class="album-card m-4">
-				<img src="${artistPhoto}" alt="${artistNameEng} Photo"/></br>
-				<button class="btn btn-info go-to-artist" my-2 data-artist_id ="${artistId}">${artistNameEng}</button></br>
+				<div class="col-lg-2 col-md-3 col-sm-4 my-3">
+				<img class="image img-fluid" src="${artistPhoto}" alt="${artistNameEng} Photo"/></br>
+				<button class="btn go-to-artist" my-2 data-artist_id ="${artistId}">${artistNameEng}</button></br>
 				</div>
 				`
 			);

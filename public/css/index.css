@@ -277,6 +277,7 @@ a {
   border-top: 1.5px solid rgb(41, 41, 41);
   border-color: black;
   background-color: rgb(41, 41, 41);
+  margin-right: 0;
 }
 
 .music-player button:focus {
@@ -350,7 +351,20 @@ a {
 .mainHomepage {
   /* background-color: rgb(41, 41, 41); */
   background-image: linear-gradient(to top, rgba(41, 41, 41), rgb(122, 48, 48));
-  min-height: 80.5vh;
+  min-height: 88vh;
+}
+
+.mainHomepage .searching .instant-search {
+  font-size: 16px;
+  height: 2.3rem;
+  width: 18rem;
+  border-radius: 10px;
+  border: 1px solid rgb(41, 41, 41);
+  padding: 0rem 0.5rem;
+}
+
+.mainHomepage .searching .instant-search:focus {
+  outline: none;
 }
 
 .mainHomepage .searching button {
@@ -368,80 +382,101 @@ a {
   background-color: #8168aa8f;
 }
 
-section.row {
-  --bs-gutter-x: 0rem;
+.mainHomepage .results button {
+  padding-left: 0;
+  font-size: 18px;
 }
 
-/* album card */
-.album-card {
+.mainHomepage .results .appendArtist button {
+  padding-left: 0;
+  font-size: 16px;
+}
+
+.mainHomepage .results .album-img {
   height: 180px;
   width: 180px;
 }
 
-.album-card .photo-pic {
+.mainHomepage .results .album-img img {
   height: 100%;
   width: 100%;
 }
 
-/*testing*/
-/* Button used to open the contact form - fixed at the bottom of the page */
-/* .open-button {
-	background-color: #555;
-	color: white;
-	padding: 16px 20px;
-	border: none;
-	cursor: pointer;
-	opacity: 0.8;
-	position: fixed;
-	bottom: 23px;
-	right: 28px;
-	width: 280px;
-} */
+.mainHomepage .results button:hover {
+  padding-left: 0;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+.mainHomepage .random-album {
+  max-width: 100%;
+}
+
+.mainHomepage .random-album .album-img {
+  max-height: 180px;
+  max-width: 180px;
+}
+
+.mainHomepage .random-album .album-img img {
+  height: 100%;
+  width: 100%;
+}
+
+section.row {
+  --bs-gutter-x: 0rem;
+}
+
+/* artist searc */
+.mainHomepage .artist,
+.album,
+.songsong,
+.songName {
+  color: rgb(236, 236, 236);
+  letter-spacing: 1.3px;
+}
 
 /* The popup form - hidden by default */
 .form-popup {
   display: none;
-  position: fixed;
-  /* bottom: 0;
-	right: 15px;
-	border: 3px solid #f1f1f1;
-	z-index: 9; */
+  position: relative;
 }
 
 /* Add styles to the form container */
 .form-container {
-  max-width: 300px;
-  padding: 10px;
-  background-color: white;
+  max-width: 75%;
+  margin-left: 1.8rem;
+  font-size: 16px;
 }
 
 /* Full-width input fields */
 .form-container input[type="text"],
 .form-container input[type="password"] {
   width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
+  margin-bottom: 5px;
   border: none;
+  border-radius: 5px;
+  padding-left: 5px;
   background: #f1f1f1;
 }
 
 /* When the inputs get focus, do something */
 .form-container input[type="text"]:focus,
 .form-container input[type="password"]:focus {
-  background-color: #ddd;
   outline: none;
 }
 
 /* Set a style for the submit/login button */
 .form-container .btn {
-  background-color: #4caf50;
   color: white;
-  padding: 16px 20px;
+  padding-left: 0;
+  margin-left: 0;
   border: none;
   cursor: pointer;
   width: 100%;
-  margin-bottom: 10px;
   opacity: 0.8;
+  color: rgb(184, 179, 179);
+  font-size: 14px;
+  text-align: left;
 }
 
 /* Add a red background color to the cancel button */
