@@ -53,7 +53,7 @@
      <div class="song d-flex flex-wrap flex-fill">
           {{#each playlistSongArr}}
           <div class="album-card m-4">
-               <img class="image" src="http://placehold.it/160x160" alt="Living Things" />
+               <img class="image" src="{{this.album_photo}}" alt="Living Things" />
                <div class="album-info">
                     <h6 class="name text-white">{{this.song_name}}</h6>
                     <h6><a href="/artist/{{this.artist_id}}">{{this.artist_name_eng}} {{this.artist_name_chi}}</a></h6>

@@ -78,6 +78,7 @@ module.exports.getAwsObject = () => {
 				albumArr.push(objArr[2]);
 			}
 		}
+		console.log(albumArr, "i dont want numbers");
 		return;
 		return albumKnex;
 	};
@@ -99,7 +100,7 @@ module.exports.getAwsObject = () => {
 					album_id: albumId,
 				});
 			}
-			if (objArr[3] && objArr[3].endsWith(".jpg")) {
+			if (objArr[3] && objArr[1] == "album" && objArr[3].endsWith(".jpg")) {
 				let artistId = (await artistArr.indexOf(objArr[0])) + 1;
 				await albumKnex.push({
 					album_name: objArr[2],
@@ -143,7 +144,9 @@ module.exports.getAwsObject = () => {
 		for (let i = 0; i < awsObj.length; i++) {
 			let objArr = awsObj[i].Key.split("/");
 			// console.log(objArr[1], "here");
+			// console.log(objArr[0], "bug");
 			let artistNameEng = objArr[0].split("-")[0].replace(/_/g, " ");
+			// console.log(objArr[0].split("-")[0].replace(/_/g, " "), "bug");
 			if (
 				objArr[2] &&
 				objArr[3] &&
@@ -152,11 +155,21 @@ module.exports.getAwsObject = () => {
 				// !storeArr.includes(`${artistNameEng}'s Store`)
 			) {
 				let storeId = (await storeArr.indexOf(`${artistNameEng}'s Store`)) + 1;
+
+				let itemCat = objArr[3].split("[category]")[0];
+				// console.log("can run here");
+				// console.log(objArr[3].split("[category]"));
+				let itemName = objArr[3]
+					.split("[category]")[1]
+					.replace(".jpg", "")
+					.replace(/_/g, " ");
+				// console.log("cannot run here");
 				await itemKnex.push({
-					item_name: objArr[3].replace(".jpg", "").replace(/_/g, " "),
+					item_name: itemName,
 					item_photo: `https://thesoundwave.s3-us-west-1.amazonaws.com/${objArr[0]}/store/${objArr[2]}/${objArr[3]}`,
 					item_price: objArr[2],
 					store_id: storeId,
+					item_category: itemCat,
 				});
 			}
 		}
