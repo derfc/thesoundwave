@@ -117,7 +117,6 @@ app.get("/", (req, res) => {
 //home route
 app.get("/home", authCheck, (req, res) => {
 	let id = req.user.id;
-
 	getNamePic(req);
 
 	return storeSQL.getPlaylist(user_id).then((playlist) => {

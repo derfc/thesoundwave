@@ -65,13 +65,15 @@ $("#filter_songs").on("keyup search", function (e) {
 $(".clear-search").click((e) => {
 	e.preventDefault();
 	clearAll();
+	$(".title").empty()
 	$(".noneWhenSearch")[0].style.display = "block";
 	$(".noneWhenSearch")[1].style.display = "block";
 });
 
 $(".search-artist").click((e) => {
-	// console.log(e.target.value);
-	// clearAll();
+	// console.log("should show", e.target.value);
+	clearAll();
+	$(".title").empty()
 	$.ajax({
 		url: `/home`,
 		type: "POST",
@@ -93,6 +95,7 @@ $(".search-artist").click((e) => {
 $(".search-album").click((e) => {
 	// console.log(e.target.value);
 	clearAll();
+	$(".title").empty()
 	$.ajax({
 		url: `/home`,
 		type: "POST",
@@ -159,6 +162,10 @@ const clearAll = () => {
 
 const appendSong = (result) => {
 	clearAll();
+	let albumName = result.album[0].album_name;
+	let albumPhoto = result.album[0].album_photo;
+	$(".song").append(`<div class="mx-4 my-3"><img class="image img-fluid" src="${albumPhoto}" alt="${albumName} Photo"/></div>`)
+
 	for (let i = 0; i < result.song.length; i++) {
 		let songId = result.song[i].id;
 		console.log(songId, "what are u");
@@ -251,7 +258,7 @@ const appendAlbum = (result) => {
 				console.log(result);
 				let playlist = result.playlist;
 				let album = result.album[0];
-				$(".song").append(`<h3>${album.album_name}</h3></br>`);
+				$(".title").empty().append(`<h3 class="mx-4 songsong">${album.album_name}</h3>`);
 				appendSong(result);
 			})
 			.fail(() => console.log("fail add"))
@@ -304,11 +311,11 @@ const appendArtist = (result) => {
 				let artist = result.artist[0];
 				// let album = result.album;
 				if (artist.artist_name_chi) {
-					$(".artist").append(
+					$(".title").empty().append(
 						`<h1 class="mx-4"><b>${artist.artist_name_eng} &nbsp;${artist.artist_name_chi}</b></h1>`
 					);
 				} else {
-					$(".artist").append(
+					$(".title").empty().append(
 						`<h1 class="mx-4"><b>${artist.artist_name_eng}</b></h1>`
 					);
 				}
@@ -319,3 +326,54 @@ const appendArtist = (result) => {
 	});
 	//$go to art
 };
+
+$(".go-to-artist").click((e) => {
+	console.log(e.target);
+	clearAll();
+	let artistId = e.target.dataset.artist_id;
+	$.ajax({
+		url: `/home/artist/${artistId}`,
+		type: "post",
+		success: function () {
+			console.log("go-to-artist");
+		},
+	})
+		.done(function (result) {
+			// console.log(result);
+			let artist = result.artist[0];
+			// let album = result.album;
+			if (artist.artist_name_chi) {
+				$(".title").empty().append(
+					`<h1 class="mx-4"><b>${artist.artist_name_eng} &nbsp;${artist.artist_name_chi}</b></h1>`
+				);
+			} else {
+				$(".title").empty().append(
+					`<h1 class="mx-4"><b>${artist.artist_name_eng}</b></h1>`
+				);
+			}
+			appendAlbum(result);
+		})
+		.fail(() => console.log("fail add"))
+		.always(() => console.log("runrunrun"));
+});
+
+$(".go-to-album").click((e) => {
+	clearAll();
+	let albumId = e.target.dataset.album_id;
+	$.ajax({
+		url: `/home/album/${albumId}`,
+		type: "post",
+		success: function () {
+			console.log("add fired");
+		},
+	})
+		.done(function (result) {
+			console.log(result);
+			let playlist = result.playlist;
+			let album = result.album[0];
+			$(".title").empty().append(`<h3 class="mx-4 songsong">${album.album_name}</h3>`);
+			appendSong(result);
+		})
+		.fail(() => console.log("fail add"))
+		.always(() => console.log("runrunrun"));
+});
