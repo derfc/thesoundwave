@@ -12,10 +12,11 @@
 				<option value="$down">Price High to Low</option>
 				<option value="$up">Price Low to High</option>
 			</select>
+	{{#each category}}
+     <button class="btn btn-info button-store search-category" value="{{this}}">{{this}}</button>
+	{{/each}}
 	</div>
 
-     {{!-- <button class="btn btn-info button-store search-artist" value="artist">artist</button>
-     <button class="btn btn-info button-album search-album" value="album">album</button> --}}
 
      <div class="greetings text-white">
      </div>

@@ -18,7 +18,9 @@ module.exports = class StoreSQL {
 		artist,
 		library,
 		playlist,
-		album
+		album,
+		transection,
+		orderDetail
 	) {
 		this.users = users;
 		this.store = store;
@@ -29,6 +31,8 @@ module.exports = class StoreSQL {
 		this.library = library;
 		this.playlist = playlist;
 		this.album = album;
+		this.transection = transection;
+		this.orderDetail = orderDetail;
 	}
 
 	selectUserName(user_id) {
@@ -248,7 +252,45 @@ module.exports = class StoreSQL {
 		}
 	}
 
-	searchForItem(keywords, sort) {
+	searchForItem(keywords, sort, selectedCat) {
+		if (!keywords && !selectedCat) {
+			if (sort == "---") {
+				return knex(this.item);
+			} else if (sort == "$down") {
+				return knex(this.item).orderBy("item_price", "desc");
+			} else {
+				return knex(this.item).orderBy("item_price", "asc");
+			}
+		}
+		if (selectedCat) {
+			if (sort == "---") {
+				return knex(this.item)
+					.where("item_name", "ilike", `%${keywords}%`)
+					.andWhere(function () {
+						for (let i = 0; i < selectedCat.length; i++) {
+							this.orWhere("item_category", "ilike", `%${selectedCat[i]}%`);
+						}
+					});
+			} else if (sort == "$down") {
+				return knex(this.item)
+					.where("item_name", "ilike", `%${keywords}%`)
+					.andWhere(function () {
+						for (let i = 0; i < selectedCat.length; i++) {
+							this.orWhere("item_category", "ilike", `%${selectedCat[i]}%`);
+						}
+					})
+					.orderBy("item_price", "desc");
+			} else {
+				return knex(this.item)
+					.where("item_name", "ilike", `%${keywords}%`)
+					.andWhere(function () {
+						for (let i = 0; i < selectedCat.length; i++) {
+							this.orWhere("item_category", "ilike", `%${selectedCat[i]}%`);
+						}
+					})
+					.orderBy("item_price", "asc");
+			}
+		}
 		if (sort == "---") {
 			return knex(this.item).where("item_name", "ilike", `%${keywords}%`);
 		} else if (sort == "$down") {
@@ -259,6 +301,36 @@ module.exports = class StoreSQL {
 			return knex(this.item)
 				.where("item_name", "ilike", `%${keywords}%`)
 				.orderBy("item_price", "asc");
+		}
+	}
+	searchForCategory() {
+		return knex(this.item).select("item_category");
+	}
+
+	getStoreName(store_id) {
+		return knex(this.store).select("store_name").where("id", store_id);
+	}
+
+	addTransection(user_id) {
+		return knex(this.transection)
+			.insert({
+				user_id: user_id,
+			})
+			.returning("id");
+	}
+
+	async addOrderDetail(transection_id, itemArr) {
+		try {
+			const data = itemArr.map((item) => {
+				return {
+					transection_id: transection_id,
+					item_id: item.item_id,
+					quantity: item.quantity,
+				};
+			});
+			await knex(this.orderDetail).insert(data);
+		} catch (err) {
+			console.log(err, "from sql");
 		}
 	}
 };

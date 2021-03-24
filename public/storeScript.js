@@ -1,9 +1,10 @@
+let selectedCat = [];
 $("#sort").on("change", function (e) {
 	clearAll();
 	let sort = e.target.value;
 	let keywords = $("#filter_store")[0].value;
 	console.log(keywords, sort);
-	fireSearch(keywords, sort);
+	fireSearch(keywords, sort, selectedCat);
 });
 
 $("#filter_store").on("keyup search", function (e) {
@@ -12,7 +13,25 @@ $("#filter_store").on("keyup search", function (e) {
 	clearAll();
 	let keywords = e.target.value;
 	let sort = $("#sort")[0].value;
-	fireSearch(keywords, sort);
+	console.log("what is this", selectedCat);
+	fireSearch(keywords, sort, selectedCat);
+});
+
+$(".search-category").click((e) => {
+	clearAll();
+	let category = e.target.value;
+
+	if (!selectedCat.includes(category)) {
+		selectedCat.push(category);
+		console.log(selectedCat);
+	} else {
+		let targetIndex = selectedCat.indexOf(category);
+		selectedCat.splice(targetIndex, 1);
+		console.log(selectedCat);
+	}
+	let keywords = $("#filter_store")[0].value;
+	let sort = $("#sort")[0].value;
+	fireSearch(keywords, sort, selectedCat);
 });
 
 $(".select-store").click((e) => {
@@ -36,32 +55,34 @@ const appendStore = (result) => {
 		$(".store").append(
 			`<button class="go-to-store" data-store_id ="${storeId}">${storeName}</button></br>`
 		);
-		$(".go-to-store").click((e) => {
-			e.preventDefault();
-			clearAll();
-			let store_id = e.target.dataset.store_id;
-			console.log(store_id, "sid");
-
-			$.ajax({
-				url: `/store`,
-				type: "POST",
-				data: {
-					storeId: e.target.dataset.store_id,
-				},
-				success: function () {
-					console.log("success search store");
-				},
-			})
-				.done(function (data) {
-					$(".store").append(`<p>${storeName}</p>`);
-					$(".item").append(`<p>Item</p>`);
-					// console.log(data);
-					appendItem(data);
-				})
-				.fail(() => console.log("hahafail outside"))
-				.always(() => console.log("running outside"));
-		});
 	}
+	// $(".go-to-store").click((e) => {
+	// 	e.preventDefault();
+	// 	clearAll();
+	// 	let store_id = e.target.dataset.store_id;
+
+	// 	console.log(store_id, "sid");
+
+	// 	$.ajax({
+	// 		url: `/store`,
+	// 		type: "POST",
+	// 		data: {
+	// 			storeId: e.target.dataset.store_id,
+	// 		},
+	// 		success: function () {
+	// 			console.log("success search store");
+	// 		},
+	// 	})
+	// 		.done(function (data) {
+	// 			let storeName = data.storeName[0].store_name;
+	// 			$(".store").append(`<p>${storeName}</p>`);
+	// 			$(".item").append(`<p>Item</p>`);
+	// 			// console.log(data);
+	// 			appendItem(data);
+	// 		})
+	// 		.fail(() => console.log("hahafail outside"))
+	// 		.always(() => console.log("running outside"));
+	// });
 };
 
 const appendItem = (result) => {
@@ -103,38 +124,37 @@ const appendItem = (result) => {
 	});
 };
 
-const fireSearch = (keywords, sort, storeId) => {
-	if (!keywords) {
-		$(".store").append("<p>Welcome to store</p>");
-	} else {
-		$.ajax({
-			url: `/store`,
-			type: "post",
-			data: { keywords: keywords, sort: sort, storeId: storeId },
-			success: function () {
-				console.log("search fired");
-			},
+const fireSearch = (keywords, sort, selectedCat) => {
+	console.log("here", selectedCat);
+	$.ajax({
+		url: `/store`,
+		type: "post",
+		data: { keywords: keywords, sort: sort, selectedCat: selectedCat },
+		success: function () {
+			console.log("search fired");
+		},
+	})
+		.done(function (data) {
+			console.log(data);
+			console.log("search complete");
+			// let store = data.store;
+			let item = data.item;
+			// if (store.length == 0 && item.length == 0) {
+			// 	$(".store").append(`<p>no result found</p>`);
+			// }
+			// if (store.length > 0 ) {
+			// 	$(".store").append(`<h3>store</h3>`);
+			// 	appendStore(data);
+			// }
+			if (item.length > 0) {
+				$(".item").append(`<h3>item</h3>`);
+				appendItem(data);
+			} else {
+				$(".store").append(`<p>no result found</p>`);
+			}
 		})
-			.done(function (data) {
-				console.log(data);
-				console.log("search complete");
-				let store = data.store;
-				let item = data.item;
-				if (store.length == 0 && item.length == 0) {
-					$(".store").append(`<p>no result found</p>`);
-				}
-				if (store.length > 0) {
-					$(".store").append(`<h3>store</h3>`);
-					appendStore(data);
-				}
-				if (item.length > 0) {
-					$(".item").append(`<h3>item</h3>`);
-					appendItem(data);
-				}
-			})
-			.fail(() => console.log("hahafail"))
-			.always(() => console.log("running"));
-	}
+		.fail(() => console.log("hahafail"))
+		.always(() => console.log("running"));
 };
 
 const searchStore = (storeId, storeName) => {

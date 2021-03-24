@@ -5,6 +5,7 @@ exports.up = function (knex) {
 		table.integer("item_price");
 		table.string("item_photo");
 		table.string("item_describtion");
+		table.string("item_category");
 		table.integer("item_stock");
 		table.integer("store_id").references("id").inTable("store");
 		table.timestamps(true, true);

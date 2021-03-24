@@ -11,7 +11,9 @@ let storeSQL = new StoreSQL(
 	"artist",
 	"library",
 	"playlist",
-	"album"
+	"album",
+	"transection",
+	"order_detail"
 );
 
 const app = express();
@@ -310,16 +312,28 @@ app.put("/setting", (req, res) => {
 
 //store route
 app.get("/store", (req, res) => {
+	let catArr = [];
+	let count = 0;
 	return storeSQL.getStoreItem().then((item) => {
 		return storeSQL.searchForStore().then((allStore) => {
-			res.render("store", {
-				item: item,
-				layout: "dashboard",
-				stripePublicKey: stripePublicKey,
-				allStore: allStore,
-				user: user,
-				thumbnail: pic,
-				storeScript: "./storeScript.js",
+			return storeSQL.searchForCategory().then(async (result) => {
+				// console.log(result[0].item_category);
+				await result.forEach((cat) => {
+					if (!catArr.includes(cat.item_category)) {
+						catArr.push(cat.item_category);
+					}
+				});
+				await console.log(catArr, "wow");
+				await res.render("store", {
+					item: item,
+					layout: "dashboard",
+					stripePublicKey: stripePublicKey,
+					allStore: allStore,
+					category: catArr,
+					user: user,
+					thumbnail: pic,
+					storeScript: "./storeScript.js",
+				});
 			});
 		});
 	});
@@ -330,48 +344,26 @@ app.post("/store", (req, res) => {
 	let user_id = 1;
 	let sort = req.body.sort;
 	let store_id = req.body.storeId;
+	let selectedCat = req.body.selectedCat;
+	console.log(req.body);
+	// console.log(selectedCat, "what is this");
 	if (store_id) {
 		return storeSQL.getStoreItem(store_id).then((item) => {
-			res.send({ item: item });
-		});
-	}
-	if (keywords == "store") {
-		return storeSQL.searchForStore().then((store) => {
-			res.send({ store: store });
-		});
-	} else {
-		return storeSQL.searchForStore(keywords).then((store) => {
-			return storeSQL.searchForItem(keywords, sort).then((item) => {
-				let result = { store: store, item: item };
-				res.send(result);
+			return storeSQL.getStoreName(store_id).then((storeName) => {
+				console.log(storeName, "bkend");
+				res.send({ item: item, storeName: storeName });
 			});
 		});
 	}
-	// if (keywords == "artist") {
-	// 	return storeSQL.searchForArtist().then((artist) => {
-	// 		res.send({ artist: artist });
-	// 	});
-	// } else if (keywords == "album") {
-	// 	return storeSQL.searchForAlbum().then((album) => {
-	// 		res.send({ album: album });
-	// 	});
-	// } else {
-	// 	return storeSQL.searchForArtist(keywords).then((artist) => {
-	// 		storeSQL.searchForAlbum(keywords).then((album) => {
-	// 			storeSQL.searchForSong(keywords).then((song) => {
-	// 				storeSQL.getPlaylist(user_id).then((playlist) => {
-	// 					let searchResult = {
-	// 						artist: artist,
-	// 						album: album,
-	// 						song: song,
-	// 						playlist: playlist,
-	// 					};
-	// 					res.send(searchResult);
-	// 				});
-	// 			});
-	// 		});
-	// 	});
-	// }
+	// return storeSQL.searchForStore().then((store) => {
+	// 	res.send({ store: store });
+	// });
+
+	return storeSQL.searchForItem(keywords, sort, selectedCat).then((item) => {
+		// console.log(item);
+		let result = { item: item };
+		res.send(result);
+	});
 });
 
 //cart route
@@ -403,27 +395,37 @@ app.post("/cart", (req, res) => {
 app.post("/purchase", (req, res) => {
 	let total = 0;
 	let count = 0;
+	let user_id = 1;
+	console.log(req.body.items, "looks good");
 	req.body.items.forEach((item) => {
 		storeSQL.getItemPrice(item.item_id).then((data) => {
 			total += data[0].item_price * item.quantity;
 			count++;
 			if (count === req.body.items.length) {
 				console.log("charge below");
-				// stripe.charges
-				// 	.create({
-				// 		amount: total,
-				// 		source: req.body.stripeTokenId,
-				// 		currency: "usd",
-				// 	})
-				// 	.then(() => {
-				// 		console.log("charge successful");
-				// //clear cart
-				// 		res.json({ message: "successfully purchased" });
-				// 	})
-				// 	.catch((err) => {
-				// 		console.log("charge fail", err);
-				// 		res.status(500).end();
-				// 	});
+				stripe.charges
+					.create({
+						amount: total,
+						source: req.body.stripeTokenId,
+						currency: "usd",
+					})
+					.then(() => {
+						console.log("charge successful");
+						return storeSQL.addTransection(user_id).then((transection_id) => {
+							console.log(transection_id, "transection_id");
+							return storeSQL
+								.addOrderDetail(transection_id[0], req.body.items)
+								.then(() => {
+									//clear cart
+									console.log("aded into order detail");
+									res.json({ message: "successfully purchased" });
+								});
+						});
+					})
+					.catch((err) => {
+						console.log("charge fail", err);
+						res.status(500).end();
+					});
 			}
 		});
 	});
