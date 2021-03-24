@@ -417,10 +417,10 @@ a {
   max-width: 180px;
 }
 
-/* .mainHomepage .random-album .album-img img {
+.mainHomepage .random-album .album-img img {
   height: 100%;
   width: 100%;
-} */
+}
 
 section.row {
   --bs-gutter-x: 0rem;
