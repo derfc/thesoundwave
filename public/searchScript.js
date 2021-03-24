@@ -125,9 +125,7 @@ $(".search-album").click((e) => {
 			// 			console.log(result);
 			// 			let playlist = result.playlist;
 			// 			let album = result.album[0];
-			// 			$(".song").append(
-			// 				`<h3 class="songsong mx-4">${album.album_name}</h3></br>`
-			// 			);
+			// 			$(".song").append(`<h3 class="songsong mx-4">${album.album_name}</h3></br>`);
 			// 			appendSong(result);
 			// 			$(".select-playlist").click((e) => {
 			// 				// e.preventDefault();
@@ -170,7 +168,7 @@ const appendSong = (result) => {
 			`<span class="mx-4 songName">${songName}</span>
 			<button class="btn btn-warning playSong" data-song_id="${songId}" data-song_url="${songUrl}"><i class="fal fa-play-circle"></i></button>
 			<button class="btn select-playlist" data-song_id="${songId}">add to playlist</button>
-			<ul style="display:none;" class="list" id="list${songId}"></ul></br>`
+			<ul class="list" id="list${songId}"></ul></br>`
 		);
 		for (let y = 0; y < result.playlist.length; y++) {
 			let playlistName = result.playlist[y].playlist_name;
