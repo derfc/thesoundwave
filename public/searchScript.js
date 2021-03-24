@@ -1,6 +1,6 @@
 $("#filter_songs").on("keyup search", function (e) {
 	// console.log("hello", e.target.value);
-	clearAll();
+	// clearAll();
 	let keywords = e.target.value;
 	if (!keywords) {
 		// $(".featuring").append("<p>featuring stuff</p>");
@@ -71,7 +71,7 @@ $(".clear-search").click((e) => {
 
 $(".search-artist").click((e) => {
 	// console.log(e.target.value);
-	clearAll();
+	// clearAll();
 	$.ajax({
 		url: `/home`,
 		type: "POST",
@@ -158,6 +158,7 @@ const clearAll = () => {
 };
 
 const appendSong = (result) => {
+	clearAll();
 	for (let i = 0; i < result.song.length; i++) {
 		let songId = result.song[i].id;
 		console.log(songId, "what are u");
@@ -217,6 +218,7 @@ const appendSong = (result) => {
 
 const appendAlbum = (result) => {
 	// console.log(result);
+	clearAll();
 	$(".album").append('<div class="random-album appendAlbum px-4 row"></div>');
 	for (let i = 0; i < result.album.length; i++) {
 		let albumName = result.album[i].album_name;
@@ -236,7 +238,7 @@ const appendAlbum = (result) => {
 
 	//$go to alb
 	$(".go-to-album").click((e) => {
-		clearAll();
+		// clearAll();
 		let albumId = e.target.dataset.album_id;
 		$.ajax({
 			url: `/home/album/${albumId}`,
@@ -259,6 +261,7 @@ const appendAlbum = (result) => {
 
 const appendArtist = (result) => {
 	// console.log(result);
+	clearAll();
 	$(".artist").append('<div class="random-album appendArtist px-4 row"></div>');
 	for (let i = 0; i < result.artist.length; i++) {
 		let artistNameEng = result.artist[i].artist_name_eng;
@@ -287,7 +290,7 @@ const appendArtist = (result) => {
 	}
 	$(".go-to-artist").click((e) => {
 		console.log(e.target);
-		clearAll();
+		// clearAll();
 		let artistId = e.target.dataset.artist_id;
 		$.ajax({
 			url: `/home/artist/${artistId}`,

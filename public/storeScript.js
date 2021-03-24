@@ -16,6 +16,12 @@ $("#filter_store").on("keyup search", function (e) {
 	console.log("what is this", selectedCat);
 	fireSearch(keywords, sort, selectedCat);
 });
+$(".clear-search").click((e) => {
+	e.preventDefault();
+	clearAll();
+	$(".noneWhenSearch")[0].style.display = "block";
+	$(".noneWhenSearch")[1].style.display = "block";
+});
 
 $(".search-category").click((e) => {
 	clearAll();
@@ -31,7 +37,13 @@ $(".search-category").click((e) => {
 	}
 	let keywords = $("#filter_store")[0].value;
 	let sort = $("#sort")[0].value;
-	fireSearch(keywords, sort, selectedCat);
+	if (!keywords && selectedCat.length == 0) {
+		clearAll();
+		$(".noneWhenSearch")[0].style.display = "block";
+		$(".noneWhenSearch")[1].style.display = "block";
+	} else {
+		fireSearch(keywords, sort, selectedCat);
+	}
 });
 
 $(".select-store").click((e) => {
@@ -45,6 +57,8 @@ $(".select-store").click((e) => {
 const clearAll = () => {
 	$(".store").empty();
 	$(".item").empty();
+	$(".noneWhenSearch")[0].style.display = "none";
+	$(".noneWhenSearch")[1].style.display = "none";
 };
 
 const appendStore = (result) => {
@@ -182,3 +196,27 @@ const searchStore = (storeId, storeName) => {
 		.fail(() => console.log("hahafail outside"))
 		.always(() => console.log("running outside"));
 };
+
+$(".add-to-cart").click((e) => {
+	e.preventDefault();
+	let item_id = e.target.dataset.item_id;
+	let user_id = e.target.dataset.user_id;
+	console.log(item_id, "iid");
+	console.log(user_id, "uid");
+
+	$.ajax({
+		type: "POST",
+		url: `/cart`,
+		data: { item_id: item_id, user_id: user_id },
+		success: function () {
+			console.log("success");
+		},
+	})
+		.done(function (data) {
+			console.log(data);
+		})
+		.fail(function () {
+			console.log("failed");
+		})
+		.always(() => console.log("running"));
+});
