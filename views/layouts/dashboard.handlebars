@@ -63,6 +63,7 @@
                                 class="fad fa-sign-out"></i> &nbsp;LOGOUT</button></a>
                 </div>
             </div>
+            {{#if playlist}}
             <div class="sidebar-playlist">
                 <p>PLAYLIST</p>
                 <button class="btn open-button" onclick="openForm()"><i class="fal fa-plus-square"></i> Create
@@ -77,6 +78,20 @@
                     </br>
                 </div>
                 {{/each}}
+            {{/if}}
+
+            {{#if allStore}}
+            <div class="sidebar-playlist">
+                <p>STORE</p>
+                <hr>
+                {{#each allStore}}
+                <div>
+                    <button type="button" class="btn select-store"
+                            data-store_id="{{this.id}}" value="{{this.store_name}}">{{this.store_name}}</button>
+                    </br>
+                </div>
+                {{/each}}
+            {{/if}}
 
 
                 {{!-- pop-up form for inserting new playlist --}}

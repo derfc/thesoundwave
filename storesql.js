@@ -45,9 +45,9 @@ module.exports = class StoreSQL {
 	//
 	getStoreItem(store_id) {
 		if (store_id) {
-			return knex(this.item).where("store_id", store_id).orderBy("store_id");
+			return knex(this.item).where("store_id", store_id);
 		} else {
-			return knex(this.item).orderBy("store_id");
+			return knex(this.item).orderBy("store_id").orderBy("store_id");
 		}
 	}
 
@@ -239,10 +239,24 @@ module.exports = class StoreSQL {
 	}
 
 	searchForStore(keywords) {
-		return knex(this.store).where("store_name", "ilike", `%${keywords}%`);
+		if (!keywords) {
+			return knex(this.store);
+		} else {
+			return knex(this.store).where("store_name", "ilike", `%${keywords}%`);
+		}
 	}
 
-	searchForItem(keywords) {
-		return knex(this.item).where("item_name", "ilike", `%${keywords}%`);
+	searchForItem(keywords, sort) {
+		if (sort == "---") {
+			return knex(this.item).where("item_name", "ilike", `%${keywords}%`);
+		} else if (sort == "$down") {
+			return knex(this.item)
+				.where("item_name", "ilike", `%${keywords}%`)
+				.orderBy("item_price", "desc");
+		} else {
+			return knex(this.item)
+				.where("item_name", "ilike", `%${keywords}%`)
+				.orderBy("item_price", "asc");
+		}
 	}
 };

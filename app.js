@@ -311,13 +311,16 @@ app.put("/setting", (req, res) => {
 //store route
 app.get("/store", (req, res) => {
 	return storeSQL.getStoreItem().then((item) => {
-		res.render("store", {
-			item: item,
-			layout: "dashboard",
-			stripePublicKey: stripePublicKey,
-			user: user,
-			thumbnail: pic,
-			storeScript: "./storeScript.js",
+		return storeSQL.searchForStore().then((allStore) => {
+			res.render("store", {
+				item: item,
+				layout: "dashboard",
+				stripePublicKey: stripePublicKey,
+				allStore: allStore,
+				user: user,
+				thumbnail: pic,
+				storeScript: "./storeScript.js",
+			});
 		});
 	});
 });
@@ -325,12 +328,25 @@ app.get("/store", (req, res) => {
 app.post("/store", (req, res) => {
 	let keywords = req.body.keywords;
 	let user_id = 1;
-	return storeSQL.searchForStore(keywords).then((store) => {
-		return storeSQL.searchForItem(keywords).then((items) => {
-			let result = { store: store, items: items };
-			res.send(result);
+	let sort = req.body.sort;
+	let store_id = req.body.storeId;
+	if (store_id) {
+		return storeSQL.getStoreItem(store_id).then((item) => {
+			res.send({ item: item });
 		});
-	});
+	}
+	if (keywords == "store") {
+		return storeSQL.searchForStore().then((store) => {
+			res.send({ store: store });
+		});
+	} else {
+		return storeSQL.searchForStore(keywords).then((store) => {
+			return storeSQL.searchForItem(keywords, sort).then((item) => {
+				let result = { store: store, item: item };
+				res.send(result);
+			});
+		});
+	}
 	// if (keywords == "artist") {
 	// 	return storeSQL.searchForArtist().then((artist) => {
 	// 		res.send({ artist: artist });
@@ -376,10 +392,11 @@ app.post("/cart", (req, res) => {
 	let item_id = req.body.item_id;
 	let user_id = req.body.user_id;
 	return storeSQL.addToCart(user_id, item_id).then(() => {
-		res.render("cart", {
-			layout: "dashboard",
-			stripePublicKey: stripePublicKey,
-		});
+		res.send("added to cart");
+		// res.render("cart", {
+		// 	layout: "dashboard",
+		// 	stripePublicKey: stripePublicKey,
+		// });
 	});
 });
 
