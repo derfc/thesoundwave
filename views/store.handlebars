@@ -10,6 +10,7 @@
                <option value="$down">Price High to Low</option>
                <option value="$up">Price Low to High</option>
           </select>
+          <button class="btn btn-info button-clear-search clear-search" value="">CLEAR</button>
           {{#each category}}
           <button class="btn btn-info button-store search-category" value="{{this}}">{{this}}</button>
           {{/each}}
@@ -21,50 +22,60 @@
 
      <div class="results mb-2">
           <div class="store">
-               <p>hihi</p>
           </div>
           <div class="item"></div>
           {{!-- <div class="song"> </div> --}}
      </div>
-
-     {{!-- <div class="carousel slide" data-ride="carousel">
-          <div class="carousel-inner">
-               <div class="carousel-item active">
-                    <div class="row">
-                         <div class="col-sm"><img class="d-block w-100" src="./image/musicposter1.jpeg" alt="1 slide">
-                         </div>
-                         <div class="col-sm"><img class="d-block w-100" src="./image/musicposter2.jpeg" alt="2 slide">
-                         </div>
-                         <div class="col-sm"><img class="d-block w-100" src="./image/musicposter3.jpeg" alt="3 slide">
+<section class="noneWhenSearch container-fluid px-4">
+          <div class="carousel slide" data-ride="carousel">
+               <div class="carousel-inner">
+                    <div class="carousel-item active">
+                         <div class="row">
+                              <div class="col-sm"><img class="d-block w-100 img-fluid" src="./image/musicposter1.jpeg"
+                                        alt="1 slide">
+                              </div>
+                              <div class="col-sm"><img class="d-block w-100 img-fluid" src="./image/musicposter2.jpeg"
+                                        alt="2 slide">
+                              </div>
+                              <div class="col-sm"><img class="d-block w-100 img-fluid" src="./image/musicposter3.jpeg"
+                                        alt="3 slide">
+                              </div>
                          </div>
                     </div>
-               </div>
-               <div class="carousel-item">
-                    <div class="row">
-                         <div class="col-sm"><img class="d-block w-100" src="./image/musicposter2.jpeg" alt="4 slide">
-                         </div>
-                         <div class="col-sm"><img class="d-block w-100" src="./image/musicposter3.jpeg" alt="5 slide">
-                         </div>
-                         <div class="col-sm"><img class="d-block w-100" src="./image/musicposter1.jpeg" alt="6 slide">
+                    <div class="carousel-item">
+                         <div class="row">
+                              <div class="col-sm"><img class="d-block w-100 img-fluid" src="./image/musicposter2.jpeg"
+                                        alt="4 slide">
+                              </div>
+                              <div class="col-sm"><img class="d-block w-100 img-fluid" src="./image/musicposter3.jpeg"
+                                        alt="5 slide">
+                              </div>
+                              <div class="col-sm"><img class="d-block w-100 img-fluid" src="./image/musicposter1.jpeg"
+                                        alt="6 slide">
+                              </div>
                          </div>
                     </div>
                </div>
           </div>
-     </div> --}}
+     </section>
 
-
-     {{!-- <div class="song d-flex flex-wrap">
-          {{#each playlistSongArr}}
-          <div class="album-card m-4">
-               <img class="image" src="http://placehold.it/160x160" alt="Living Things" />
-               <div class="album-info">
-                    <h6 class="name text-white">{{this.song_name}}</h6>
-                    <h6><a href="/artist/{{this.artist_id}}">{{this.artist_name_eng}} {{this.artist_name_chi}}</a></h6>
+     {{!-- d-flex flex-wrap flex-fillalbum-card --}}
+     <div class="noneWhenSearch homeSong">
+          <div class="random-album px-4 row">
+               {{#each item}}
+               <div class="col-lg-2 col-md-3 col-sm-4 my-3">
+                    <div class="album-img">
+                         <img class="image img-fluid" src="{{this.item_photo}}" alt="Living Things" />
+                    </div>
+                    <div class="album-info">
+                         <h6 class="name mt-2 text-white">{{this.item_name}}</h6>
+                    </div>
+                    <div><button class="add-to-cart" data-item_id ="{{this.id}}" data-user_id="1">add to cart</button></br></div>
                </div>
-               <div class="album-page"></div>
+               {{/each}}
           </div>
-          {{/each}}
-     </div> --}}
+     </div>
+     
 </section>
 
 

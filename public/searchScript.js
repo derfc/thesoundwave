@@ -1,6 +1,6 @@
 $("#filter_songs").on("keyup search", function (e) {
 	// console.log("hello", e.target.value);
-	clearAll();
+	// clearAll();
 	let keywords = e.target.value;
 	if (!keywords) {
 		// $(".featuring").append("<p>featuring stuff</p>");
@@ -245,7 +245,7 @@ const appendAlbum = (result) => {
 
 	//$go to alb
 	$(".go-to-album").click((e) => {
-		clearAll();
+		// clearAll();
 		let albumId = e.target.dataset.album_id;
 		$.ajax({
 			url: `/home/album/${albumId}`,
@@ -297,7 +297,7 @@ const appendArtist = (result) => {
 	}
 	$(".go-to-artist").click((e) => {
 		console.log(e.target);
-		clearAll();
+		// clearAll();
 		let artistId = e.target.dataset.artist_id;
 		$.ajax({
 			url: `/home/artist/${artistId}`,

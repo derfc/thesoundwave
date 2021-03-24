@@ -84,6 +84,7 @@ app.use(express.static(__dirname + "/public"));
 // get Picture and Name
 let pic;
 let user;
+let user_id = 1;
 
 function getNamePic(req) {
 	if (req.user.provider === "google") {
@@ -101,6 +102,7 @@ function getNamePic(req) {
 const authCheck = (req, res, next) => {
 	if (req.isAuthenticated()) {
 		console.log("He is allowed!");
+		console.log(req.user, "looking for id");
 		return next();
 	} else {
 		res.redirect("/auth/login");
@@ -114,7 +116,6 @@ app.get("/", (req, res) => {
 
 //home route
 app.get("/home", authCheck, (req, res) => {
-	let user_id = 1;
 	let id = req.user.id;
 	getNamePic(req);
 
@@ -139,7 +140,6 @@ app.get("/home", authCheck, (req, res) => {
 //search
 app.post("/home", (req, res) => {
 	let keywords = req.body.keywords;
-	let user_id = 1;
 	if (keywords == "artist") {
 		return storeSQL.searchForArtist().then((artist) => {
 			res.send({ artist: artist });
@@ -179,7 +179,6 @@ app.post("/home/artist/:artist_id", (req, res) => {
 });
 
 app.post("/home/album/:album_id", (req, res) => {
-	let user_id = 1;
 	let album_id = req.params.album_id;
 	console.log(album_id, "geeez");
 	return storeSQL.getAlbum(album_id).then((albumInfo) => {
@@ -207,7 +206,6 @@ app.get("/library/:library_id", (req, res) => {
 	let library_id = req.params.library_id;
 	let count = 0;
 	let playlistSongArr = [];
-	let user_id = 1;
 	return storeSQL.getSongByPlaylist(library_id).then((playlistSongs) => {
 		// console.log("PL id outpout", playlistSongs);
 		if (playlistSongs.length !== 0) {
@@ -221,6 +219,7 @@ app.get("/library/:library_id", (req, res) => {
 						// console.log("finally", playlistSongArr);
 						storeSQL.getPlaylist(user_id).then((playlist) => {
 							// console.log("PL outpout", playlist);
+							console.log(playlistSongArr);
 							res.render("playlist", {
 								layout: "dashboard",
 								libraryId: library_id,
@@ -230,6 +229,7 @@ app.get("/library/:library_id", (req, res) => {
 								css: "../css/index.css",
 								user: user,
 								thumbnail: pic,
+								musicPlayerScript: "../musicplayer.js",
 							});
 						});
 					}
@@ -243,6 +243,7 @@ app.get("/library/:library_id", (req, res) => {
 					playlist: playlist,
 					stripePublicKey: stripePublicKey,
 					css: "../css/index.css",
+					musicPlayerScript: "../musicplayer.js",
 				});
 			});
 		}
@@ -250,7 +251,6 @@ app.get("/library/:library_id", (req, res) => {
 });
 
 app.post("/library", (req, res) => {
-	let user_id = 1;
 	// console.log("hello", req.body.playlistName);
 	let newPlaylistName = req.body.playlistName;
 	return storeSQL.addPlaylist(newPlaylistName, user_id).then((library_id) => {
@@ -340,7 +340,6 @@ app.get("/store", (req, res) => {
 
 app.post("/store", (req, res) => {
 	let keywords = req.body.keywords;
-	let user_id = 1;
 	let sort = req.body.sort;
 	let store_id = req.body.storeId;
 	let selectedCat = req.body.selectedCat;
@@ -367,7 +366,6 @@ app.post("/store", (req, res) => {
 
 //cart route
 app.get("/cart", (req, res) => {
-	let user_id = 1;
 	return storeSQL.getCartItem(user_id).then((item) => {
 		res.render("cart", {
 			item: item,
@@ -381,7 +379,7 @@ app.get("/cart", (req, res) => {
 
 app.post("/cart", (req, res) => {
 	let item_id = req.body.item_id;
-	let user_id = req.body.user_id;
+	// let user_id = req.body.user_id;
 	return storeSQL.addToCart(user_id, item_id).then(() => {
 		res.send("added to cart");
 		// res.render("cart", {
@@ -394,8 +392,7 @@ app.post("/cart", (req, res) => {
 app.post("/purchase", (req, res) => {
 	let total = 0;
 	let count = 0;
-	let user_id = 1;
-	console.log(req.body.items, "looks good");
+	// console.log(req.body.items, "looks good");
 	req.body.items.forEach((item) => {
 		storeSQL.getItemPrice(item.item_id).then((data) => {
 			total += data[0].item_price * item.quantity;
@@ -431,7 +428,7 @@ app.post("/purchase", (req, res) => {
 });
 
 app.delete("/cart/:user_id/:item_id", (req, res) => {
-	let user_id = req.params.user_id;
+	// let user_id = req.params.user_id;
 	let delete_item = req.params.item_id;
 	return storeSQL.delCartItem(user_id, delete_item).then(() => {
 		return storeSQL.getCartItem(user_id).then((item) => {
