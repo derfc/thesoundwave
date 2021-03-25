@@ -63,8 +63,12 @@ $('.play-this-song').click((e) => {
 	playsong();
 })
 
-$('.play-thisthis').click((e) => {
-	console.log(e)
+$('.play-another-this').click((e) => {
+	console.log(e.target.dataset.song_name)
+	index = songList.findIndex(p => p.song_name == e.target.dataset.song_name)
+	load_playlist();
+	playsong();
+
 })
 
 function repeat_song() {

@@ -238,7 +238,10 @@
 
     $(".delete-song").click((e) => {
         e.preventDefault();
-        let library_id = $(".playlist")[0].dataset.library_id
+        console.log($(".playlist")[1])
+        let library_id = $(".playlist")[1].dataset.library_id
+        console.log(library_id, "lid")
+        console.log(e.target.dataset.song_id, "dsid")
         $.ajax({
             url: `/playlist/${library_id}/${e.target.dataset.song_id}`,
             type: "DELETE",
