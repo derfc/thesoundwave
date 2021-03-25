@@ -20,6 +20,7 @@ let random = 0;
 let loop = 0;
 let ismute = 0;
 let vol = 80;
+let space = 0;
 
 let songList = [];
 let songNameArr = songName.split("/");
@@ -54,6 +55,17 @@ let playlist = JSON.parse(JSON.stringify(songList));
 // song_length()
 
 // {/* <p>${audio.duration}</p> */ }
+
+// play-this-song
+$('.play-this-song').click((e) => {
+	index = songList.findIndex(p => p.song_name == e.target.innerHTML)
+	load_playlist();
+	playsong();
+})
+
+$('.play-thisthis').click((e) => {
+	console.log(e)
+})
 
 function repeat_song() {
 	loop++;
@@ -153,7 +165,6 @@ function updateTrackTime() {
 }
 
 function justplay() {
-	console.log(songList, "here");
 	if (Playing_song == false) {
 		playsong();
 	} else {
