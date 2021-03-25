@@ -78,7 +78,8 @@ module.exports.getAwsObject = () => {
 				albumArr.push(objArr[2]);
 			}
 		}
-		console.log(albumArr, "i dont want numbers");
+		console.log("5times");
+		// console.log(albumArr, "i dont want numbers");
 		return;
 		return albumKnex;
 	};

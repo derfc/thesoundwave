@@ -101,10 +101,12 @@ function getNamePic(req) {
 //authcheck
 const authCheck = (req, res, next) => {
 	if (req.isAuthenticated()) {
+		getNamePic(req);
 		console.log("He is allowed!");
 		console.log(req.user, "looking for id");
 		return next();
 	} else {
+		getNamePic(req);
 		res.redirect("/auth/login");
 	}
 };
@@ -117,7 +119,7 @@ app.get("/", (req, res) => {
 //home route
 app.get("/home", authCheck, (req, res) => {
 	let id = req.user.id;
-	getNamePic(req);
+	// getNamePic(req);
 
 	return storeSQL.getPlaylist(user_id).then((playlist) => {
 		// console.log("PL outpout", playlist);
@@ -300,13 +302,14 @@ app.delete("/playlist/:library_id/:song_id", (req, res) => {
 });
 
 //setting route
-app.get("/setting", (req, res) => {
+app.get("/setting", authCheck, (req, res) => {
+	console.log(user, "i need name");
 	res.render("setting", { layout: "dashboard", user: user, thumbnail: pic });
 });
 
 //setting route
 app.put("/setting", (req, res) => {
-	res.render("setting", { layout: "dashboard" });
+	res.render("setting", { layout: "dashboard", user: user, thumbnail: pic });
 });
 
 //store route

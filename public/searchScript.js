@@ -22,7 +22,8 @@ $("#filter_songs").on("keyup search", function (e) {
 				let song = data.song;
 				let playlist = data.playlist;
 				if (artist.length == 0 && album.length == 0 && song.length == 0) {
-					$(".artist").append(`<p class="mx-4">No results found</p>`);
+					clearAll();
+					$(".title").empty().append(`<p class="mx-4">No results found</p>`);
 				}
 				if (artist.length > 0) {
 					$(".artist").append(
@@ -65,7 +66,7 @@ $("#filter_songs").on("keyup search", function (e) {
 $(".clear-search").click((e) => {
 	e.preventDefault();
 	clearAll();
-	$(".title").empty()
+	$(".title").empty();
 	$(".noneWhenSearch")[0].style.display = "block";
 	$(".noneWhenSearch")[1].style.display = "block";
 });
@@ -73,7 +74,7 @@ $(".clear-search").click((e) => {
 $(".search-artist").click((e) => {
 	// console.log("should show", e.target.value);
 	clearAll();
-	$(".title").empty()
+	$(".title").empty();
 	$.ajax({
 		url: `/home`,
 		type: "POST",
@@ -95,7 +96,7 @@ $(".search-artist").click((e) => {
 $(".search-album").click((e) => {
 	// console.log(e.target.value);
 	clearAll();
-	$(".title").empty()
+	$(".title").empty();
 	$.ajax({
 		url: `/home`,
 		type: "POST",
@@ -162,9 +163,13 @@ const clearAll = () => {
 
 const appendSong = (result) => {
 	clearAll();
-	let albumName = result.album[0].album_name;
-	let albumPhoto = result.album[0].album_photo;
-	$(".song").append(`<div class="mx-4 my-3"><img class="image img-fluid" src="${albumPhoto}" alt="${albumName} Photo"/></div>`)
+	if (result.album[0]) {
+		let albumName = result.album[0].album_name;
+		let albumPhoto = result.album[0].album_photo;
+		$(".song").append(
+			`<div class="mx-4 my-3"><img class="image img-fluid" src="${albumPhoto}" alt="${albumName} Photo"/></div>`
+		);
+	}
 
 	for (let i = 0; i < result.song.length; i++) {
 		let songId = result.song[i].id;
@@ -258,7 +263,9 @@ const appendAlbum = (result) => {
 				console.log(result);
 				let playlist = result.playlist;
 				let album = result.album[0];
-				$(".title").empty().append(`<h3 class="mx-4 songsong">${album.album_name}</h3>`);
+				$(".title")
+					.empty()
+					.append(`<h3 class="mx-4 songsong">${album.album_name}</h3>`);
 				appendSong(result);
 			})
 			.fail(() => console.log("fail add"))
@@ -311,13 +318,15 @@ const appendArtist = (result) => {
 				let artist = result.artist[0];
 				// let album = result.album;
 				if (artist.artist_name_chi) {
-					$(".title").empty().append(
-						`<h1 class="mx-4"><b>${artist.artist_name_eng} &nbsp;${artist.artist_name_chi}</b></h1>`
-					);
+					$(".title")
+						.empty()
+						.append(
+							`<h1 class="mx-4"><b>${artist.artist_name_eng} &nbsp;${artist.artist_name_chi}</b></h1>`
+						);
 				} else {
-					$(".title").empty().append(
-						`<h1 class="mx-4"><b>${artist.artist_name_eng}</b></h1>`
-					);
+					$(".title")
+						.empty()
+						.append(`<h1 class="mx-4"><b>${artist.artist_name_eng}</b></h1>`);
 				}
 				appendAlbum(result);
 			})
@@ -343,13 +352,15 @@ $(".go-to-artist").click((e) => {
 			let artist = result.artist[0];
 			// let album = result.album;
 			if (artist.artist_name_chi) {
-				$(".title").empty().append(
-					`<h1 class="mx-4"><b>${artist.artist_name_eng} &nbsp;${artist.artist_name_chi}</b></h1>`
-				);
+				$(".title")
+					.empty()
+					.append(
+						`<h1 class="mx-4"><b>${artist.artist_name_eng} &nbsp;${artist.artist_name_chi}</b></h1>`
+					);
 			} else {
-				$(".title").empty().append(
-					`<h1 class="mx-4"><b>${artist.artist_name_eng}</b></h1>`
-				);
+				$(".title")
+					.empty()
+					.append(`<h1 class="mx-4"><b>${artist.artist_name_eng}</b></h1>`);
 			}
 			appendAlbum(result);
 		})
@@ -371,7 +382,9 @@ $(".go-to-album").click((e) => {
 			console.log(result);
 			let playlist = result.playlist;
 			let album = result.album[0];
-			$(".title").empty().append(`<h3 class="mx-4 songsong">${album.album_name}</h3>`);
+			$(".title")
+				.empty()
+				.append(`<h3 class="mx-4 songsong">${album.album_name}</h3>`);
 			appendSong(result);
 		})
 		.fail(() => console.log("fail add"))
