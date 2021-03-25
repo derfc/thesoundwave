@@ -25,18 +25,17 @@ $(".clear-search").click((e) => {
 
 $(".search-category").click((e) => {
 	clearAll();
-	// let category = e.target.value;
-	// console.log(category, "1");
-	// $(`#category-${category}`).attr("btn-info", "btn-danger");
-	// console.log(e.target, "2");
+	let category = e.target.value;
 
 	if (!selectedCat.includes(category)) {
 		selectedCat.push(category);
 		console.log(selectedCat);
+		$(`#category-${category}`).attr("class", "btn btn-danger button-store search-category");
 	} else {
 		let targetIndex = selectedCat.indexOf(category);
 		selectedCat.splice(targetIndex, 1);
 		console.log(selectedCat);
+		$(`#category-${category}`).attr("class", "btn button-store search-category");
 	}
 	let keywords = $("#filter_store")[0].value;
 	let sort = $("#sort")[0].value;
