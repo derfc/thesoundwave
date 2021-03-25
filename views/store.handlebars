@@ -12,7 +12,7 @@
                </select>
                <button class="btn button-clear-search clear-search" value="">CLEAR</button>
                {{#each category}}
-               <button class="btn btn-info button-store search-category" id="category-{{this}}" value="{{this}}">{{this}}</button>
+               <button class="btn button-store search-category" id="category-{{this}}" value="{{this}}">{{this}}</button>
                {{/each}}
           </span>
      </div>
@@ -73,7 +73,7 @@
                     </div>
                     <div class="item-info">
                          <h6 class="name mt-2 text-white">{{this.item_name}}</h6>
-                         <h6 class="name mt-2 text-white">{{divide this.item_price 100}}</h6>
+                         <h6 class="name mt-2 text-white">${{divide this.item_price 100}}</h6>
                          <button class="btn add-to-cart text-white" data-item_id="{{this.id}}" data-user_id="1"><i  data-user_id="1" data-item_id="{{this.id}}" class="fal fa-shopping-cart"></i>add to cart</button>
                     </div>
                </div>
