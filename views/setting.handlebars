@@ -1,26 +1,32 @@
-<h1>setting page</h1>
-<h2>my setting</h2>
-<button class="btn btn-info button-clear-search clear-search" value="">CLEAR</button>
-{{!-- <form action="#">
-    <label for="change-display-name">Change display name</label><br>
-    <input type="text" id="fname" name="fname" value=""><br>
-    <label for="lname">Last name:</label><br>
-    <input type="text" id="lname" name="lname" value=""><br><br>
-    <input type="submit" value="Submit">
-</form> --}}
+<section class="set-height">
 
-<div class="output col-md-6 col-sm-12">
-    <h2>{{user}}'s setting</h2>
-    <div class="output-outside">
-        <div class="row output-text">
-            <div class="col-8">
-            <textarea id="text{{this.id}}" name="{{userName}}" class="text-area"data-number={{this.id}} >{{this.notes}}</textarea>
-            </div>
-            <div class="col-4">
-            <button method="DELETE" name="{{userName}}" id="{{this.id}}" class="button-del"value="delete">delete</button>
+    <h1>setting page</h1>
+    <h2>my setting</h2>
+    <button class="btn btn-info button-clear-search clear-search" value="">CLEAR</button>
+    {{!-- <form action="#">
+        <label for="change-display-name">Change display name</label><br>
+        <input type="text" id="fname" name="fname" value=""><br>
+        <label for="lname">Last name:</label><br>
+        <input type="text" id="lname" name="lname" value=""><br><br>
+        <input type="submit" value="Submit">
+    </form> --}}
+
+    <div class="output col-md-6 col-sm-12">
+        <h2>{{user}}'s setting</h2>
+        <div class="output-outside">
+            <div class="row output-text">
+                <div class="col-8">
+                    <textarea id="text{{this.id}}" name="{{userName}}" class="text-area"
+                        data-number={{this.id}}>{{this.notes}}</textarea>
+                </div>
+                <div class="col-4">
+                    <button method="DELETE" name="{{userName}}" id="{{this.id}}" class="button-del"
+                        value="delete">delete</button>
+                </div>
             </div>
         </div>
     </div>
     </div>
-</div>
-</div>
+    </div>
+
+</section>

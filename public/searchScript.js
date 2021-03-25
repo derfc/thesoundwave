@@ -50,7 +50,7 @@ $("#filter_songs").on("keyup search", function (e) {
 				if (song.length > 0) {
 					$(".song").empty();
 					$(".song").append(
-						`<h3 class="mx-4 songsong" style="text-decoration: underline">Song</h3></br>`
+						`<h3 class="mx-4 songsong" style="text-decoration: underline">Song</h3>`
 					);
 					appendSong(data);
 				}
