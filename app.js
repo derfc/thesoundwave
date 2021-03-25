@@ -124,9 +124,16 @@ app.get("/home", authCheck, (req, res) => {
 	return storeSQL.getPlaylist(user_id).then((playlist) => {
 		// console.log("PL outpout", playlist);
 		storeSQL.getAllSong().then((songs) => {
-			// console.log("where is the 19th", songs);
+			// console.log(
+			// 	songs.sort(() => Math.random() - 0.5),
+			// 	"almost"
+			// );
+			let randomSong = JSON.parse(JSON.stringify(songs));
 			res.render("home", {
 				playlistSongArr: songs,
+				showOnlySongArr: randomSong
+					.sort(() => Math.random() - 0.5)
+					.slice(0, 60),
 				playlist: playlist,
 				layout: "dashboard",
 				stripePublicKey: stripePublicKey,

@@ -61,7 +61,7 @@
           {{!-- d-flex flex-wrap flex-fillalbum-card --}}
           <div class="noneWhenSearch homeSong">
                <div class="random-album px-4 row">
-                    {{#each playlistSongArr}}
+                    {{#each showOnlySongArr}}
                     <div class="col-lg-2 col-md-3 col-sm-4 my-3">
                          <div class="album-img">
                               <img class="image img-fluid" src="{{this.album_photo}}" alt="Living Things" />
@@ -77,5 +77,28 @@
                     {{/each}}
                </div>
           </div>
+
+          {{!-- <div class="homeSong" style="display: none;">
+               <div class="random-album px-4 row">
+                    {{#each playlistSongArr}}
+                    <div class="col-lg-2 col-md-3 col-sm-4 my-3">
+                         <div class="album-img">
+                              <img class="image img-fluid" src="{{this.album_photo}}" alt="Living Things" />
+                         </div>
+                         <div class="album-info">
+                              <button class="btn play-this-song pt-1 pb-0">{{this.song_name}}</button>
+                              <br>
+                              <button class="btn go-to-artist py-0"
+                                   data-artist_id="{{this.artist_id}}">{{this.artist_name_eng}}
+                                   {{this.artist_name_chi}}</button>
+                         </div>
+                    </div>
+                    {{/each}}
+               </div>
+          </div> --}}
      </section>
 </section>
+
+
+
+          
