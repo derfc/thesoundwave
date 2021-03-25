@@ -491,6 +491,13 @@ section.row {
   list-style-type: none;
 }
 
+/* Playlist */
+
+/* set-height */
+.set-height {
+  min-height: 89vh;
+}
+
 /* Add playlist */
 /* The popup form - hidden by default */
 .form-popup {

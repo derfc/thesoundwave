@@ -1,42 +1,34 @@
 <div class="login_content text-white text-center">
   <div class="left">
 
-    {{!-- <div class="title">Login</div> --}}
     <img class="logopic" src="../image/thesoundwavelogo.png" alt="">
 
     <form action="/auth/login" method="POST">
 
       <div class="container">
-        {{!-- <div class="left"> --}}
-          {{!-- <label for="uname"><b>Username</b></label> --}}
-          <input type="text" placeholder="Username" name="username" id="loginUsername" required>
 
-
-          {{!-- <div> --}}
-            {{!-- <label for="psw"><b>Password</b></label> --}}
-            <input type="password" placeholder="Password" name="password" id="loginPassword" required>
-          </div>
-
-
-          <button class="btn btn-success" type="submit" id="loginButton">Login</button>
-
-          {{!-- google button --}}
-          <a class="goog btn btn-block btn-social btn-google" href="/auth/google">
-            <span class="fa fa-google"></span> Sign in with Google
-          </a>
-
-          {{!-- facebook button --}}
-          <a class="faceb btn btn-block btn-social btn-facebook" href="/auth/facebook">
-            <span class="fa fa-facebook"></span> Sign in with Facebook
-          </a>
-
-
-          {{!-- </label> --}}
-
-          <button type="submit" class="cancelbtn" id="cancelButton">Cancel</button>
-
-          <p class="psw">Forgot <a href="#">password?</a></p>
-
-        </div>
+        <input type="email" placeholder="Email" name="username" id="loginUsername" required>
+        <input type="password" placeholder="Password" name="password" id="loginPassword" required>
       </div>
+
+
+      <button class="btn btn-success" type="submit" id="loginButton">Login</button>
+
+      {{!-- google button --}}
+      <a class="goog btn btn-block btn-social btn-google" href="/auth/google">
+        <span class="fa fa-google"></span> Sign in with Google
+      </a>
+
+      {{!-- facebook button --}}
+      <a class="faceb btn btn-block btn-social btn-facebook" href="/auth/facebook">
+        <span class="fa fa-facebook"></span> Sign in with Facebook
+      </a>
+
+
+      <button type="submit" class="cancelbtn" id="cancelButton">Cancel</button>
+
+      <p class="psw">Forgot <a href="#">password?</a></p>
+
   </div>
+</div>
+</div>
