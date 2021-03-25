@@ -5,9 +5,7 @@
 
      <div class="playlist" data-library_id="{{libraryId}}">
           <div class="title row">
-               <div class="col">
-                    <p>#</p>
-               </div>
+
                <div class="col">
                     <p>SONG</p>
                </div>
@@ -29,9 +27,7 @@
           <div class="song-list">
                {{#each playlistSongArr}}
                <div class="album__tracks row">
-                    <div class="col">
-                         <p>{{this.id}}</p>
-                    </div>
+
                     <div class="col">
                          <p>{{this.song_name}}</p>
                     </div>
@@ -45,7 +41,8 @@
                          <p>need to get length</p>
                     </div>
                     <div class="col">
-                         <button data-song_id="{{this.id}}" class="delete-song">delete song</button>
+                         <button data-song_id="{{this.id}}" class="btn delete-song"><i
+                                   class="fad fa-trash"></i></button>
                     </div>
 
                </div>
