@@ -39,24 +39,26 @@ module.exports.getAwsObject = () => {
 		for (let i = 0; i < awsObj.length; i++) {
 			let objArr = awsObj[i].Key.split("/");
 			// console.log(objArr[0]);
-			if (!artistArr.includes(objArr[0])) {
-				// console.log("new artist, push to arr", objArr[0]);
-				// console.log(objArr[0].split("-"));
-				let artistNameEng = objArr[0].split("-")[0].replace(/_/g, " ");
-				let artistNameChi = objArr[0].split("-")[1];
-				artistArr.push(objArr[0]);
-				// console.log(artistArr, "artistArr 1");
-				if (artistNameChi) {
-					await artistKnex.push({
-						artist_name_eng: artistNameEng,
-						artist_name_chi: artistNameChi,
-						artist_photo: "#",
-					});
-				} else {
-					await artistKnex.push({
-						artist_name_eng: artistNameEng,
-						artist_photo: "#",
-					});
+			if (objArr[1] && objArr[1].endsWith(".jpg")) {
+				if (!artistArr.includes(objArr[0])) {
+					// console.log("new artist, push to arr", objArr[0]);
+					// console.log(objArr[0].split("-"));
+					let artistNameEng = objArr[0].split("-")[0].replace(/_/g, " ");
+					let artistNameChi = objArr[0].split("-")[1];
+					artistArr.push(objArr[0]);
+					// console.log(artistArr, "artistArr 1");
+					if (artistNameChi) {
+						await artistKnex.push({
+							artist_name_eng: artistNameEng,
+							artist_name_chi: artistNameChi,
+							artist_photo: `https://thesoundwave.s3-us-west-1.amazonaws.com/${objArr[0]}/${objArr[1]}`,
+						});
+					} else {
+						await artistKnex.push({
+							artist_name_eng: artistNameEng,
+							artist_photo: `https://thesoundwave.s3-us-west-1.amazonaws.com/${objArr[0]}/${objArr[1]}`,
+						});
+					}
 				}
 			}
 		}

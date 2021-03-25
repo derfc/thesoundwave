@@ -1,8 +1,6 @@
 <section class="set-height">
 
-<h2>my setting</h2>
-<div class="greetings text-white"></div>
-<button class="btn btn-info button-clear-search clear-search" value="">CLEAR</button>
+<div class="greetings text-dark"></div>
 {{!-- <form action="#">
     <label for="change-display-name">Change display name</label><br>
     <input type="text" id="fname" name="fname" value=""><br>
@@ -11,12 +9,21 @@
     <input type="submit" value="Submit">
 </form> --}}
 
+    
+    {{#if displayName}}
+    <h2>{{displayName}}'s setting</h2>
+    {{else}}
     <h2>{{user}}'s setting</h2>
-    <lable for="display-name">display name:</lable>
-    <p class="display-name">Name from backend</p>
-    <button class="button-edit"value="edit">edit</button>
-    <textarea id="edit-display-name" name="{{userName}}" class="text-area" >edit name here</textarea>
-    <div id="check-availability"></div>
+    {{/if}}
+    <div class="setting-display-name">
+        <lable for="display-name">display name:</lable>
+        <p id="display-name" style="display: block;" name="display-name">{{displayName}}</p>
+        <input style="display: none;" id="edit-display-name" class="text-area" placeholder="{{displayName}}"></input>
+        <button class="button-edit" id="button-edit">edit</button>
+        <div class="confirm"></div>
+        <div id="check-availability"></div>
+    </div>
+    
 </div>
 </div>
 </section>
