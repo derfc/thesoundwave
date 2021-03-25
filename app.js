@@ -299,8 +299,11 @@ app.delete("/library/:library_id", (req, res) => {
 
 //del song
 app.delete("/playlist/:library_id/:song_id", (req, res) => {
+
 	let libraryId = req.params.library_id;
 	let deleteSongId = req.params.song_id;
+	console.log(libraryId, "lid")
+	console.log(deleteSongId, "sdid")
 	// console.log("hello PLID", libraryId);
 	// console.log("hello SID", deleteSongId);
 	return storeSQL
