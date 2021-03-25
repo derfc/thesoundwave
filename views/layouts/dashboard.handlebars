@@ -39,7 +39,11 @@
                 <div>
                     <img class="pro-pic" src="{{thumbnail}}" alt="thumbnail" height="80px" width="80px" />
                 </div>
+                {{#if displayName}}
+                <h3 class="mt-1 mb-3">{{displayName}}</h3>
+                {{else}}
                 <h3 class="mt-1 mb-3">{{user}}</h3>
+                {{/if}}
             </div>
             <div class="navroutes">
                 <div>
