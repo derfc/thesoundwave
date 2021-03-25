@@ -145,6 +145,10 @@ module.exports = class StoreSQL {
 		return knex(this.library).where("user_id", user_id).orderBy("id");
 	}
 
+	getPlaylistName(library_id) {
+		return knex(this.library).select("playlist_name").where("id", library_id);
+	}
+
 	addPlaylist(newPlaylistName, user_id) {
 		return knex(this.library)
 			.insert({

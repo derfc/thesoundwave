@@ -25,7 +25,10 @@ $(".clear-search").click((e) => {
 
 $(".search-category").click((e) => {
 	clearAll();
-	let category = e.target.value;
+	// let category = e.target.value;
+	// console.log(category, "1");
+	// $(`#category-${category}`).attr("btn-info", "btn-danger");
+	// console.log(e.target, "2");
 
 	if (!selectedCat.includes(category)) {
 		selectedCat.push(category);
@@ -110,10 +113,10 @@ const appendItem = (result) => {
 		$(".item-inside").append(
 			`
 			<div class="col-lg-2 col-md-3 col-sm-4 my-3">
-			<img style="max-height:200px; max-width:200px;" src=${itemPhoto} alt="${itemName} Photo"/></br>
-			<p>$${itemPrice / 100}</p>
-			<p>${itemName}</>
-			<button class="add-to-cart" data-item_id ="${itemId}" data-user_id="1">add to cart</button></br>
+			<img class="image img-fluid" style="max-height:200px; max-width:200px;" src=${itemPhoto} alt="${itemName} Photo"/></br>
+			<h6 class="name mt-2 text-white">${itemName}</h6>
+			<h6 class="name mt-2 text-white">$${itemPrice / 100}</h6>
+			<button class="btn add-to-cart py-0 text-white" data-item_id ="${itemId}" data-user_id="1"><i data-item_id ="${itemId}" class="fal fa-shopping-cart"></i>add to cart</button></br>
 			</div>
 			`
 		);
