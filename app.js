@@ -228,18 +228,24 @@ app.get("/library/:library_id", (req, res) => {
 						// console.log("finally", playlistSongArr);
 						storeSQL.getPlaylist(user_id).then((playlist) => {
 							// console.log("PL outpout", playlist);
-							console.log(playlistSongArr);
-							res.render("playlist", {
-								layout: "dashboard",
-								libraryId: library_id,
-								playlist: playlist,
-								playlistSongArr: playlistSongArr,
-								stripePublicKey: stripePublicKey,
-								css: "../css/index.css",
-								user: user,
-								thumbnail: pic,
-								musicPlayerScript: "../musicplayer.js",
-							});
+							return storeSQL
+								.getPlaylistName(library_id)
+								.then((playlistName) => {
+									// console.log(playlistSongArr);
+									console.log(playlistName);
+									res.render("playlist", {
+										playlistName: playlistName[0].playlist_name,
+										layout: "dashboard",
+										libraryId: library_id,
+										playlist: playlist,
+										playlistSongArr: playlistSongArr,
+										stripePublicKey: stripePublicKey,
+										css: "../css/index.css",
+										user: user,
+										thumbnail: pic,
+										musicPlayerScript: "../musicplayer.js",
+									});
+								});
 						});
 					}
 				});
