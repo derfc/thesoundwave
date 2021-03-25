@@ -95,7 +95,7 @@ module.exports = class StoreSQL {
 			])
 			.from(`song as s`)
 			.join(`artist as a`, "s.artist_id", "a.id")
-			.join(`album as alb`, "s.album_id", "alb.id")
+			.join(`album as alb`, "s.album_id", "alb.id");
 		// .orderBy("id");
 		// return knex
 		// 	.from(this.song)
@@ -156,7 +156,8 @@ module.exports = class StoreSQL {
 	searchSongInPlaylist(libraryId, addSongId) {
 		return knex(this.playlist)
 			.where("library_id", libraryId)
-			.andWhere("song_id", addSongId);
+			.andWhere("song_id", addSongId)
+			.orderBy("id");
 	}
 	addSongToPlaylist(libraryId, addSongId) {
 		return knex(this.playlist).insert({
