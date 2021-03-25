@@ -304,7 +304,16 @@ app.delete("/playlist/:library_id/:song_id", (req, res) => {
 //setting route
 app.get("/setting", authCheck, (req, res) => {
 	console.log(user, "i need name");
-	res.render("setting", { layout: "dashboard", user: user, thumbnail: pic });
+	return storeSQL.getDisplayName(user_id).then((displayName) => {
+		console.log(displayName, "display name");
+		res.render("setting", {
+			layout: "dashboard",
+			user: user,
+			thumbnail: pic,
+			displayName: displayName,
+			settingScript: "./settingScript.js",
+		});
+	});
 });
 
 //setting route
