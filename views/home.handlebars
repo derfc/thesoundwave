@@ -1,6 +1,5 @@
-<section class="mainHomepage">
-
-     <section class="searching pt-3">
+<section class="wholebody">
+     <section class="navsearch py-2">
           <div class="d-inline mx-4">
                <input class="instant-search" type="search" spellcheck="false" placeholder="Artists, albums and songs"
                     id="filter_songs" />
@@ -8,70 +7,77 @@
                <button class="btn button-artist search-artist" value="artist">ARTIST</button>
                <button class="btn button-album search-album" value="album">ALBUM</button>
           </div>
-
-
-          <div class="greetings text-white">
-          </div>
-
-          <div class="results mb-2">
-               <div class="title"></div>
-               <div class="artist"></div>
-               <div class="album"></div>
-               <div class="song"></div>
-          </div>
      </section>
 
-     <section class="noneWhenSearch container-fluid px-4">
-          <div class="carousel slide" data-ride="carousel">
-               <div class="carousel-inner">
-                    <div class="carousel-item active">
-                         <div class="row">
-                              <div class="col-sm"><img class="d-block w-100 img-fluid" src="./image/musicposter1.jpeg"
-                                        alt="1 slide">
-                              </div>
-                              <div class="col-sm"><img class="d-block w-100 img-fluid" src="./image/musicposter2.jpeg"
-                                        alt="2 slide">
-                              </div>
-                              <div class="col-sm"><img class="d-block w-100 img-fluid" src="./image/musicposter3.jpeg"
-                                        alt="3 slide">
+     <section class="mainHomepage">
+
+          <section class="searching">
+
+
+               <div class="greetings text-white">
+               </div>
+
+               <div class="results mb-2">
+                    <div class="title"></div>
+                    <div class="artist"></div>
+                    <div class="album"></div>
+                    <div class="song"></div>
+               </div>
+          </section>
+
+          <section class="noneWhenSearch container-fluid px-4">
+               <div class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                         <div class="carousel-item active">
+                              <div class="row">
+                                   <div class="col-sm"><img class="d-block w-100 img-fluid"
+                                             src="./image/musicposter1.jpeg" alt="1 slide">
+                                   </div>
+                                   <div class="col-sm"><img class="d-block w-100 img-fluid"
+                                             src="./image/musicposter2.jpeg" alt="2 slide">
+                                   </div>
+                                   <div class="col-sm"><img class="d-block w-100 img-fluid"
+                                             src="./image/musicposter3.jpeg" alt="3 slide">
+                                   </div>
                               </div>
                          </div>
-                    </div>
-                    <div class="carousel-item">
-                         <div class="row">
-                              <div class="col-sm"><img class="d-block w-100 img-fluid" src="./image/musicposter2.jpeg"
-                                        alt="4 slide">
-                              </div>
-                              <div class="col-sm"><img class="d-block w-100 img-fluid" src="./image/musicposter3.jpeg"
-                                        alt="5 slide">
-                              </div>
-                              <div class="col-sm"><img class="d-block w-100 img-fluid" src="./image/musicposter1.jpeg"
-                                        alt="6 slide">
+                         <div class="carousel-item">
+                              <div class="row">
+                                   <div class="col-sm"><img class="d-block w-100 img-fluid"
+                                             src="./image/musicposter2.jpeg" alt="4 slide">
+                                   </div>
+                                   <div class="col-sm"><img class="d-block w-100 img-fluid"
+                                             src="./image/musicposter3.jpeg" alt="5 slide">
+                                   </div>
+                                   <div class="col-sm"><img class="d-block w-100 img-fluid"
+                                             src="./image/musicposter1.jpeg" alt="6 slide">
+                                   </div>
                               </div>
                          </div>
                     </div>
                </div>
-          </div>
-     </section>
+          </section>
 
-     {{!-- d-flex flex-wrap flex-fillalbum-card --}}
-     <div class="noneWhenSearch homeSong">
-          <div class="random-album px-4 row">
-               {{#each playlistSongArr}}
-               <div class="col-lg-2 col-md-3 col-sm-4 my-3">
-                    <div class="album-img">
-                         <img class="image img-fluid" src="{{this.album_photo}}" alt="Living Things" />
+          {{!-- d-flex flex-wrap flex-fillalbum-card --}}
+          <div class="noneWhenSearch homeSong">
+               <div class="random-album px-4 row">
+                    {{#each playlistSongArr}}
+                    <div class="col-lg-2 col-md-3 col-sm-4 my-3">
+                         <div class="album-img">
+                              <img class="image img-fluid" src="{{this.album_photo}}" alt="Living Things" />
+                         </div>
+                         <div class="album-info">
+                              <h6 class="name mt-2 text-white">{{this.song_name}}</h6>
+                              <button class="btn go-to-artist"
+                                   data-artist_id="{{this.artist_id}}">{{this.artist_name_eng}}
+                                   {{this.artist_name_chi}}</button>
+                         </div>
                     </div>
-                    <div class="album-info">
-                         <h6 class="name mt-2 text-white">{{this.song_name}}</h6>
-                         <button class="btn go-to-artist" data-artist_id="{{this.artist_id}}">{{this.artist_name_eng}}
-                              {{this.artist_name_chi}}</button>
-                    </div>
+                    {{/each}}
                </div>
-               {{/each}}
           </div>
-     </div>
 
+     </section>
 </section>
 
 {{!-- <div class="title row">
