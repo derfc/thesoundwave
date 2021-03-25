@@ -51,6 +51,17 @@ module.exports = class StoreSQL {
 		return knex(this.users).select("display_name").where("id", user_id);
 	}
 
+	checkDisplayName(desireDisplayName) {
+		return knex(this.users).where("display_name", desireDisplayName);
+	}
+
+	editDisplayName(user_id, newDisplayName) {
+		return knex(this.users)
+			.update("display_name", newDisplayName)
+			.where("id", user_id)
+			.returning("display_name");
+	}
+
 	getStoreItem(store_id) {
 		if (store_id) {
 			return knex(this.item).where("store_id", store_id);

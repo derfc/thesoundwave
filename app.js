@@ -305,20 +305,48 @@ app.delete("/playlist/:library_id/:song_id", (req, res) => {
 app.get("/setting", authCheck, (req, res) => {
 	console.log(user, "i need name");
 	return storeSQL.getDisplayName(user_id).then((displayName) => {
-		console.log(displayName, "display name");
+		console.log(displayName);
+		console.log(displayName[0].display_name, "display name");
 		res.render("setting", {
 			layout: "dashboard",
 			user: user,
 			thumbnail: pic,
-			displayName: displayName,
+			displayName: displayName[0].display_name,
 			settingScript: "./settingScript.js",
 		});
 	});
 });
 
 //setting route
+app.post("/setting", (req, res) => {
+	console.log(req.body.desireDisplayName);
+	let desireDisplayName = req.body.desireDisplayName;
+	console.log("post request");
+	return storeSQL.checkDisplayName(desireDisplayName).then((checkingResult) => {
+		if (checkingResult[0]) {
+			res.send("used");
+		} else {
+			res.send("availabile");
+		}
+	});
+});
+
 app.put("/setting", (req, res) => {
-	res.render("setting", { layout: "dashboard", user: user, thumbnail: pic });
+	console.log(req.body.newDisplayName);
+	let newDisplayName = req.body.newDisplayName;
+	console.log("put request");
+	return storeSQL
+		.editDisplayName(user_id, newDisplayName)
+		.then((display_name) => {
+			// res.render("setting", {
+			// 	layout: "dashboard",
+			// 	user: user,
+			// 	thumbnail: pic,
+			// 	displayName: display_name,
+			// 	settingScript: "./settingScript.js",
+			// });
+			res.send(display_name);
+		});
 });
 
 //store route
