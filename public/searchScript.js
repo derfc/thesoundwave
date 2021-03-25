@@ -158,7 +158,7 @@ const appendSong = (result) => {
 		$(".song").append(
 			`
 			<div class="mx-3">	
-			<button class="btn btn playSong" data-song_id="${songId}" data-song_url="${songUrl}"><i class="fal fa-play-circle"></i></button>
+			<button class="btn play-thisthis playSong" data-song_id="${songId}" data-song_url="${songUrl}"><i class="fal fa-play-circle"></i></button>
 			<button class="btn select-playlist" data-song_id="${songId}"><i class="fal fa-plus"></i></button>
 			<h6 class="d-inline songName">${songName}</h6>
 			<ul class="list" id="list${songId}"></ul>
@@ -172,6 +172,13 @@ const appendSong = (result) => {
 			);
 		}
 	}
+	// playsong from appended list
+	$('.play-thisthis').click((e) => {
+		index = songList.findIndex(p => p.song_url == e.target.dataset.song_url)
+		load_playlist();
+		playsong();
+	})
+
 
 	$(".select-playlist").click((e) => {
 		// e.preventDefault();
@@ -252,7 +259,7 @@ const appendAlbum = (result) => {
 				let albumName = result.album[0].album_name;
 				let albumPhoto = result.album[0].album_photo;
 				$(".album").append(
-					`<div class="mx-4 my-3"><img class="image img-fluid" src="${albumPhoto}" alt="${albumName} Photo"/></div>`
+					`<div class="mx-4 my-3"><img style="max-height:200px; max-width:200px" class="image img-fluid" src="${albumPhoto}" alt="${albumName} Photo"/></div>`
 				);
 				appendSong(result);
 			})

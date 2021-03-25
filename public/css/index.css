@@ -409,6 +409,7 @@ a {
 .mainHomepage .results button {
   padding-left: 0;
   font-size: 18px;
+  text-align: left;
 }
 
 .mainHomepage .results .appendArtist button {
@@ -416,14 +417,14 @@ a {
   font-size: 16px;
 }
 
-.mainHomepage .results .album-img {
-  height: 180px;
-  width: 180px;
-}
+/* .mainHomepage .results .album-img {
+} */
 
 .mainHomepage .results .album-img img {
   height: 100%;
   width: 100%;
+  max-height: 180px;
+  max-width: 180px;
 }
 
 .mainHomepage .results button:hover {
@@ -436,14 +437,11 @@ a {
   max-width: 100%;
 }
 
-.mainHomepage .random-album .album-img {
-  max-height: 180px;
-  max-width: 180px;
-}
-
 .mainHomepage .random-album .album-img img {
   height: 100%;
   width: 100%;
+  max-height: 180px;
+  max-width: 180px;
 }
 
 .mainHomepage .homeSong .album-info button {
@@ -457,6 +455,10 @@ a {
 .mainHomepage .homeSong .album-info button:hover {
   color: rgb(236, 236, 236);
   text-decoration: underline;
+}
+
+.mainHomepage .homeSong .album-info button:focus {
+  box-shadow: none;
 }
 
 section.row {
@@ -477,6 +479,10 @@ section.row {
   font-size: 18px;
   padding-left: 6px;
   padding-right: 6px;
+}
+
+.mainHomepage .results .song .list button {
+  font-size: 16px;
 }
 
 .mainHomepage .results .song button > i {
