@@ -30,18 +30,26 @@ $(".search-category").click((e) => {
 	if (!selectedCat.includes(category)) {
 		selectedCat.push(category);
 		console.log(selectedCat);
+<<<<<<< HEAD
 		$(`#category-${category}`).attr(
 			"class",
 			"btn btn-danger button-store search-category"
 		);
+=======
+		$(`#category-${category}`).attr("class", "btn btn-danger button-store search-category");
+>>>>>>> 0fda035d0311c1a7d7703bcb4b96631dd06c82e0
 	} else {
 		let targetIndex = selectedCat.indexOf(category);
 		selectedCat.splice(targetIndex, 1);
 		console.log(selectedCat);
+<<<<<<< HEAD
 		$(`#category-${category}`).attr(
 			"class",
 			"btn button-store search-category"
 		);
+=======
+		$(`#category-${category}`).attr("class", "btn button-store search-category");
+>>>>>>> 0fda035d0311c1a7d7703bcb4b96631dd06c82e0
 	}
 	let keywords = $("#filter_store")[0].value;
 	let sort = $("#sort")[0].value;
