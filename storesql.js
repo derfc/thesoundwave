@@ -46,7 +46,11 @@ module.exports = class StoreSQL {
 	selectStoreId(storeName) {
 		return knex(this.store).select("id").where("store_name", `${storeName}`);
 	}
-	//
+
+	getDisplayName(user_id) {
+		return knex(this.users).select("display_name").where("id", user_id);
+	}
+
 	getStoreItem(store_id) {
 		if (store_id) {
 			return knex(this.item).where("store_id", store_id);

@@ -5,7 +5,7 @@ exports.up = function (knex) {
 		table.string("password");
 		table.string("google_id");
 		table.string("facebook_id");
-		table.string("display_name");
+		table.string("display_name").unique();
 		table.binary("profile_pic");
 		table.timestamps(false, true);
 	});

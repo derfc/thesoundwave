@@ -1,5 +1,5 @@
-<h1>setting page</h1>
 <h2>my setting</h2>
+<div class="greetings text-white"></div>
 <button class="btn btn-info button-clear-search clear-search" value="">CLEAR</button>
 {{!-- <form action="#">
     <label for="change-display-name">Change display name</label><br>
@@ -9,18 +9,11 @@
     <input type="submit" value="Submit">
 </form> --}}
 
-<div class="output col-md-6 col-sm-12">
     <h2>{{user}}'s setting</h2>
-    <div class="output-outside">
-        <div class="row output-text">
-            <div class="col-8">
-            <textarea id="text{{this.id}}" name="{{userName}}" class="text-area"data-number={{this.id}} >{{this.notes}}</textarea>
-            </div>
-            <div class="col-4">
-            <button method="DELETE" name="{{userName}}" id="{{this.id}}" class="button-del"value="delete">delete</button>
-            </div>
-        </div>
-    </div>
-    </div>
+    <lable for="display-name">display name:</lable>
+    <p class="display-name">Name from backend</p>
+    <button class="button-edit"value="edit">edit</button>
+    <textarea id="edit-display-name" name="{{userName}}" class="text-area" >edit name here</textarea>
+    <div id="check-availability"></div>
 </div>
 </div>
