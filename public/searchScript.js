@@ -173,16 +173,19 @@ const appendSong = (result) => {
 		let songUrl = result.song[i].song_url;
 		// console.log(result.song[0]);
 		$(".song").append(
-			`<span class="mx-4 songName">${songName}</span>
-			<button class="btn btn-warning playSong" data-song_id="${songId}" data-song_url="${songUrl}"><i class="fal fa-play-circle"></i></button>
-			<button class="btn select-playlist" data-song_id="${songId}">add to playlist</button>
-			<ul class="list" id="list${songId}"></ul></br>`
+			`
+			<div class="mx-3">	
+			<button class="btn btn playSong" data-song_id="${songId}" data-song_url="${songUrl}"><i class="fal fa-play-circle"></i></button>
+			<button class="btn select-playlist" data-song_id="${songId}"><i class="fal fa-plus"></i></button>
+			<h6 class="d-inline songName">${songName}</h6>
+			<ul class="list" id="list${songId}"></ul>
+			</div>`
 		);
 		for (let y = 0; y < result.playlist.length; y++) {
 			let playlistName = result.playlist[y].playlist_name;
 			let libraryId = result.playlist[y].id;
 			$(`#list${songId}`).append(
-				`<li><button class="btn btn-success add-to-playlist" data-song_id="${songId}" data-library_id="${libraryId}">add to here ${playlistName}</button></li>`
+				`<li><button class="btn add-to-playlist p-0" data-song_id="${songId}" data-library_id="${libraryId}">Add to ${playlistName}</button></li>`
 			);
 		}
 	}

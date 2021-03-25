@@ -440,7 +440,7 @@ section.row {
   --bs-gutter-x: 0rem;
 }
 
-/* artist searc */
+/* artist search */
 .mainHomepage .artist,
 .album,
 .songsong,
@@ -450,6 +450,25 @@ section.row {
   letter-spacing: 1.3px;
 }
 
+.mainHomepage .results .song button {
+  font-size: 18px;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.mainHomepage .results .song button > i {
+  pointer-events: none;
+}
+
+.mainHomepage .results .song ul {
+  padding-left: 0.4rem;
+}
+
+.mainHomepage .results .song li {
+  list-style-type: none;
+}
+
+/* Add playlist */
 /* The popup form - hidden by default */
 .form-popup {
   display: none;
@@ -512,4 +531,3 @@ section.row {
 /* .select-playlist {
 	display: none;
 } */
-
