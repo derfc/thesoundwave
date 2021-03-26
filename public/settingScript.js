@@ -74,3 +74,70 @@ $("#button-edit").click((e) => {
 		$("#edit-display-name")[0].style.display = "block";
 	}
 });
+
+$("#button-show-history").click((e) => {
+	console.log("hello");
+	if (e.target.innerText == "close") {
+		e.target.innerText = "show purchase hostory";
+		$(".purchase-history").empty();
+	} else {
+		e.target.innerText = "close";
+		$.ajax({
+			type: "POST",
+			url: `/setting`,
+			data: { showHistory: "showHistory" },
+			success: function () {
+				console.log("success");
+			},
+		})
+			.done(function (data) {
+				console.log(data);
+				if (data.length == 0) {
+					$(".purchase-history").empty().append(`<p>No History Found</p>`);
+				}
+				$(".purchase-history").empty();
+				for (let i = 0; i < data.length; i++) {
+					$(".purchase-history").append(
+						`<button class="button-show-order" id="button-show-order" data-transection_id="${data[i].id}">show order history</button><div class="order-history" id="order-history${data[i].id}"></div>`
+					);
+				}
+
+				$(".button-show-order").click((e) => {
+					let transectionId = e.target.dataset.transection_id;
+					console.log(transectionId);
+					if (e.target.innerText == "close") {
+						e.target.innerText = "show order hostory";
+						$(`#order-history${transectionId}`).empty();
+					} else {
+						e.target.innerText = "close";
+						$.ajax({
+							type: "POST",
+							url: `/setting`,
+							data: { transectionId: transectionId },
+							success: function () {
+								console.log("success");
+							},
+						})
+							.done(function (data) {
+								console.log(data);
+								for (let i = 0; i < data.length; i++) {
+									$(`#order-history${data[i].transection_id}`).append(
+										`<p>Product Name: ${data[i].item_name} Price: $${
+											data[i].item_price / 100
+										} Quantity:${data[i].quantity}</p>`
+									);
+								}
+							})
+							.fail(function () {
+								console.log("failed");
+							})
+							.always(() => console.log("running"));
+					}
+				});
+			})
+			.fail(function () {
+				console.log("failed");
+			})
+			.always(() => console.log("running"));
+	}
+});

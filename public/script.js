@@ -93,7 +93,13 @@ $(document).ready(() => {
 					console.log("Ajax Error!");
 					console.log(err);
 				},
-			});
+			})
+				.done(function () {
+					window.location.reload();
+					alert("Thanks!");
+				})
+				.fail(() => console.log("hahafail"))
+				.always(() => console.log("running"));
 		},
 	});
 	$("#checkout").click((e) => {
