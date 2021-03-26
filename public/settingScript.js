@@ -97,8 +97,8 @@ $("#button-edit").click((e) => {
 
 $("#button-show-history").click((e) => {
 	console.log("hello");
-	if (e.target.innerText == "close") {
-		e.target.innerText = "show purchase hostory";
+	if (e.target.innerText == "Close") {
+		e.target.innerText = "Show purchase history";
 		$(".purchase-history").empty();
 	} else {
 		e.target.innerText = "Close";
@@ -118,18 +118,18 @@ $("#button-show-history").click((e) => {
 				$(".purchase-history").empty();
 				for (let i = 0; i < data.length; i++) {
 					$(".purchase-history").append(
-						`<button class="button-show-order" id="button-show-order" data-transection_id="${data[i].id}">show order history</button><div class="order-history" id="order-history${data[i].id}"></div>`
+						`<button class="btn button-show-order" id="button-show-order" data-transection_id="${data[i].id}">Show order history</button><div class="order-history" id="order-history${data[i].id}"></div>`
 					);
 				}
 
 				$(".button-show-order").click((e) => {
 					let transectionId = e.target.dataset.transection_id;
 					console.log(transectionId);
-					if (e.target.innerText == "close") {
+					if (e.target.innerText == "Close") {
 						e.target.innerText = "Show order history";
 						$(`#order-history${transectionId}`).empty();
 					} else {
-						e.target.innerText = "close";
+						e.target.innerText = "Close";
 						$.ajax({
 							type: "POST",
 							url: `/setting`,
@@ -140,10 +140,32 @@ $("#button-show-history").click((e) => {
 						})
 							.done(function (data) {
 								console.log(data);
+								$(`#order-history${transectionId}`).append(`<div class="row pt-2">
+								<div class="col">
+								<h6>Product Name</h6>
+								</div>	
+								<div class="col">
+								<h6>Price</h6>
+								</div>
+								<div class="col">
+								<h6>Quantity</h6>
+								</div>
+								</div>
+								<hr class="mt-1 mb-2">`)
 								for (let i = 0; i < data.length; i++) {
 									$(`#order-history${data[i].transection_id}`).append(
-										`<p>Product Name: ${data[i].item_name} Price: $${data[i].item_price / 100
-										} Quantity:${data[i].quantity}</p>`
+										`
+										<div class="row">
+<div class="col">
+<h6> ${data[i].item_name} </h6>
+</div>
+<div class="col">
+<h6> $${data[i].item_price / 100}</h6>
+</div>
+<div class="col">
+<h6> ${data[i].quantity} </h6>
+</div>
+										`
 									);
 								}
 							})
