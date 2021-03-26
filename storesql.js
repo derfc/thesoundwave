@@ -70,14 +70,21 @@ module.exports = class StoreSQL {
 	}
 
 	editDisplayName(user_id, newDisplayName) {
-		if (newDisplayName == "") {
-			return knex(this.users)
-				.update("display_name", null)
-				.where("id", user_id)
-				.returning("display_name");
-		}
+		// if (newDisplayName == "") {
+		// 	return knex(this.users)
+		// 		.update("display_name", null)
+		// 		.where("id", user_id)
+		// 		.returning("display_name");
+		// }
 		return knex(this.users)
 			.update("display_name", newDisplayName)
+			.where("id", user_id)
+			.returning("display_name");
+	}
+
+	setToDefaultDisplayName(user_id) {
+		return knex(this.users)
+			.update("display_name", null)
 			.where("id", user_id)
 			.returning("display_name");
 	}
