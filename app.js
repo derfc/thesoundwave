@@ -84,7 +84,7 @@ app.use(express.static(__dirname + "/public"));
 // get Picture and Name
 let pic;
 let user;
-let user_id = 1;
+let user_id;
 
 function getNamePic(req) {
 	if (req.user.provider === "google") {
@@ -103,8 +103,16 @@ const authCheck = (req, res, next) => {
 	if (req.isAuthenticated()) {
 		getNamePic(req);
 		console.log("He is allowed!");
-		console.log(req.user, "looking for id");
-		return next();
+		console.log(req.user.id, "looking for id");
+		let googleFacebookId = req.user.id;
+		return storeSQL.getUserId(googleFacebookId).then((userInfo) => {
+			console.log(userInfo[0], "give me id");
+			console.log(userInfo[0].id, "give me id");
+			user_id = userInfo[0].id;
+			console.log(userInfo[0].display_name, "give me id");
+			displayName = userInfo[0].display_name;
+			return next();
+		});
 	} else {
 		getNamePic(req);
 		res.redirect("/auth/login");
@@ -210,8 +218,8 @@ app.post("/home/album/:album_id", (req, res) => {
 });
 
 //get playlist
-app.get("/library/:library_id", (req, res) => {
-	// console.log("hi", req.params.playlist_id);
+app.get("/library/:library_id", authCheck, (req, res) => {
+	console.log("hi", req.params.library_id);
 	let library_id = req.params.library_id;
 	let count = 0;
 	let playlistSongArr = [];
@@ -232,7 +240,8 @@ app.get("/library/:library_id", (req, res) => {
 								.getPlaylistName(library_id)
 								.then((playlistName) => {
 									// console.log(playlistSongArr);
-									console.log(playlistName);
+									console.log(playlistName, "playlistName");
+									console.log(user, "user");
 									res.render("playlist", {
 										playlistName: playlistName[0].playlist_name,
 										layout: "dashboard",
@@ -257,6 +266,8 @@ app.get("/library/:library_id", (req, res) => {
 					layout: "dashboard",
 					playlist: playlist,
 					stripePublicKey: stripePublicKey,
+					user: user,
+					thumbnail: pic,
 					css: "../css/index.css",
 					musicPlayerScript: "../musicplayer.js",
 				});
@@ -270,7 +281,8 @@ app.post("/library", (req, res) => {
 	let newPlaylistName = req.body.playlistName;
 	return storeSQL.addPlaylist(newPlaylistName, user_id).then((library_id) => {
 		// console.log("hihihihi", library_id[0]);
-		res.redirect(`/library/${library_id[0]}`);
+		res.redirect(`/home`);
+		// res.redirect(`/library/${library_id[0]}`);
 	});
 });
 
@@ -294,7 +306,7 @@ app.post("/playlist/:library_id/:song_id", (req, res) => {
 
 //del playlist
 app.delete("/library/:library_id", (req, res) => {
-	// console.log("hello", req.params.library_id);
+	console.log("hello", req.params.library_id);
 	let deleteId = req.params.library_id;
 	return storeSQL.delAllSongsInPlaylist(deleteId).then(() => {
 		storeSQL.delPlaylistInLibrary(deleteId).then(() => {
@@ -305,11 +317,10 @@ app.delete("/library/:library_id", (req, res) => {
 
 //del song
 app.delete("/playlist/:library_id/:song_id", (req, res) => {
-
 	let libraryId = req.params.library_id;
 	let deleteSongId = req.params.song_id;
-	console.log(libraryId, "lid")
-	console.log(deleteSongId, "sdid")
+	console.log(libraryId, "lid");
+	console.log(deleteSongId, "sdid");
 	// console.log("hello PLID", libraryId);
 	// console.log("hello SID", deleteSongId);
 	return storeSQL
@@ -319,25 +330,31 @@ app.delete("/playlist/:library_id/:song_id", (req, res) => {
 
 //setting route
 app.get("/setting", authCheck, (req, res) => {
-	console.log(user, "i need name");
-	return storeSQL.getDisplayName(user_id).then((displayName) => {
-		console.log(displayName);
-		console.log(displayName[0].display_name, "display name");
-		res.render("setting", {
-			layout: "dashboard",
-			user: user,
-			thumbnail: pic,
-			displayName: displayName[0].display_name,
-			settingScript: "./settingScript.js",
-		});
+	console.log(displayName, "display name");
+	res.render("setting", {
+		layout: "dashboard",
+		user: user,
+		thumbnail: pic,
+		displayName: displayName,
+		settingScript: "./settingScript.js",
 	});
+	// return storeSQL.getDisplayName(user_id).then((displayName) => {
+	// 	console.log(displayName);
+	// 	console.log(displayName[0].display_name, "display name");
+	// 	res.render("setting", {
+	// 		layout: "dashboard",
+	// 		user: user,
+	// 		thumbnail: pic,
+	// 		displayName: displayName[0].display_name,
+	// 		settingScript: "./settingScript.js",
+	// 	});
+	// });
 });
 
 //setting route
 app.post("/setting", (req, res) => {
-	console.log(req.body.desireDisplayName);
 	let desireDisplayName = req.body.desireDisplayName;
-	console.log("post request");
+	console.log(desireDisplayName, "Desire Display Name post request");
 	return storeSQL.checkDisplayName(desireDisplayName).then((checkingResult) => {
 		if (checkingResult[0]) {
 			res.send("used");
@@ -366,7 +383,7 @@ app.put("/setting", (req, res) => {
 });
 
 //store route
-app.get("/store", (req, res) => {
+app.get("/store", authCheck, (req, res) => {
 	let catArr = [];
 	let count = 0;
 	return storeSQL.getStoreItem().then((item) => {
@@ -421,14 +438,17 @@ app.post("/store", (req, res) => {
 });
 
 //cart route
-app.get("/cart", (req, res) => {
-	return storeSQL.getCartItem(user_id).then((item) => {
-		res.render("cart", {
-			item: item,
-			layout: "dashboard",
-			stripePublicKey: stripePublicKey,
-			user: user,
-			thumbnail: pic,
+app.get("/cart", authCheck, (req, res) => {
+	return storeSQL.searchForStore().then((allStore) => {
+		return storeSQL.getCartItem(user_id).then((item) => {
+			res.render("cart", {
+				allStore: allStore,
+				item: item,
+				layout: "dashboard",
+				stripePublicKey: stripePublicKey,
+				user: user,
+				thumbnail: pic,
+			});
 		});
 	});
 });
