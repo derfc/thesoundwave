@@ -42,7 +42,8 @@
                 </div>
                 {{else}}
                 <div>
-                    <img class="pro-pic" src="./image/normal_login_icon.jpg" alt="thumbnail" height="80px" width="80px" />
+                    <img class="pro-pic" src="./image/normal_login_icon.jpg" alt="thumbnail" height="80px"
+                        width="80px" />
                 </div>
                 {{/if}}
                 {{#if displayName}}
@@ -104,11 +105,11 @@
         <hr>
 
         {{#each playlist}}
-        <div>
-            <a href="/library/{{this.id}}"><button type="button" class="btn select-playlist"
-                    data-library_id="{{this.id}}">{{this.playlist_name}}</button></a>
+        <div class="name-of-playlist">
             <button data-library_id="{{this.id}}" class="btn delete-playlist"><i class="fad fa-trash"
                     data-library_id="{{this.id}}"></i></button>
+            <a href="/library/{{this.id}}"><button type="button" class="btn select-playlist"
+                    data-library_id="{{this.id}}">{{this.playlist_name}}</button></a>
             </br>
         </div>
         {{/each}}

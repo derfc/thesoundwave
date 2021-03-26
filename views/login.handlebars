@@ -1,19 +1,19 @@
 <div class="login_content text-white text-center">
   <div class="left">
+    <div class="login-title">
+      <img class="logopic" src="../image/thesoundwavelogo.png" alt="">
 
-    <img class="logopic" src="../image/thesoundwavelogo.png" alt="">
-
+    </div>
     <form action="/auth/login" method="POST">
 
       <div class="container">
-
         <input type="email" placeholder="Email" name="username" id="loginUsername" required>
         <input type="password" placeholder="Password" name="password" id="loginPassword" required>
       </div>
 
 
       <button class="btn btn-success" type="submit" id="loginButton">Login</button>
-
+      <button type="submit" class="cancelbtn" id="cancelButton">Cancel</button>
       {{!-- google button --}}
       <a class="goog btn btn-block btn-social btn-google" href="/auth/google">
         <span class="fa fa-google"></span> Sign in with Google
@@ -25,9 +25,7 @@
       </a>
 
 
-      <button type="submit" class="cancelbtn" id="cancelButton">Cancel</button>
-
-      <p class="psw">Forgot <a href="#">password?</a></p>
+      {{!-- <p class="psw">Forgot <a href="#">password?</a></p> --}}
 
   </div>
 </div>

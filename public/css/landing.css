@@ -5,8 +5,19 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-
 header {
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+}
+
+header .title {
+  color: rgb(236, 236, 236);
+  font-size: 4em;
+  padding-top: 0.3em;
+}
+
+/* header {
   position: absolute;
   top: 0%;
   left: 0;
@@ -15,12 +26,18 @@ header {
   z-index: 1;
   display: flex;
   justify-content: space-between;
-  /* align-items: center; */
 }
 header .logo {
-  font-size: 2.5em;
-  color: #fff;
+  font-size: 4em;
+  color: rgb(236, 236, 236);
   text-transform: uppercase;
+  padding-top: 1rem;
+} */
+
+@media (max-width: 991px) {
+  header .title {
+    font-size: 2em;
+  }
 }
 
 .logoimg {
@@ -29,10 +46,10 @@ header .logo {
 }
 
 .music-title {
-  color: #fff;
+  color: rgb(236, 236, 236);
   font-size: 5em;
 }
-.toggle {
+/* .toggle {
   position: relative;
   width: 60px;
   height: 60px;
@@ -48,16 +65,17 @@ header .logo {
   background-size: 25px;
   background-position: center;
   cursor: pointer;
-}
+} */
 .showcase {
   position: absolute;
   right: 0;
   width: 100%;
   min-height: 100vh;
-  padding: 100px;
+  padding-left: 100px;
+  padding-right: 100px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
   background: #111;
   transition: 0.5s;
   z-index: 2;
@@ -87,8 +105,9 @@ header .logo {
   mix-blend-mode: overlay;
 }
 .text {
-  position: relative;
+  position: absolute;
   z-index: 0.3;
+  margin-top: 14em;
 }
 
 .text h2 {
@@ -180,8 +199,12 @@ header .logo {
   .showcase header {
     padding: 30px;
   }
+  .text h1 {
+    font-size: 2em;
+  }
+
   .text h2 {
-    font-size: 3em;
+    font-size: 2em;
   }
   .text h3 {
     font-size: 2em;
