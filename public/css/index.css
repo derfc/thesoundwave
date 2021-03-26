@@ -247,10 +247,15 @@ a {
 
 .side-bar button:hover {
   color: rgb(236, 236, 236);
+  background-color: #1d23304d;
 }
 
 .side-bar button:focus {
   box-shadow: none;
+}
+
+.side-bar button:active {
+  background-color: #13151d;
 }
 
 .side-bar .profile .pro-pic {
@@ -564,11 +569,11 @@ section.row {
 }
 
 .mainHomepage .results .item .item-inside button:hover {
-  background-color: #2d3547;
+  background-color: #1d23304d;
 }
 
 .mainHomepage .results .item .item-inside button:active {
-  background-color: #1d212c;
+  background-color: #13151d;
 }
 
 .mainHomepage .results .item .item-inside button:focus {
@@ -621,12 +626,23 @@ section.row {
   font-size: 14px;
 }
 
+.set-height .cart-item,
+.set-height .setting-page {
+  overflow: scroll;
+  max-height: 71.5vh;
+}
+
 .set-height .cart-item button {
   color: rgb(184, 179, 179);
 }
 
 .set-height .cart-item button:hover {
   color: rgb(236, 236, 236);
+  background-color: #1d23304d;
+}
+
+.set-height .cart-item button:active {
+  background-color: #13151d;
 }
 
 .set-height .cart-item button:focus {
@@ -724,7 +740,7 @@ section.row {
 .mainHomepage .homeItem .item-info button:hover {
   color: rgb(236, 236, 236);
   text-decoration: underline;
-  background-color: #2d3547;
+  background-color: #1d23304d;
 }
 
 .mainHomepage .homeItem .item-info button:focus {
@@ -732,5 +748,5 @@ section.row {
 }
 
 .mainHomepage .homeItem .item-info button:active {
-  background-color: #1d212c;
+  background-color: #13151d;
 }

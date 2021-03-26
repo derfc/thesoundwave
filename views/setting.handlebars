@@ -1,25 +1,31 @@
 <section class="set-height">
 
+
     {{#if displayName}}
-    <h2>{{displayName}}'s setting</h2>
+    <h1 class="pt-4 px-4">{{displayName}}'s settings</h1>
     {{else}}
-    <h2>{{user}}'s setting</h2>
+    <h1 class="pt-4 px-4">{{user}}'s settings</h1>
     {{/if}}
-    <div class="setting-display-name">
-        <lable for="display-name">display name:</lable>
-        <p id="display-name" style="display: block;" name="display-name">{{displayName}}</p>
-        <input style="display: none;" id="edit-display-name" class="text-area" placeholder="{{displayName}}"></input>
-        <button class="button-edit" id="button-edit">edit</button>
-        <div class="confirm"></div>
-        <div id="check-availability"></div>
-    </div>   
-<div>
-    <button class="button-show-history" id="button-show-history">show purchase hostory</button>
-</div>
-<div class="purchase"></div>
-<div class="purchase-history"></div>
+
+
+    <div class="setting-page px-4 pt-2">
+        <div class="setting-display-name">
+            <h3 for="display-name">Change Display Name</h3>
+            <h5 id="display-name" style="display: block;" name="display-name">{{displayName}}</h5>
+            <input style="display: none;" id="edit-display-name" class="text-area"
+                placeholder="{{displayName}}"></input>
+            <button class="button-edit" id="button-edit">edit</button>
+            <div class="confirm"></div>
+            <div id="check-availability"></div>
+        </div>
+        <div>
+            <button class="button-show-history" id="button-show-history">show purchase history</button>
+        </div>
+        <div class="purchase"></div>
+        <div class="purchase-history"></div>
+    </div>
 </section>
 
-    </div>
-    </div>
+</div>
+</div>
 </section>
