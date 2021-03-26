@@ -36,13 +36,13 @@ $("#edit-display-name").on("keyup", function (e) {
 		.done(function (data) {
 			console.log(data, "back to front end");
 			if (data == "used") {
-				$("#check-availability").empty().append("used");
+				$("#check-availability").empty().append("<h3 class='pt-2' style='color:rgb(236, 236, 236);'>STATUS: Display name used</h3>");
 			} else {
-				$("#check-availability").empty().append("availabile");
+				$("#check-availability").empty().append("<h3 class='pt-2' style='color:rgb(236, 236, 236);'>STATUS: Display name available</h3>");
 				$(".confirm")
 					.empty()
 					.append(
-						`<button class="button-confirm" id="button-confirm" value="confirm">confirm</button>`
+						`<button class="btn my-2 button-confirm" id="button-confirm" value="confirm">Confirm changes</button>`
 					);
 
 				$("#button-confirm").click((e) => {
@@ -80,10 +80,10 @@ $("#button-edit").click((e) => {
 	console.log(e.target);
 	if ($("#display-name")[0].style.display == "block") {
 		$("#display-name")[0].style.display = "none";
-		e.target.innerText = "cancel";
+		e.target.innerText = "Cancel changes";
 	} else {
 		$("#display-name")[0].style.display = "block";
-		e.target.innerText = "edit";
+		e.target.innerText = "Edit display name";
 		$(".confirm").empty();
 		$("#check-availability").empty();
 	}
@@ -101,7 +101,7 @@ $("#button-show-history").click((e) => {
 		e.target.innerText = "show purchase hostory";
 		$(".purchase-history").empty();
 	} else {
-		e.target.innerText = "close";
+		e.target.innerText = "Close";
 		$.ajax({
 			type: "POST",
 			url: `/setting`,
@@ -113,7 +113,7 @@ $("#button-show-history").click((e) => {
 			.done(function (data) {
 				console.log(data);
 				if (data.length == 0) {
-					$(".purchase-history").empty().append(`<p>No History Found</p>`);
+					$(".purchase-history").empty().append(`<p>No history found</p>`);
 				}
 				$(".purchase-history").empty();
 				for (let i = 0; i < data.length; i++) {
@@ -126,7 +126,7 @@ $("#button-show-history").click((e) => {
 					let transectionId = e.target.dataset.transection_id;
 					console.log(transectionId);
 					if (e.target.innerText == "close") {
-						e.target.innerText = "show order hostory";
+						e.target.innerText = "Show order history";
 						$(`#order-history${transectionId}`).empty();
 					} else {
 						e.target.innerText = "close";
@@ -142,8 +142,7 @@ $("#button-show-history").click((e) => {
 								console.log(data);
 								for (let i = 0; i < data.length; i++) {
 									$(`#order-history${data[i].transection_id}`).append(
-										`<p>Product Name: ${data[i].item_name} Price: $${
-											data[i].item_price / 100
+										`<p>Product Name: ${data[i].item_name} Price: $${data[i].item_price / 100
 										} Quantity:${data[i].quantity}</p>`
 									);
 								}

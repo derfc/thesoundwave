@@ -23,7 +23,7 @@
   right: 0;
   width: 400px;
   height: 512px;
-  background-color: rgba(33, 157, 228, 0.616);
+  background-color: rgba(33, 41, 46, 0.616);
   margin: auto auto;
   padding: 40px;
   border-radius: 4px;
@@ -111,15 +111,15 @@
   width: 80%;
   font-size: 1.2rem;
   padding: 5px;
-  margin: 10px 0px;
-  background-color: #0f8f44;
+  margin: 6px 0px;
+  background-color: #afafaf44;
   color: White;
   border: none;
   border-radius: 6px;
 }
 
 .login_content button:hover {
-  background-color: #4e973d;
+  background-color: #61bb4d;
 }
 
 .login_content .social {
@@ -135,14 +135,18 @@
 }
 .goog {
   text-align: center;
-  width: 225px;
-  padding: 5px;
+  width: 80%;
+  height: 2.8em;
+  padding: 7px;
   padding-left: 27px;
   margin-bottom: 5px;
   font-size: 13px;
 }
 .faceb {
-  width: 225px;
+  width: 80%;
+  height: 2.8em;
+  padding-left: 30px;
+  padding-top: 7px;
   text-align: center;
   font-size: 13px;
 }

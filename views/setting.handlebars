@@ -10,17 +10,27 @@
 
     <div class="setting-page px-4 pt-2">
         <div class="setting-display-name">
-            <h3 for="display-name">Change Display Name</h3>
-            <h5 id="display-name" style="display: block;" name="display-name">{{displayName}}</h5>
+            <h3 for="display-name">Your configurations</h3>
+            <h2 class="py-3" id="display-name" style="display: block; color:rgb(236, 236, 236);" name="display-name">
+                {{displayName}}</h2>
+
+            <div>
+                <i class="fal fa-users mx-2"></i><button class="my-2 btn button-edit" id="button-edit">Edit display
+                    name</button>
+            </div>
             <input style="display: none;" id="edit-display-name" class="text-area"
                 placeholder="{{displayName}}"></input>
-                <button class="button-default" id="button-default">set to default</button>
-            <button class="button-edit" id="button-edit">edit</button>
             <div class="confirm"></div>
             <div id="check-availability"></div>
+
+            <div>
+                <i class="fal fa-arrow-alt-circle-left mx-2"></i><button class="my-2 btn button-default"
+                    id="button-default">Profile to default settings</button>
+            </div>
         </div>
         <div>
-            <button class="button-show-history" id="button-show-history">show purchase history</button>
+            <i class="fad fa-history mx-2"></i><button class="btn my-2 button-show-history"
+                id="button-show-history">Show purchase history</button>
         </div>
         <div class="purchase"></div>
         <div class="purchase-history"></div>

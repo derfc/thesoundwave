@@ -132,6 +132,9 @@ const authCheck = (req, res, next) => {
 
 //landing page
 app.get("/", (req, res) => {
+	if (req.isAuthenticated()) {
+		res.redirect("/home")
+	}
 	res.render("index");
 });
 
@@ -380,13 +383,17 @@ app.get("/setting", authCheck, (req, res) => {
 	console.log("get setting");
 	console.log(user_id, "setting user id");
 	console.log(displayName, "display name");
-	res.render("setting", {
-		layout: "dashboard",
-		user: user,
-		thumbnail: pic,
-		displayName: displayName,
-		settingScript: "./settingScript.js",
-	});
+	return storeSQL.getPlaylist(user_id).then((playlist) => {
+		res.render("setting", {
+			layout: "dashboard",
+			playlist: playlist,
+			user: user,
+			thumbnail: pic,
+			displayName: displayName,
+			settingScript: "./settingScript.js",
+		});
+	})
+
 	// return storeSQL.getDisplayName(user_id).then((displayName) => {
 	// 	console.log(displayName);
 	// 	console.log(displayName[0].display_name, "display name");
