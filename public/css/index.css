@@ -242,6 +242,7 @@ a {
   color: rgb(184, 179, 179);
   font-size: 16px;
   margin-left: 26px;
+  text-align: left;
 }
 
 .side-bar button:hover {
@@ -510,22 +511,68 @@ section.row {
 }
 
 .mainstore label {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 400;
 }
 
 .mainstore input {
   font-size: 16px;
   height: 2.3rem;
-  width: 18rem;
+  width: 14rem;
   border-radius: 10px;
   border: 1px solid rgb(41, 41, 41);
   padding: 0rem 0.5rem;
+  outline: none;
 }
 
 .mainstore button {
   color: rgb(184, 179, 179);
   font-size: 18px;
+}
+
+.mainstore #sort {
+  font-size: 15px;
+}
+
+.mainHomepage .homeItem {
+  color: rgb(184, 179, 179);
+}
+
+.mainHomepage .homeItem img {
+  max-height: 180px;
+  max-width: 180px;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.mainHomepage .results .item img {
+  max-height: 180px;
+  max-width: 180px;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.mainHomepage .results {
+  color: rgb(236, 236, 236);
+}
+
+.mainHomepage .results .item .item-inside,
+.mainHomepage .results .item .item-inside button {
+  color: rgb(184, 179, 179);
+}
+
+.mainHomepage .results .item .item-inside button:hover {
+  background-color: #2d3547;
+}
+
+.mainHomepage .results .item .item-inside button:active {
+  background-color: #1d212c;
+}
+
+.mainHomepage .results .item .item-inside button:focus {
+  box-shadow: none;
 }
 
 /* Playlist */
@@ -559,7 +606,39 @@ section.row {
 
 /* set-height */
 .set-height {
-  min-height: 87.3vh;
+  min-height: 89vh;
+  background-image: linear-gradient(to top, rgba(41, 41, 41), rgb(122, 48, 48));
+  color: rgb(184, 179, 179);
+}
+
+/* Cart */
+
+.set-height h1 {
+  color: rgb(236, 236, 236);
+}
+
+.set-height input {
+  font-size: 14px;
+}
+
+.set-height .cart-item button {
+  color: rgb(184, 179, 179);
+}
+
+.set-height .cart-item button:hover {
+  color: rgb(236, 236, 236);
+}
+
+.set-height .cart-item button:focus {
+  box-shadow: none;
+}
+
+.set-height .cart-item img {
+  max-height: 180px;
+  max-width: 180px;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }
 
 /* Add playlist */
@@ -645,4 +724,13 @@ section.row {
 .mainHomepage .homeItem .item-info button:hover {
   color: rgb(236, 236, 236);
   text-decoration: underline;
+  background-color: #2d3547;
+}
+
+.mainHomepage .homeItem .item-info button:focus {
+  box-shadow: none;
+}
+
+.mainHomepage .homeItem .item-info button:active {
+  background-color: #1d212c;
 }
