@@ -1,7 +1,5 @@
 <section class="set-height">
-     <h1 class="p-4">Your Cart</h1>
-
-
+     <h1 class="pt-4 px-4">Your Cart</h1>
 
      <div class="cart-item px-4 row">
           {{#each item}}
@@ -26,10 +24,13 @@
      </div>
 
 
-     <div class="px-4">
-          <h5 id="total">TOTAL = $</h5>
-          <button id="checkout" class="button-checkout" value="checkout"><i class="fad fa-credit-card"></i>
-               Checkout</button>
+     <div class="px-4 pt-2">
+          <div>
+               <h5 id="total">TOTAL = $</h5>
+               <button id="checkout" class="btn btn-secondary button-checkout" value="checkout"><i
+                         class="fad fa-credit-card"></i>
+                    Checkout</button>
+          </div>
      </div>
 
      <script src="./script.js"></script>
