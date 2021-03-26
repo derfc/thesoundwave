@@ -95,7 +95,7 @@ function getNamePic(req) {
 		user = req.user.displayName;
 	} else {
 		user = req.user.username;
-		// pic = undefined;
+		pic = undefined;
 	}
 }
 
@@ -235,43 +235,76 @@ app.get("/library/:library_id", authCheck, (req, res) => {
 	let library_id = req.params.library_id;
 	let count = 0;
 	let playlistSongArr = [];
-	return storeSQL.getSongByPlaylist(library_id).then((playlistSongs) => {
+	return storeSQL.getSongByPlaylist(library_id).then(async (playlistSongs) => {
 		// console.log("PL id outpout", playlistSongs);
 		if (playlistSongs.length !== 0) {
-			playlistSongs.forEach((playlistSong) => {
-				let song_id = playlistSong.song_id;
-				storeSQL.getSongById(song_id).then((song) => {
-					// console.log("what is this type", song[0]);
-					playlistSongArr.push(song[0]);
-					count++;
-					if (count == playlistSongs.length) {
-						// console.log("finally", playlistSongArr);
-						storeSQL.getPlaylist(user_id).then((playlist) => {
-							// console.log("PL outpout", playlist);
-							return storeSQL
-								.getPlaylistName(library_id)
-								.then((playlistName) => {
-									// console.log(playlistSongArr);
-									console.log(playlistName, "playlistName");
-									console.log(user, "user");
-									res.render("playlist", {
-										playlistName: playlistName[0].playlist_name,
-										layout: "dashboard",
-										libraryId: library_id,
-										playlist: playlist,
-										playlistSongArr: playlistSongArr,
-										stripePublicKey: stripePublicKey,
-										css: "../css/index.css",
-										user: user,
-										thumbnail: pic,
-										displayName: displayName,
-										musicPlayerScript: "../musicplayer.js",
-									});
-								});
+			// console.log("PL id outpout", playlistSongs.length);
+			// console.log("PL id outpout", playlistSongs[0]);
+			if (playlistSongs.length !== 0) {
+				for (let i = 0; i < playlistSongs.length; i++) {
+					let song_id = playlistSongs[i].song_id;
+					await storeSQL.getSongById(song_id).then((song) => {
+						// console.log("what is this type", song[0]);
+						playlistSongArr.push(song[0]);
+					});
+				}
+				// console.log(playlistSongArr, "i want to know the order");
+				return storeSQL.getPlaylist(user_id).then((playlist) => {
+					// console.log("PL outpout", playlist);
+					return storeSQL.getPlaylistName(library_id).then((playlistName) => {
+						// console.log(playlistSongArr);
+						// console.log(playlistName, "playlistName");
+						// console.log(user, "user");
+						res.render("playlist", {
+							playlistName: playlistName[0].playlist_name,
+							layout: "dashboard",
+							libraryId: library_id,
+							playlist: playlist,
+							playlistSongArr: playlistSongArr,
+							stripePublicKey: stripePublicKey,
+							css: "../css/index.css",
+							user: user,
+							thumbnail: pic,
+							displayName: displayName,
+							musicPlayerScript: "../musicplayer.js",
 						});
-					}
+					});
 				});
-			});
+			}
+			// playlistSongs.forEach((playlistSong) => {
+			// 	let song_id = playlistSong.song_id;
+			// 	storeSQL.getSongById(song_id).then((song) => {
+			// 		// console.log("what is this type", song[0]);
+			// 		playlistSongArr.push(song[0]);
+			// 		count++;
+			// 		if (count == playlistSongs.length) {
+			// 			// console.log("finally", playlistSongArr);
+			// 			storeSQL.getPlaylist(user_id).then((playlist) => {
+			// 				// console.log("PL outpout", playlist);
+			// 				return storeSQL
+			// 					.getPlaylistName(library_id)
+			// 					.then((playlistName) => {
+			// 						// console.log(playlistSongArr);
+			// 						console.log(playlistName, "playlistName");
+			// 						console.log(user, "user");
+			// 						res.render("playlist", {
+			// 							playlistName: playlistName[0].playlist_name,
+			// 							layout: "dashboard",
+			// 							libraryId: library_id,
+			// 							playlist: playlist,
+			// 							playlistSongArr: playlistSongArr,
+			// 							stripePublicKey: stripePublicKey,
+			// 							css: "../css/index.css",
+			// 							user: user,
+			// 							thumbnail: pic,
+			// 							displayName: displayName,
+			// 							musicPlayerScript: "../musicplayer.js",
+			// 						});
+			// 					});
+			// 			});
+			// 		}
+			// 	});
+			// });
 		} else {
 			storeSQL.getPlaylist(user_id).then((playlist) => {
 				// console.log("PL outpout", playlist);
@@ -372,31 +405,38 @@ app.post("/setting", authCheck, (req, res) => {
 	let showHistory = req.body.showHistory;
 	let transectionId = req.body.transectionId;
 	let desireDisplayName = req.body.desireDisplayName;
+	let setToDefaultDisplayName = req.body.setToDefaultDisplayName;
 	if (showHistory) {
 		return storeSQL
 			.getTransectionHistory(user_id)
 			.then((transectionHistory) => {
 				res.send(transectionHistory);
 			});
-	}
-	if (transectionId) {
+	} else if (transectionId) {
 		return storeSQL.getOrderDetail(transectionId).then((transectionDetail) => {
 			console.log(transectionDetail);
 			res.send(transectionDetail);
 		});
+	} else if (setToDefaultDisplayName) {
+		return storeSQL.setToDefaultDisplayName(user_id).then(() => {
+			console.log("set to default");
+			res.send("set to default");
+		});
+	} else {
+		// if ((desireDisplayName = "")) {
+		// 	res.send("availabile");
+		// }
+		// console.log(desireDisplayName, "Desire Display Name post request");
+		return storeSQL
+			.checkDisplayName(desireDisplayName)
+			.then((checkingResult) => {
+				if (checkingResult[0]) {
+					res.send("used");
+				} else {
+					res.send("availabile");
+				}
+			});
 	}
-
-	if ((desireDisplayName = "")) {
-		res.send("availabile");
-	}
-	// console.log(desireDisplayName, "Desire Display Name post request");
-	return storeSQL.checkDisplayName(desireDisplayName).then((checkingResult) => {
-		if (checkingResult[0]) {
-			res.send("used");
-		} else {
-			res.send("availabile");
-		}
-	});
 });
 
 app.put("/setting", authCheck, (req, res) => {

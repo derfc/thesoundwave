@@ -1,3 +1,23 @@
+$("#button-default").click((e) => {
+	e.preventDefault();
+	$.ajax({
+		type: "POST",
+		url: `/setting`,
+		data: { setToDefaultDisplayName: "dafault" },
+		success: function () {
+			console.log("success");
+		},
+	})
+		.done(function (data) {
+			// console.log(data);
+			window.location.reload();
+		})
+		.fail(function () {
+			console.log("failed");
+		})
+		.always(() => console.log("running"));
+});
+
 $("#edit-display-name").on("keyup", function (e) {
 	e.preventDefault();
 	$(".confirm").empty();
