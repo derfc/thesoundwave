@@ -109,7 +109,7 @@ const appendStore = (result) => {
 
 const appendItem = (result) => {
 	// console.log(result);
-	$(".item").append('<div class="item-inside row"></div>');
+	$(".item").append('<div class="item-inside px-4 row"></div>');
 	for (let i = 0; i < result.item.length; i++) {
 		let itemName = result.item[i].item_name;
 		let itemPhoto = result.item[i].item_photo;
@@ -118,10 +118,14 @@ const appendItem = (result) => {
 		$(".item-inside").append(
 			`
 			<div class="col-lg-2 col-md-3 col-sm-4 my-3">
-			<img class="image img-fluid" style="max-height:200px; max-width:200px;" src=${itemPhoto} alt="${itemName} Photo"/></br>
-			<h6 class="name mt-2 text-white">${itemName}</h6>
-			<h6 class="name mt-2 text-white">$${itemPrice / 100}</h6>
-			<button class="btn add-to-cart py-0 text-white" data-item_id ="${itemId}" data-user_id="1"><i data-item_id ="${itemId}" class="fal fa-shopping-cart"></i>add to cart</button></br>
+			<div class="album-img">
+			<img class="image img-fluid" src=${itemPhoto} alt="${itemName} Photo"/>
+			</div>
+			<div class="item-info">
+			<h6 class="name mt-2">${itemName}</h6>
+			<h6 class="name mt-2">$${itemPrice / 100}</h6>
+			<button class="btn add-to-cart py-0" data-item_id ="${itemId}" data-user_id="1"><i data-item_id ="${itemId}" class="fal fa-shopping-cart"></i>add to cart</button>
+			</div>
 			</div>
 			`
 		);
@@ -174,10 +178,10 @@ const fireSearch = (keywords, sort, selectedCat) => {
 			// 	appendStore(data);
 			// }
 			if (item.length > 0) {
-				$(".item").append(`<h3>item</h3>`);
+				$(".item").append(`<h3 class="mx-4">Items</h3>`);
 				appendItem(data);
 			} else {
-				$(".store").append(`<p>no result found</p>`);
+				$(".store").append(`<h3 class="mx-4">No results found</h3>`);
 			}
 		})
 		.fail(() => console.log("hahafail"))
@@ -196,8 +200,8 @@ const searchStore = (storeId, storeName) => {
 		},
 	})
 		.done(function (data) {
-			$(".store").append(`<p>${storeName}</p>`);
-			$(".item").append(`<p>Item</p>`);
+			$(".store").append(`<h3 class="mx-4">${storeName}</h3>`);
+			// $(".item").append(`<h3 class="mx-4">Item</h3>`);
 			// console.log(data);
 			appendItem(data);
 		})
