@@ -36,9 +36,15 @@
     <section class="row">
         <div class="col-md-2 side-bar">
             <div class="profile text-center">
+                {{#if thumbnail}}
                 <div>
                     <img class="pro-pic" src="{{thumbnail}}" alt="thumbnail" height="80px" width="80px" />
                 </div>
+                {{else}}
+                <div>
+                    <img class="pro-pic" src="./image/normal_login_icon.jpg" alt="thumbnail" height="80px" width="80px" />
+                </div>
+                {{/if}}
                 {{#if displayName}}
                 <h3 class="mt-1 mb-3">{{displayName}}</h3>
                 {{else}}
@@ -240,8 +246,8 @@
 
     $(".delete-song").click((e) => {
         e.preventDefault();
-        console.log($(".playlist")[1])
-        let library_id = $(".playlist")[1].dataset.library_id
+        console.log($(".playlist")[0])
+        let library_id = $(".playlist")[0].dataset.library_id
         console.log(library_id, "lid")
         console.log(e.target.dataset.song_id, "dsid")
         $.ajax({

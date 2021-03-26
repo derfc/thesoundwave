@@ -39,11 +39,17 @@ module.exports = class StoreSQL {
 		return knex(this.users).select("username").where("user_id", user_id);
 	}
 
-	getUserId(googleFacebookId) {
+	getUserIdFromGFB(googleFacebookId) {
 		return knex(this.users)
 			.select(["id", "display_name"])
 			.where("google_id", googleFacebookId)
 			.orWhere("facebook_id", googleFacebookId);
+	}
+
+	getUserId(googleFacebookId) {
+		return knex(this.users)
+			.select(["id", "display_name"])
+			.where("id", googleFacebookId);
 	}
 
 	selectArtistId(artistName) {
@@ -64,6 +70,12 @@ module.exports = class StoreSQL {
 	}
 
 	editDisplayName(user_id, newDisplayName) {
+		if (newDisplayName == "") {
+			return knex(this.users)
+				.update("display_name", null)
+				.where("id", user_id)
+				.returning("display_name");
+		}
 		return knex(this.users)
 			.update("display_name", newDisplayName)
 			.where("id", user_id)
@@ -360,5 +372,27 @@ module.exports = class StoreSQL {
 		} catch (err) {
 			console.log(err, "from sql");
 		}
+	}
+	clearCart(user_id) {
+		return knex(this.cart).where("user_id", user_id).del();
+	}
+
+	getTransectionHistory(user_id) {
+		return knex(this.transection).where("user_id", user_id).orderBy("id");
+	}
+
+	getOrderDetail(transection_id) {
+		return knex
+			.select([
+				"i.id",
+				"i.item_name",
+				"i.item_price",
+				"i.store_id",
+				"o.quantity",
+				"o.transection_id",
+			])
+			.from(`order_detail as o`)
+			.join(`item as i`, "o.item_id", "i.id")
+			.where("o.transection_id", transection_id);
 	}
 };
