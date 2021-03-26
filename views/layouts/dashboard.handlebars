@@ -67,12 +67,24 @@
                                 class="fad fa-sign-out"></i> &nbsp;LOGOUT</button></a>
                 </div>
             </div>
-            {{#if playlist}}
-            <div class="sidebar-playlist">
+            <hr>
+                <div class="sidebar-playlist"></div>
+                {{#if allStore}}
+                
+                    <p>STORE</p>
+                    <hr>
+                    {{#each allStore}}
+                    <div>
+                        <button type="button" class="btn select-store" data-store_id="{{this.id}}"
+                            value="{{this.store_name}}">{{this.store_name}}</button>
+                        </br>
+                    </div>
+                    {{/each}}
+                </div>
+                {{else}}
                 <p>PLAYLIST</p>
                 <button class="btn open-button" id="create-list"><i class="fal fa-plus-square"></i>
                     &nbsp;Create playlist</button>
-
                 {{!-- pop-up form for inserting new playlist --}}
                 <div class="form-popup " id="myForm">
                     <form action="/library" method="post" class="form-container px-2 py-1">
@@ -84,32 +96,17 @@
                     </form>
                 </div>
 
-                <hr>
                 {{#each playlist}}
                 <div>
                     <a href="/library/{{this.id}}"><button type="button" class="btn select-playlist"
                             data-library_id="{{this.id}}">{{this.playlist_name}}</button></a>
                     <button data-library_id="{{this.id}}" class="btn delete-playlist"><i
-                            class="fad fa-trash"></i></button>
+                            class="fad fa-trash" data-library_id="{{this.id}}"></i></button>
                     </br>
                 </div>
                 {{/each}}
+                </div>         
                 {{/if}}
-
-
-                {{#if allStore}}
-                <div class="sidebar-playlist">
-                    <p>STORE</p>
-                    <hr>
-                    {{#each allStore}}
-                    <div>
-                        <button type="button" class="btn select-store" data-store_id="{{this.id}}"
-                            value="{{this.store_name}}">{{this.store_name}}</button>
-                        </br>
-                    </div>
-                    {{/each}}
-                    {{/if}}
-                </div>
             </div>
 
             <div class="col">
@@ -225,6 +222,7 @@
     }
 
     $(".delete-playlist").click((e) => {
+        console.log("hi, hi, hi", e.target.dataset.library_id)
         e.preventDefault();
         $.ajax({
             url: `/library/${e.target.dataset.library_id}`,

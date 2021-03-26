@@ -38,6 +38,14 @@ module.exports = class StoreSQL {
 	selectUserName(user_id) {
 		return knex(this.users).select("username").where("user_id", user_id);
 	}
+
+	getUserId(googleFacebookId) {
+		return knex(this.users)
+			.select(["id", "display_name"])
+			.where("google_id", googleFacebookId)
+			.orWhere("facebook_id", googleFacebookId);
+	}
+
 	selectArtistId(artistName) {
 		return knex(this.artist)
 			.select("id")
