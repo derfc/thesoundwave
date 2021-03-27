@@ -427,6 +427,32 @@ a {
   overflow: scroll;
 }
 
+@media (max-width: 991px) {
+  .mainHomepage {
+    background-image: linear-gradient(
+      to top,
+      rgba(41, 41, 41),
+      rgb(122, 48, 48)
+    );
+    height: 75vh;
+  }
+  .side-bar button,
+  .side-bar p,
+  .side-bar h3 {
+    margin-left: 0;
+    font-size: 14px;
+  }
+  .music-bar .volume {
+    display: none;
+  }
+}
+
+@media (max-width: 632px) {
+  .music-bar #responsive-song-name {
+    padding-top: 5rem;
+  }
+}
+
 .mainHomepage .searching button {
   color: rgb(184, 179, 179);
   font-size: 18px;
