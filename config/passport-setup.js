@@ -119,7 +119,7 @@ passport.use(
 		{
 			clientID: keys.facebook.appID,
 			clientSecret: keys.facebook.appSecret,
-			callbackURL: "/auth/facebook/redirect",
+			callbackURL: "https://thesoundwave.club/auth/facebook/redirect",
 			profileFields: ["id", "displayName", "photos", "email"],
 		},
 		async (accessToken, refreshToken, profile, done) => {
