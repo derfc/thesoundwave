@@ -104,6 +104,8 @@
         </div>
         <hr>
 
+
+
         {{#each playlist}}
         <div class="name-of-playlist">
             <button data-library_id="{{this.id}}" class="btn delete-playlist"><i class="fad fa-trash"
@@ -115,6 +117,7 @@
         {{/each}}
         </div>
         {{/if}}
+
         </div>
 
         <div class="col">
@@ -131,7 +134,7 @@
             </div> --}}
 
 
-            <div class="col current-song">
+            <div class="col current-song" id="responsive-song-name">
                 <div id="current_song"></div>
                 <div id="current_artist"></div>
             </div>
@@ -139,7 +142,7 @@
             <audio id="myTrack" ontimeupdate="updateTrackTime(this)" onended="audio_end()" src="" type="audio/mp3" />
             </audio>
 
-            <div class="middle col-lg-6 text-center">
+            <div class="middle col-lg-6 col-sm-12 text-center">
                 <div class="music-buttons pt-2">
                     <button class="btn text-white" onclick="random_song()" id="random"><i class="fa fa-random"
                             aria-hidden="true"></i></button>
