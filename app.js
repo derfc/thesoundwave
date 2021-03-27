@@ -340,7 +340,6 @@ app.post("/library", authCheck, (req, res) => {
 app.post("/playlist/:library_id/:song_id", authCheck, (req, res) => {
 	let libraryId = req.params.library_id;
 	let addSongId = req.params.song_id;
-	// console.log("lid", libraryId);
 	// console.log("asid", addSongId);
 	return storeSQL.searchSongInPlaylist(libraryId, addSongId).then((result) => {
 		if (result[0]) {
