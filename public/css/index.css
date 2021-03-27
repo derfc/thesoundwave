@@ -6,6 +6,11 @@ body {
   font-weight: 600;
 }
 
+.wholeapp {
+  height: 100vh;
+  background-image: linear-gradient(to top, rgb(32, 32, 32), rgb(122, 48, 48));
+}
+
 a {
   color: #bbb;
 }
@@ -192,9 +197,9 @@ a {
 /* side-bar */
 .side-bar {
   /* background-color: rgb(43, 43, 48); */
-  background-image: linear-gradient(to top, rgba(41, 41, 41), rgb(83, 35, 35));
+  background-image: linear-gradient(to top, rgba(37, 37, 37), rgb(83, 35, 35));
   border-right: 1px solid rgb(19, 18, 18);
-  min-height: 88.4vh;
+  min-height: 85.1vh;
 }
 
 .side-bar .profile {
@@ -286,7 +291,7 @@ a {
   height: 100%;
   border-top: 1.5px solid rgb(41, 41, 41);
   border-color: black;
-  background-color: rgb(41, 41, 41);
+  background-color: rgb(35, 35, 35);
   margin-right: 0;
 }
 
@@ -384,7 +389,7 @@ a {
 }
 
 .navsearch {
-  background-color: rgb(122, 48, 48);
+  background-color: rgb(119, 48, 48);
 }
 
 .navsearch .instant-search {
@@ -416,9 +421,9 @@ a {
 
 .mainHomepage {
   /* background-color: rgb(41, 41, 41); */
-  background-image: linear-gradient(to top, rgba(41, 41, 41), rgb(122, 48, 48));
-  min-height: 82.6vh;
-  max-height: 82.6vh;
+  /* background-image: linear-gradient(to top, rgba(41, 41, 41), rgb(122, 48, 48)); */
+  min-height: 77.7vh;
+  max-height: 77.7vh;
   overflow: scroll;
 }
 
@@ -606,14 +611,14 @@ section.row {
 
 /* Playlist */
 .playListpage {
-  background-image: linear-gradient(to top, rgba(41, 41, 41), rgb(122, 48, 48));
+  /* background-image: linear-gradient(to top, rgba(41, 41, 41), rgb(122, 48, 48)); */
   color: rgb(184, 179, 179);
 }
 
 .playListpage .song-list {
   color: rgb(184, 179, 179);
-  max-height: 75.4vh;
-  min-height: 75.4vh;
+  max-height: 67.3vh;
+  min-height: 67.3vh;
   overflow: scroll;
 }
 
@@ -635,7 +640,7 @@ section.row {
 
 /* set-height */
 .set-height {
-  min-height: 89vh;
+  min-height: 86.5vh;
   background-image: linear-gradient(to top, rgba(41, 41, 41), rgb(122, 48, 48));
   color: rgb(184, 179, 179);
 }
