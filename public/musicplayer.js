@@ -57,19 +57,18 @@ let playlist = JSON.parse(JSON.stringify(songList));
 // {/* <p>${audio.duration}</p> */ }
 
 // play-this-song
-$('.play-this-song').click((e) => {
-	index = songList.findIndex(p => p.song_name == e.target.innerHTML)
+$(".play-this-song").click((e) => {
+	index = songList.findIndex((p) => p.song_name == e.target.innerHTML);
 	load_playlist();
 	playsong();
-})
+});
 
-$('.play-another-this').click((e) => {
-	console.log(e.target.dataset.song_name)
-	index = songList.findIndex(p => p.song_name == e.target.dataset.song_name)
+$(".play-another-this").click((e) => {
+	console.log(e.target.dataset.song_name);
+	index = songList.findIndex((p) => p.song_name == e.target.dataset.song_name);
 	load_playlist();
 	playsong();
-
-})
+});
 
 function repeat_song() {
 	loop++;
@@ -96,16 +95,18 @@ function random_song() {
 }
 
 function load_playlist() {
-	if (random % 2) {
-		track[0].src = playlist[index].song_url;
-		$(
-			"#current_song"
-		)[0].innerHTML = `<h5 style="margin: 5px">NOW PLAYING:</h5><p>${playlist[index].song_name}</p> <p>${playlist[index].artist_name}</p>`;
-	} else {
-		track[0].src = songList[index].song_url;
-		$(
-			"#current_song"
-		)[0].innerHTML = `<h5 style="margin: 5px">NOW PLAYING:</h5> <p>${songList[index].song_name}</p> <p>${songList[index].artist_name}</p>`;
+	if (playlist[index]) {
+		if (random % 2) {
+			track[0].src = playlist[index].song_url;
+			$(
+				"#current_song"
+			)[0].innerHTML = `<h5 style="margin: 5px">NOW PLAYING:</h5><p>${playlist[index].song_name}</p> <p>${playlist[index].artist_name}</p>`;
+		} else {
+			track[0].src = songList[index].song_url;
+			$(
+				"#current_song"
+			)[0].innerHTML = `<h5 style="margin: 5px">NOW PLAYING:</h5> <p>${songList[index].song_name}</p> <p>${songList[index].artist_name}</p>`;
+		}
 	}
 }
 load_playlist();

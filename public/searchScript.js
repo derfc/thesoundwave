@@ -1,3 +1,17 @@
+var today = new Date();
+var curHr = today.getHours();
+
+if (curHr < 12) {
+	$(".greetings")[0].innerHTML =
+		'<h3 class="mx-4 my-3 fw-bolder">Good Morning</h3>';
+} else if (curHr < 18) {
+	$(".greetings")[0].innerHTML =
+		'<h3 class="mx-4 my-3 fw-bolder">Good Afternoon</h3>';
+} else {
+	$(".greetings")[0].innerHTML =
+		'<h3 class="mx-4 my-3 fw-bolder">Good Evening</h3>';
+}
+
 $("#filter_songs").on("keyup search", function (e) {
 	// console.log("hello", e.target.value);
 	let keywords = e.target.value;
@@ -173,12 +187,11 @@ const appendSong = (result) => {
 		}
 	}
 	// playsong from appended list
-	$('.play-thisthis').click((e) => {
-		index = songList.findIndex(p => p.song_url == e.target.dataset.song_url)
+	$(".play-thisthis").click((e) => {
+		index = songList.findIndex((p) => p.song_url == e.target.dataset.song_url);
 		load_playlist();
 		playsong();
-	})
-
+	});
 
 	$(".select-playlist").click((e) => {
 		// e.preventDefault();
