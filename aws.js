@@ -80,7 +80,7 @@ module.exports.getAwsObject = () => {
 				albumArr.push(objArr[2]);
 			}
 		}
-		console.log("5times");
+		// console.log("5times");
 		// console.log(albumArr, "i dont want numbers");
 		return;
 		return albumKnex;
@@ -184,7 +184,7 @@ module.exports.getAwsObject = () => {
 			return insertSong().then((albumSongKnex) => {
 				return insertStore().then((storeKnex) => {
 					return insertItem().then((itemKnex) => {
-						// console.log(itemKnex, "trytry");
+						console.log("should see 5 times");
 						return [artistKnex, albumSongKnex, storeKnex, itemKnex];
 					});
 				});

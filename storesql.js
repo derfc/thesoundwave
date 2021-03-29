@@ -70,12 +70,6 @@ module.exports = class StoreSQL {
 	}
 
 	editDisplayName(user_id, newDisplayName) {
-		// if (newDisplayName == "") {
-		// 	return knex(this.users)
-		// 		.update("display_name", null)
-		// 		.where("id", user_id)
-		// 		.returning("display_name");
-		// }
 		return knex(this.users)
 			.update("display_name", newDisplayName)
 			.where("id", user_id)
@@ -102,7 +96,6 @@ module.exports = class StoreSQL {
 	}
 
 	getCartItem(user_id) {
-		// return knex(this.cart).where("user_id", user_id).orderBy("item_id");
 		return knex(this.item)
 			.orderBy("id")
 			.whereIn("id", function () {
@@ -138,14 +131,9 @@ module.exports = class StoreSQL {
 			.from(`song as s`)
 			.join(`artist as a`, "s.artist_id", "a.id")
 			.join(`album as alb`, "s.album_id", "alb.id");
-		// .orderBy("id");
-		// return knex
-		// 	.from(this.song)
-		// 	.join(this.artist, "song.artist_id", "artist.id");
 	}
 
 	getSongById(song_id) {
-		// return knex(this.song).where("id", song_id).orderBy("id");
 		return knex
 			.select([
 				"s.id",
@@ -246,7 +234,6 @@ module.exports = class StoreSQL {
 
 	getAlbum(album_id) {
 		if (!album_id) {
-			// return knex(this.album);
 			return knex
 				.select([
 					"s.id",

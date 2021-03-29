@@ -3,17 +3,17 @@ $("#sort").on("change", function (e) {
 	clearAll();
 	let sort = e.target.value;
 	let keywords = $("#filter_store")[0].value;
-	console.log(keywords, sort);
+	// console.log(keywords, sort);
 	fireSearch(keywords, sort, selectedCat);
 });
 
 $("#filter_store").on("keyup search", function (e) {
-	console.log($("#sort")[0].value);
-	console.log("hello", e.target.value);
+	// console.log($("#sort")[0].value);
+	// console.log("hello", e.target.value);
 	clearAll();
 	let keywords = e.target.value;
 	let sort = $("#sort")[0].value;
-	console.log("what is this", selectedCat);
+	// console.log("what is this", selectedCat);
 	fireSearch(keywords, sort, selectedCat);
 });
 $(".clear-search").click((e) => {
@@ -29,7 +29,7 @@ $(".search-category").click((e) => {
 
 	if (!selectedCat.includes(category)) {
 		selectedCat.push(category);
-		console.log(selectedCat);
+		// console.log(selectedCat);
 		$(`#category-${category}`).attr(
 			"class",
 			"btn btn-danger button-store search-category"
@@ -37,7 +37,7 @@ $(".search-category").click((e) => {
 	} else {
 		let targetIndex = selectedCat.indexOf(category);
 		selectedCat.splice(targetIndex, 1);
-		console.log(selectedCat);
+		// console.log(selectedCat);
 		$(`#category-${category}`).attr(
 			"class",
 			"btn button-store search-category"
@@ -55,7 +55,7 @@ $(".search-category").click((e) => {
 });
 
 $(".select-store").click((e) => {
-	console.log(e.target.dataset.store_id);
+	// console.log(e.target.dataset.store_id);
 	let storeId = e.target.dataset.store_id;
 	let storeName = e.target.value;
 	clearAll();
@@ -78,33 +78,6 @@ const appendStore = (result) => {
 			`<button class="go-to-store" data-store_id ="${storeId}">${storeName}</button></br>`
 		);
 	}
-	// $(".go-to-store").click((e) => {
-	// 	e.preventDefault();
-	// 	clearAll();
-	// 	let store_id = e.target.dataset.store_id;
-
-	// 	console.log(store_id, "sid");
-
-	// 	$.ajax({
-	// 		url: `/store`,
-	// 		type: "POST",
-	// 		data: {
-	// 			storeId: e.target.dataset.store_id,
-	// 		},
-	// 		success: function () {
-	// 			console.log("success search store");
-	// 		},
-	// 	})
-	// 		.done(function (data) {
-	// 			let storeName = data.storeName[0].store_name;
-	// 			$(".store").append(`<p>${storeName}</p>`);
-	// 			$(".item").append(`<p>Item</p>`);
-	// 			// console.log(data);
-	// 			appendItem(data);
-	// 		})
-	// 		.fail(() => console.log("hahafail outside"))
-	// 		.always(() => console.log("running outside"));
-	// });
 };
 
 const appendItem = (result) => {
@@ -134,8 +107,8 @@ const appendItem = (result) => {
 		e.preventDefault();
 		let item_id = e.target.dataset.item_id;
 		let user_id = e.target.dataset.user_id;
-		console.log(item_id, "iid");
-		console.log(user_id, "uid");
+		// console.log(item_id, "iid");
+		// console.log(user_id, "uid");
 
 		$.ajax({
 			type: "POST",
@@ -146,7 +119,7 @@ const appendItem = (result) => {
 			},
 		})
 			.done(function (data) {
-				console.log(data);
+				// console.log(data);
 			})
 			.fail(function () {
 				console.log("failed");
@@ -156,7 +129,7 @@ const appendItem = (result) => {
 };
 
 const fireSearch = (keywords, sort, selectedCat) => {
-	console.log("here", selectedCat);
+	// console.log("here", selectedCat);
 	$.ajax({
 		url: `/store`,
 		type: "post",
@@ -166,17 +139,9 @@ const fireSearch = (keywords, sort, selectedCat) => {
 		},
 	})
 		.done(function (data) {
-			console.log(data);
-			console.log("search complete");
-			// let store = data.store;
+			// console.log(data);
+			// console.log("search complete");
 			let item = data.item;
-			// if (store.length == 0 && item.length == 0) {
-			// 	$(".store").append(`<p>no result found</p>`);
-			// }
-			// if (store.length > 0 ) {
-			// 	$(".store").append(`<h3>store</h3>`);
-			// 	appendStore(data);
-			// }
 			if (item.length > 0) {
 				$(".item").append(`<h3 class="mx-4">Items</h3>`);
 				appendItem(data);
@@ -201,7 +166,6 @@ const searchStore = (storeId, storeName) => {
 	})
 		.done(function (data) {
 			$(".store").append(`<h3 class="mx-4">${storeName}</h3>`);
-			// $(".item").append(`<h3 class="mx-4">Item</h3>`);
 			// console.log(data);
 			appendItem(data);
 		})
@@ -213,8 +177,8 @@ $(".add-to-cart").click((e) => {
 	e.preventDefault();
 	let item_id = e.target.dataset.item_id;
 	let user_id = e.target.dataset.user_id;
-	console.log(item_id, "iid");
-	console.log(user_id, "uid");
+	// console.log(item_id, "iid");
+	// console.log(user_id, "uid");
 
 	$.ajax({
 		type: "POST",

@@ -19,7 +19,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const keys = require("./keys");
 
 passport.serializeUser((user, done) => {
-	console.log("serialize");
+	// console.log("serialize");
 	// console.log(user)
 	done(null, user);
 });
@@ -37,7 +37,7 @@ passport.use(
 		try {
 			const salt = await bcrypt.genSalt();
 			const hashedPassword = await bcrypt.hash(password, salt);
-			console.log(hashedPassword);
+			// console.log(hashedPassword);
 
 			let users = await knex("users").where({ username: username });
 			if (users.length > 0) {
@@ -50,7 +50,7 @@ passport.use(
 
 			let userId = await knex("users").insert(newUser).returning("id");
 			newUser.id = userId[0];
-			console.log(userId);
+			// console.log(userId);
 			done(null, newUser);
 		} catch (err) {
 			done(err);
@@ -68,14 +68,14 @@ passport.use(
 				return done(null, false, { message: "Incorrect credentials." });
 			}
 			let user = users[0];
-			console.log(user);
-			console.log(password);
+			// console.log(user);
+			// console.log(password);
 
 			if (await bcrypt.compare(password, user.password)) {
-				console.log("can login");
+				// console.log("can login");
 				return done(null, user);
 			} else {
-				console.log("cannot");
+				// console.log("cannot");
 				return done(null, false, { message: "Incorrect credentials." });
 			}
 		} catch (err) {
@@ -94,8 +94,8 @@ passport.use(
 		},
 		async (accessToken, refreshToken, profile, done) => {
 			// passport callback
-			console.log("passport callback fired");
-			console.log(profile);
+			// console.log("passport callback fired");
+			// console.log(profile);
 
 			// insert database
 			database.findUserById(profile.id).then(function (id) {
@@ -123,8 +123,8 @@ passport.use(
 			profileFields: ["id", "displayName", "photos", "email"],
 		},
 		async (accessToken, refreshToken, profile, done) => {
-			console.log("passport callback fired");
-			console.log(profile);
+			// console.log("passport callback fired");
+			// console.log(profile);
 
 			database.findUserByFacebookID(profile.id).then(function (id) {
 				if (id) {
@@ -146,40 +146,3 @@ passport.use(
 );
 
 module.exports = passport;
-
-// await knex('users').where('google_id', newuser.googleID)
-//     .then((currentUser) => {
-//         if (currentUser[0] !== undefined) {
-//             //already have the user
-//             console.log('user is', currentUser)
-//             return done(null, currentUser)
-//         } else {
-//             // create user in database
-//             try {
-//                 knex('users').insert({ username: newuser.username, google_id: newuser.googleID })
-//                     .then(() => {
-//                         knex('users').where('google_id', newuser.googleID)
-//                             .then((newnew) => {
-//                                 console.log('user inserted', newnew);
-//                                 return done(null, newnew)
-//                             })
-//                     })
-//             }
-//             catch {
-//                 console.log('cannot run knex')
-//             }
-//         }
-//     })
-// const getUser = async () => {
-//     try {
-//         await knex('users').insert({ username: 'oscar', google_id: '123' })
-//             .then(() => {
-//                 console.log('user inserted')
-//             })
-//     }
-//     catch {
-//         console.log('cannot run knex')
-//     }
-// }
-
-// getUser()

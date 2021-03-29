@@ -103,23 +103,23 @@ function getNamePic(req) {
 const authCheck = (req, res, next) => {
 	if (req.isAuthenticated()) {
 		getNamePic(req);
-		console.log("He is allowed!");
-		console.log(req.user.id, "looking for id");
+		// console.log("He is allowed!");
+		// console.log(req.user.id, "looking for id");
 		let googleFacebookId = req.user.id;
 		return storeSQL.getUserIdFromGFB(googleFacebookId).then((userInfo) => {
 			if (userInfo[0]) {
-				console.log(userInfo[0], "give me id");
-				console.log(userInfo[0].id, "give me id");
+				// console.log(userInfo[0], "give me id");
+				// console.log(userInfo[0].id, "give me id");
 				user_id = userInfo[0].id;
-				console.log(userInfo[0].display_name, "give me displayname");
+				// console.log(userInfo[0].display_name, "give me displayname");
 				displayName = userInfo[0].display_name;
 				return next();
 			} else {
 				return storeSQL.getUserId(googleFacebookId).then((userInfo) => {
-					console.log(userInfo[0], "give me id");
-					console.log(userInfo[0].id, "give me id");
+					// console.log(userInfo[0], "give me id");
+					// console.log(userInfo[0].id, "give me id");
 					user_id = userInfo[0].id;
-					console.log(userInfo[0].display_name, "give me displayname");
+					// console.log(userInfo[0].display_name, "give me displayname");
 					displayName = userInfo[0].display_name;
 					return next();
 				});
@@ -140,9 +140,6 @@ app.get("/", (req, res) => {
 
 //home route
 app.get("/home", authCheck, (req, res) => {
-	let id = req.user.id;
-	// getNamePic(req);
-
 	return storeSQL.getPlaylist(user_id).then((playlist) => {
 		// console.log("PL outpout", playlist);
 		storeSQL.getAllSong().then((songs) => {
@@ -202,7 +199,7 @@ app.post("/home", authCheck, (req, res) => {
 app.post("/home/artist/:artist_id", authCheck, (req, res) => {
 	let artist_id = req.params.artist_id;
 	return storeSQL.getArtist(artist_id).then((artistInfo) => {
-		console.log(artistInfo);
+		// console.log(artistInfo);
 		storeSQL.getAlbumByArtist(artistInfo[0].id).then((album) => {
 			let result = { artist: artistInfo, album: album };
 			res.send(result);
@@ -212,7 +209,7 @@ app.post("/home/artist/:artist_id", authCheck, (req, res) => {
 
 app.post("/home/album/:album_id", authCheck, (req, res) => {
 	let album_id = req.params.album_id;
-	console.log(album_id, "geeez");
+	// console.log(album_id, "geeez");
 	return storeSQL.getAlbum(album_id).then((albumInfo) => {
 		// console.log(albumInfo);
 		storeSQL.getSongByAlbum(albumInfo[0].id).then((song) => {
@@ -234,9 +231,9 @@ app.post("/home/album/:album_id", authCheck, (req, res) => {
 
 //get playlist
 app.get("/library/:library_id", authCheck, (req, res) => {
-	console.log("hi", req.params.library_id);
+	// console.log("hi", req.params.library_id);
 	let library_id = req.params.library_id;
-	let count = 0;
+	// let count = 0;
 	let playlistSongArr = [];
 	return storeSQL.getSongByPlaylist(library_id).then(async (playlistSongs) => {
 		// console.log("PL id outpout", playlistSongs);
@@ -274,40 +271,6 @@ app.get("/library/:library_id", authCheck, (req, res) => {
 					});
 				});
 			}
-			// playlistSongs.forEach((playlistSong) => {
-			// 	let song_id = playlistSong.song_id;
-			// 	storeSQL.getSongById(song_id).then((song) => {
-			// 		// console.log("what is this type", song[0]);
-			// 		playlistSongArr.push(song[0]);
-			// 		count++;
-			// 		if (count == playlistSongs.length) {
-			// 			// console.log("finally", playlistSongArr);
-			// 			storeSQL.getPlaylist(user_id).then((playlist) => {
-			// 				// console.log("PL outpout", playlist);
-			// 				return storeSQL
-			// 					.getPlaylistName(library_id)
-			// 					.then((playlistName) => {
-			// 						// console.log(playlistSongArr);
-			// 						console.log(playlistName, "playlistName");
-			// 						console.log(user, "user");
-			// 						res.render("playlist", {
-			// 							playlistName: playlistName[0].playlist_name,
-			// 							layout: "dashboard",
-			// 							libraryId: library_id,
-			// 							playlist: playlist,
-			// 							playlistSongArr: playlistSongArr,
-			// 							stripePublicKey: stripePublicKey,
-			// 							css: "../css/index.css",
-			// 							user: user,
-			// 							thumbnail: pic,
-			// 							displayName: displayName,
-			// 							musicPlayerScript: "../musicplayer.js",
-			// 						});
-			// 					});
-			// 			});
-			// 		}
-			// 	});
-			// });
 		} else {
 			return storeSQL.getPlaylist(user_id).then((playlist) => {
 				return storeSQL.getPlaylistName(library_id).then((playlistName) => {
@@ -370,8 +333,8 @@ app.delete("/library/:library_id", authCheck, (req, res) => {
 app.delete("/playlist/:library_id/:song_id", authCheck, (req, res) => {
 	let libraryId = req.params.library_id;
 	let deleteSongId = req.params.song_id;
-	console.log(libraryId, "lid");
-	console.log(deleteSongId, "sdid");
+	// console.log(libraryId, "lid");
+	// console.log(deleteSongId, "sdid");
 	// console.log("hello PLID", libraryId);
 	// console.log("hello SID", deleteSongId);
 	return storeSQL
@@ -381,9 +344,9 @@ app.delete("/playlist/:library_id/:song_id", authCheck, (req, res) => {
 
 //setting route
 app.get("/setting", authCheck, (req, res) => {
-	console.log("get setting");
-	console.log(user_id, "setting user id");
-	console.log(displayName, "display name");
+	// console.log("get setting");
+	// console.log(user_id, "setting user id");
+	// console.log(displayName, "display name");
 	return storeSQL.getPlaylist(user_id).then((playlist) => {
 		res.render("setting", {
 			layout: "dashboard",
@@ -394,18 +357,6 @@ app.get("/setting", authCheck, (req, res) => {
 			settingScript: "./settingScript.js",
 		});
 	});
-
-	// return storeSQL.getDisplayName(user_id).then((displayName) => {
-	// 	console.log(displayName);
-	// 	console.log(displayName[0].display_name, "display name");
-	// 	res.render("setting", {
-	// 		layout: "dashboard",
-	// 		user: user,
-	// 		thumbnail: pic,
-	// 		displayName: displayName[0].display_name,
-	// 		settingScript: "./settingScript.js",
-	// 	});
-	// });
 });
 
 //setting route
@@ -422,18 +373,15 @@ app.post("/setting", authCheck, (req, res) => {
 			});
 	} else if (transectionId) {
 		return storeSQL.getOrderDetail(transectionId).then((transectionDetail) => {
-			console.log(transectionDetail);
+			// console.log(transectionDetail);
 			res.send(transectionDetail);
 		});
 	} else if (setToDefaultDisplayName) {
 		return storeSQL.setToDefaultDisplayName(user_id).then(() => {
-			console.log("set to default");
+			// console.log("set to default");
 			res.send("set to default");
 		});
 	} else {
-		// if ((desireDisplayName = "")) {
-		// 	res.send("availabile");
-		// }
 		// console.log(desireDisplayName, "Desire Display Name post request");
 		return storeSQL
 			.checkDisplayName(desireDisplayName)
@@ -448,21 +396,14 @@ app.post("/setting", authCheck, (req, res) => {
 });
 
 app.put("/setting", authCheck, (req, res) => {
-	console.log(typeof req.body.newDisplayName, "what is this");
-	console.log("i am user", user_id);
+	// console.log(typeof req.body.newDisplayName, "what is this");
+	// console.log("i am user", user_id);
 	let newDisplayName = req.body.newDisplayName;
-	console.log(newDisplayName, "changing to desire Display Name");
+	// console.log(newDisplayName, "changing to desire Display Name");
 	return storeSQL
 		.editDisplayName(user_id, newDisplayName)
 		.then((display_name) => {
-			console.log(display_name, "returning stuff");
-			// res.render("setting", {
-			// 	layout: "dashboard",
-			// 	user: user,
-			// 	thumbnail: pic,
-			// 	displayName: display_name,
-			// 	settingScript: "./settingScript.js",
-			// });
+			// console.log(display_name, "returning stuff");
 			res.send("done editing");
 		});
 });
@@ -470,7 +411,6 @@ app.put("/setting", authCheck, (req, res) => {
 //store route
 app.get("/store", authCheck, (req, res) => {
 	let catArr = [];
-	let count = 0;
 	return storeSQL.getStoreItem().then((item) => {
 		return storeSQL.searchForStore().then((allStore) => {
 			return storeSQL.searchForCategory().then(async (result) => {
@@ -480,7 +420,7 @@ app.get("/store", authCheck, (req, res) => {
 						catArr.push(cat.item_category);
 					}
 				});
-				await console.log(catArr, "wow");
+				// await console.log(catArr, "wow");
 				await res.render("store", {
 					item: item,
 					layout: "dashboard",
@@ -502,19 +442,16 @@ app.post("/store", authCheck, (req, res) => {
 	let sort = req.body.sort;
 	let store_id = req.body.storeId;
 	let selectedCat = req.body.selectedCat;
-	console.log(req.body);
+	// console.log(req.body);
 	// console.log(selectedCat, "what is this");
 	if (store_id) {
 		return storeSQL.getStoreItem(store_id).then((item) => {
 			return storeSQL.getStoreName(store_id).then((storeName) => {
-				console.log(storeName, "bkend");
+				// console.log(storeName, "bkend");
 				res.send({ item: item, storeName: storeName });
 			});
 		});
 	}
-	// return storeSQL.searchForStore().then((store) => {
-	// 	res.send({ store: store });
-	// });
 
 	return storeSQL.searchForItem(keywords, sort, selectedCat).then((item) => {
 		// console.log(item);
@@ -542,13 +479,8 @@ app.get("/cart", authCheck, (req, res) => {
 
 app.post("/cart", authCheck, (req, res) => {
 	let item_id = req.body.item_id;
-	// let user_id = req.body.user_id;
 	return storeSQL.addToCart(user_id, item_id).then(() => {
 		res.send("added to cart");
-		// res.render("cart", {
-		// 	layout: "dashboard",
-		// 	stripePublicKey: stripePublicKey,
-		// });
 	});
 });
 
@@ -593,7 +525,6 @@ app.post("/purchase", authCheck, (req, res) => {
 });
 
 app.delete("/cart/:user_id/:item_id", authCheck, (req, res) => {
-	// let user_id = req.params.user_id;
 	let delete_item = req.params.item_id;
 	return storeSQL.delCartItem(user_id, delete_item).then(() => {
 		return storeSQL.getCartItem(user_id).then((item) => {
