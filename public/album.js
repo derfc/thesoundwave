@@ -1,5 +1,5 @@
 $(document).ready(() => {
-	console.log($(".album-info")[0]);
+	// console.log($(".album-info")[0]);
 	let albumSongIdArr = albumSongId.split("[split]");
 	let albumNameArr = albumName.split("[split]");
 	let albumNaneIdArr = albumId.split("[split]");
@@ -14,22 +14,13 @@ $(document).ready(() => {
 			);
 		}
 	}
-	$(".select-playlist").click((e) => {
-		// e.preventDefault();
-		console.log("hello", e.target);
-		// if ($(".list")[0].style.display == "block") {
-		// 	$(".list")[0].style.display = "none";
-		// } else {
-		// 	$(".list")[0].style.display = "block";
-		// }
-	});
 
 	$(".add-to-playlist").click((e) => {
 		e.preventDefault();
 		let song_id = e.target.dataset.song_id;
 		let library_id = e.target.dataset.library_id;
-		console.log(" songid", song_id);
-		console.log(" plid ", library_id);
+		// console.log(" songid", song_id);
+		// console.log(" plid ", library_id);
 		$.ajax({
 			url: `/playlist/${library_id}/${song_id}`,
 			type: "post",

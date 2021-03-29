@@ -56,7 +56,7 @@ $("#edit-display-name").on("keyup", function (e) {
 				$("#button-confirm").click((e) => {
 					e.preventDefault();
 					let newDisplayName = $("#edit-display-name")[0].value;
-					console.log("confirm", newDisplayName);
+					// console.log("confirm", newDisplayName);
 					$.ajax({
 						type: "PUT",
 						url: `/setting`,
@@ -85,7 +85,7 @@ $("#edit-display-name").on("keyup", function (e) {
 // const updateDisplayName = (status) => {};
 $("#button-edit").click((e) => {
 	e.preventDefault();
-	console.log(e.target);
+	// console.log(e.target);
 	if ($("#display-name")[0].style.display == "block") {
 		$("#display-name")[0].style.display = "none";
 		e.target.innerText = "Cancel changes";
@@ -104,7 +104,7 @@ $("#button-edit").click((e) => {
 });
 
 $("#button-show-history").click((e) => {
-	console.log("hello");
+	// console.log("hello");
 	if (e.target.innerText == "Close") {
 		e.target.innerText = "Show purchase history";
 		$(".purchase-history").empty();
@@ -119,7 +119,7 @@ $("#button-show-history").click((e) => {
 			},
 		})
 			.done(function (data) {
-				console.log(data);
+				// console.log(data);
 				if (data.length == 0) {
 					$(".purchase-history").empty().append(`<p>No history found</p>`);
 				}
@@ -132,7 +132,7 @@ $("#button-show-history").click((e) => {
 
 				$(".button-show-order").click((e) => {
 					let transectionId = e.target.dataset.transection_id;
-					console.log(transectionId);
+					// console.log(transectionId);
 					if (e.target.innerText == "Close") {
 						e.target.innerText = "Show order history";
 						$(`#order-history${transectionId}`).empty();
@@ -147,7 +147,7 @@ $("#button-show-history").click((e) => {
 							},
 						})
 							.done(function (data) {
-								console.log(data);
+								// console.log(data);
 								$(
 									`#order-history${transectionId}`
 								).append(`<div class="row pt-2">

@@ -36,26 +36,6 @@ for (let i = 0; i < songNameArr.length - 1; i++) {
 }
 let playlist = JSON.parse(JSON.stringify(songList));
 
-// let source = track[0].src
-// for (let i = 0; i < songList.length; i++) {
-//     source = songList[i].song_url
-//     song_length(source)
-// }
-
-// function song_length(src) {
-//     let audio = new Audio();
-//     $(audio).on("loadedmetadata", function () {
-//         console.log(audio.duration);
-//         console.log($('#song_length'))
-//         $('#song_length')
-//     });
-//     audio.src = src;
-// }
-
-// song_length()
-
-// {/* <p>${audio.duration}</p> */ }
-
 // play-this-song
 $(".play-this-song").click((e) => {
 	index = songList.findIndex((p) => p.song_name == e.target.innerHTML);
@@ -64,7 +44,7 @@ $(".play-this-song").click((e) => {
 });
 
 $(".play-another-this").click((e) => {
-	console.log(e.target.dataset.song_name);
+	// console.log(e.target.dataset.song_name);
 	index = songList.findIndex((p) => p.song_name == e.target.dataset.song_name);
 	load_playlist();
 	playsong();
