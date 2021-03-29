@@ -269,16 +269,6 @@
             .always(() => console.log("running"));
     });
 
-    var today = new Date()
-    var curHr = today.getHours()
-
-    if (curHr < 12) {
-        $('.greetings')[0].innerHTML = '<h3 class="mx-4 my-3 fw-bolder">Good Morning</h3>'
-    } else if (curHr < 18) {
-        $('.greetings')[0].innerHTML = '<h3 class="mx-4 my-3 fw-bolder">Good Afternoon</h3>'
-    } else {
-        $('.greetings')[0].innerHTML = '<h3 class="mx-4 my-3 fw-bolder">Good Evening</h3>'
-    }
 
 </script>
 

@@ -133,7 +133,7 @@ const authCheck = (req, res, next) => {
 //landing page
 app.get("/", (req, res) => {
 	if (req.isAuthenticated()) {
-		res.redirect("/home")
+		res.redirect("/home");
 	}
 	res.render("index");
 });
@@ -309,17 +309,19 @@ app.get("/library/:library_id", authCheck, (req, res) => {
 			// 	});
 			// });
 		} else {
-			storeSQL.getPlaylist(user_id).then((playlist) => {
-				// console.log("PL outpout", playlist);
-				res.render("playlist", {
-					layout: "dashboard",
-					playlist: playlist,
-					stripePublicKey: stripePublicKey,
-					user: user,
-					thumbnail: pic,
-					displayName: displayName,
-					css: "../css/index.css",
-					musicPlayerScript: "../musicplayer.js",
+			return storeSQL.getPlaylist(user_id).then((playlist) => {
+				return storeSQL.getPlaylistName(library_id).then((playlistName) => {
+					res.render("playlist", {
+						layout: "dashboard",
+						playlistName: playlistName[0].playlist_name,
+						playlist: playlist,
+						stripePublicKey: stripePublicKey,
+						user: user,
+						thumbnail: pic,
+						displayName: displayName,
+						css: "../css/index.css",
+						musicPlayerScript: "../musicplayer.js",
+					});
 				});
 			});
 		}
@@ -391,7 +393,7 @@ app.get("/setting", authCheck, (req, res) => {
 			displayName: displayName,
 			settingScript: "./settingScript.js",
 		});
-	})
+	});
 
 	// return storeSQL.getDisplayName(user_id).then((displayName) => {
 	// 	console.log(displayName);
