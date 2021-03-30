@@ -80,13 +80,15 @@
 
             <p>STORE</p>
             <hr>
-            {{#each allStore}}
-            <div>
-                <button type="button" class="btn select-store" data-store_id="{{this.id}}"
-                    value="{{this.store_name}}">{{this.store_name}}</button>
-                </br>
+            <div class="overflow-sidebar-store">
+                {{#each allStore}}
+                <div>
+                    <button type="button" class="btn select-store" data-store_id="{{this.id}}"
+                        value="{{this.store_name}}">{{this.store_name}}</button>
+                    </br>
+                </div>
+                {{/each}}
             </div>
-            {{/each}}
         </div>
         {{else}}
         <p>PLAYLIST</p>
@@ -105,22 +107,23 @@
         <hr>
 
 
-
-        {{#each playlist}}
-        <div class="name-of-playlist">
-            <button data-library_id="{{this.id}}" class="btn delete-playlist"><i class="fad fa-trash"
-                    data-library_id="{{this.id}}"></i></button>
-            <a href="/library/{{this.id}}"><button type="button" class="btn select-playlist"
-                    data-library_id="{{this.id}}">{{this.playlist_name}}</button></a>
-            </br>
+        <div class="overflow-sidebar-playlist">
+            {{#each playlist}}
+            <div class="name-of-playlist">
+                <button data-library_id="{{this.id}}" class="btn delete-playlist"><i class="fad fa-trash"
+                        data-library_id="{{this.id}}"></i></button>
+                <a href="/library/{{this.id}}"><button type="button" class="btn select-playlist"
+                        data-library_id="{{this.id}}">{{this.playlist_name}}</button></a>
+                </br>
+            </div>
+            {{/each}}
         </div>
-        {{/each}}
         </div>
         {{/if}}
 
         </div>
 
-        <div class="col">
+        <div class="col" style="background-image: linear-gradient(to top, rgb(36, 36, 36), rgb(122, 48, 48));">
             {{{body}}}
         </div>
         </div>

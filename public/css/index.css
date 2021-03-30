@@ -9,6 +9,7 @@ body {
 .wholeapp {
   height: 100vh;
   background-image: linear-gradient(to top, rgb(32, 32, 32), rgb(122, 48, 48));
+  /* background-color: rgb(37, 37, 37); */
 }
 
 a {
@@ -274,6 +275,16 @@ a {
   border-radius: 50%;
 }
 
+.side-bar .overflow-sidebar-store {
+  max-height: 32vh;
+  overflow-y: scroll;
+}
+
+.side-bar .overflow-sidebar-playlist {
+  max-height: 32vh;
+  overflow-y: scroll;
+}
+
 /* song-list */
 .song-list {
   /* height: 550px; */
@@ -424,7 +435,7 @@ a {
   /* background-image: linear-gradient(to top, rgba(41, 41, 41), rgb(122, 48, 48)); */
   min-height: 77.7vh;
   max-height: 77.7vh;
-  overflow: scroll;
+  overflow-y: scroll;
   overflow-x: hidden;
 }
 
@@ -435,6 +446,7 @@ a {
       rgba(41, 41, 41),
       rgb(122, 48, 48)
     );
+    /* background-color: rgb(37, 37, 37); */
     height: 75vh;
   }
   .side-bar button,
@@ -638,7 +650,7 @@ section.row {
 
 /* Playlist */
 .playListpage {
-  /* background-image: linear-gradient(to top, rgba(41, 41, 41), rgb(122, 48, 48)); */
+  background-image: linear-gradient(to top, rgba(41, 41, 41), rgb(122, 48, 48));
   color: rgb(184, 179, 179);
 }
 
@@ -646,7 +658,7 @@ section.row {
   color: rgb(184, 179, 179);
   max-height: 67.3vh;
   min-height: 67.3vh;
-  overflow: scroll;
+  overflow-y: scroll;
   overflow-x: hidden;
 }
 
@@ -670,6 +682,7 @@ section.row {
 .set-height {
   min-height: 86.5vh;
   background-image: linear-gradient(to top, rgba(41, 41, 41), rgb(122, 48, 48));
+  /* background-color: rgb(37, 37, 37); */
   color: rgb(184, 179, 179);
 }
 
@@ -718,7 +731,7 @@ section.row {
 
 .set-height .cart-item,
 .set-height .setting-page {
-  overflow: scroll;
+  overflow-y: scroll;
   overflow-x: hidden;
   max-height: 71.5vh;
 }
