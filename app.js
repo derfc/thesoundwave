@@ -320,7 +320,7 @@ app.post("/playlist/:library_id/:song_id", authCheck, (req, res) => {
 
 //del playlist
 app.delete("/library/:library_id", authCheck, (req, res) => {
-	console.log("hello", req.params.library_id);
+	// console.log("hello", req.params.library_id);
 	let deleteId = req.params.library_id;
 	return storeSQL.delAllSongsInPlaylist(deleteId).then(() => {
 		storeSQL.delPlaylistInLibrary(deleteId).then(() => {

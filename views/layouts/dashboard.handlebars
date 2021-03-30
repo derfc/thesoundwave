@@ -32,7 +32,9 @@
 </head>
 
 <body class="wholeapp">
-
+<div class="d-flex justify-content-end toggle-container">
+<button class=" btn" id="toggle"><i class="fad fa-chevron-square-down fa-2x" id="toggle-icon"></i></button>
+</div>
     <section class="row">
         <div class="col-md-2 side-bar">
             <div class="profile text-center">
@@ -263,6 +265,47 @@
             .fail(() => console.log("hahafail"))
             .always(() => console.log("running"));
     });
+
+$("#toggle").click((e)=>{
+    if ($(".side-bar")[0].style.display == "block"){
+    $(".side-bar")[0].style.display = "none";
+    $(`#toggle-icon`).attr("class", "fad fa-chevron-square-down fa-2x");
+    }else{
+        $(".side-bar")[0].style.display = "block";
+        $(`#toggle-icon`).attr("class", "fad fa-chevron-square-up fa-2x");
+    }
+})
+
+
+window.addEventListener('resize', setWindowSize);
+
+function setWindowSize() {
+    let currentWidth;
+    let currentHeight;
+    if (typeof (window.innerWidth) == 'number') {
+        currentWidth = window.innerWidth;
+        currentHeight = window.innerHeight;
+    } else {
+        if (document.documentElement && (document.documentElement.clientWidth || document.documentElement.clientHeight)) {
+        currentWidth = document.documentElement.clientWidth;
+        currentHeight = document.documentElement.clientHeight;
+        } else {
+        if (document.body && (document.body.clientWidth || document.body.clientHeight)) {
+        currentWidth = document.body.clientWidth;
+        currentHeight = document.body.clientHeight;
+            }
+        }
+    }
+console.log(currentWidth)
+
+    if (currentWidth > 768){
+        $(".side-bar")[0].style.display = "block";
+    }else{
+        $(".side-bar")[0].style.display = "none";
+    }
+}
+
+
 
 
 </script>
