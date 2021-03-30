@@ -276,7 +276,9 @@ const appendArtist = (result) => {
 			$(".appendArtist").append(
 				`
 				<div class="col-lg-2 col-md-3 col-sm-4 my-3">
-				<img class="image img-fluid" src="${artistPhoto}" alt="${artistNameEng} ${artistNameChi} Photo"/></br>
+				<div class="album-img">
+				<img class="image img-fluid" src="${artistPhoto}" alt="${artistNameEng} ${artistNameChi} Photo"/>
+				</div>
 				<button class="btn go-to-artist" my-2 data-artist_id ="${artistId}">${artistNameEng} ${artistNameChi}</button></br>
 				</div>
 				`
@@ -285,7 +287,9 @@ const appendArtist = (result) => {
 			$(".appendArtist").append(
 				`
 				<div class="col-lg-2 col-md-3 col-sm-4 my-3">
-				<img class="image img-fluid" src="${artistPhoto}" alt="${artistNameEng} Photo"/></br>
+				<div class="album-img">
+				<img class="image img-fluid" src="${artistPhoto}" alt="${artistNameEng} Photo"/>
+				</div>
 				<button class="btn go-to-artist" my-2 data-artist_id ="${artistId}">${artistNameEng}</button></br>
 				</div>
 				`

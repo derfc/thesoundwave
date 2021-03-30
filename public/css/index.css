@@ -425,6 +425,7 @@ a {
   min-height: 77.7vh;
   max-height: 77.7vh;
   overflow: scroll;
+  overflow-x: hidden;
 }
 
 @media (max-width: 991px) {
@@ -646,6 +647,7 @@ section.row {
   max-height: 67.3vh;
   min-height: 67.3vh;
   overflow: scroll;
+  overflow-x: hidden;
 }
 
 .playListpage .playlist button {
@@ -717,6 +719,7 @@ section.row {
 .set-height .cart-item,
 .set-height .setting-page {
   overflow: scroll;
+  overflow-x: hidden;
   max-height: 71.5vh;
 }
 
