@@ -15,17 +15,16 @@ if (curHr < 12) {
 $("#filter_songs").on("keyup search", function (e) {
 	// console.log("hello", e.target.value);
 	let keywords = e.target.value;
+	$(".title").empty();
+	$(".album").empty();
+	$(".song").empty();
+	$(".artist").empty();
 	if (!keywords) {
-		$(".artist").empty();
-		$(".album").empty();
-		$(".song").empty();
-		$(".title").empty();
 		$(".noneWhenSearch")[0].style.display = "block";
 		$(".noneWhenSearch")[1].style.display = "block";
 	} else {
 		$(".noneWhenSearch")[0].style.display = "none";
 		$(".noneWhenSearch")[1].style.display = "none";
-
 		$.ajax({
 			url: `/home`,
 			type: "post",

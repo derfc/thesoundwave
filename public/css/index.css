@@ -775,7 +775,7 @@ section.row {
 .set-height .setting-page {
 	overflow-y: scroll;
 	overflow-x: hidden;
-	max-height: 71.5vh;
+	max-height: 64.5vh;
 }
 
 .set-height .cart-item button {
